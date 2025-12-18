@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
@@ -76,7 +77,7 @@ export const RecentPosts: React.FC = async () => {
         </div>
 
         {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-10">
           {posts.docs.map((post) => {
             const image = post.heroImage && typeof post.heroImage === 'object' 
               ? post.heroImage 
@@ -175,6 +176,30 @@ export const RecentPosts: React.FC = async () => {
               </article>
             )
           })}
+        </div>
+
+        {/* See All Blog Posts Button */}
+        <div className="flex justify-center">
+          <Button
+            asChild
+            className="w-full sm:w-auto flex items-center gap-2"
+            style={{
+              backgroundColor: 'hsl(23, 100%, 56%)',
+              color: 'white',
+              borderRadius: '8px',
+              paddingTop: 'clamp(12px, 1.8vw, 15px)',
+              paddingBottom: 'clamp(12px, 1.8vw, 15px)',
+              paddingLeft: 'clamp(24px, 4.5vw, 40px)',
+              paddingRight: 'clamp(24px, 4.5vw, 40px)',
+              fontSize: 'clamp(14px, 2vw, 18px)',
+              fontWeight: 500
+            }}
+          >
+            <Link href="/blog" className="flex items-center gap-2">
+              See All Blog Posts
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
