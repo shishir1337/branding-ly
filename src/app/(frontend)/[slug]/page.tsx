@@ -13,6 +13,7 @@ import { CustomHero } from '@/heros/CustomHero'
 import { TrustedBrands } from '@/components/TrustedBrands'
 import { AboutUs } from '@/components/AboutUs'
 import { Statistics } from '@/components/Statistics'
+import { Testimonials } from '@/components/Testimonials'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -84,6 +85,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <TrustedBrands />
           <AboutUs />
           <Statistics />
+          <Testimonials />
         </>
       ) : (
         <RenderHero {...hero} />

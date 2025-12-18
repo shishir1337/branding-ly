@@ -114,3 +114,17 @@ html[data-theme='light'] {
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
+
+/* Testimonials horizontal scroll animation */
+@keyframes testimonials-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-testimonials {
+  animation: testimonials-scroll 60s linear infinite;
+}
