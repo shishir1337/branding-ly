@@ -8,6 +8,7 @@ import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
+import { Button } from '@/components/ui/button'
 
 interface HeaderClientProps {
   data: Header
@@ -30,12 +31,33 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
 
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+    <header 
+      className="relative z-20 w-full" 
+      style={{ backgroundColor: '#070515' }}
+    >
+      <div className="container py-6 flex items-center justify-between gap-4">
+        {/* Left: Logo */}
+        <Link href="/" className="flex-shrink-0 z-10">
+          <Logo loading="eager" priority="high" />
         </Link>
-        <HeaderNav data={data} />
+
+        {/* Center: Nav Menu */}
+        <div className="flex-1 flex justify-center items-center">
+          <HeaderNav data={data} />
+        </div>
+
+        {/* Right: Contact Us Button */}
+        <div className="flex-shrink-0 z-10">
+          <Button 
+            asChild 
+            variant="default" 
+            size="default"
+            style={{ backgroundColor: 'hsl(23, 100%, 56%)', color: 'white' }}
+            className="hover:opacity-90"
+          >
+            <Link href="/contact">Contact Us</Link>
+          </Button>
+        </div>
       </div>
     </header>
   )
