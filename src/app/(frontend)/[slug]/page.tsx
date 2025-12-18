@@ -10,6 +10,7 @@ import { homeStatic } from '@/endpoints/seed/home-static'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { CustomHero } from '@/heros/CustomHero'
+import { TrustedBrands } from '@/components/TrustedBrands'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -76,7 +77,10 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       {decodedSlug === 'home' ? (
-        <CustomHero />
+        <>
+          <CustomHero />
+          <TrustedBrands />
+        </>
       ) : (
         <RenderHero {...hero} />
       )}
