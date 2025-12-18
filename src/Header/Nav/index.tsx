@@ -10,7 +10,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const navItems = data?.navItems || []
 
   return (
-    <nav className="flex gap-8 items-center">
+    <nav className="flex gap-4 md:gap-6 lg:gap-8 items-center">
       {navItems.map(({ link }, i) => {
         if (!link) return null
         
@@ -19,7 +19,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
             key={i} 
             {...link}
             appearance="link"
-            className="text-white hover:text-primary transition-colors text-base font-medium"
+            className="text-white hover:text-primary transition-colors text-sm md:text-base font-medium whitespace-nowrap"
           />
         )
       })}
