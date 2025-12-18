@@ -23,7 +23,7 @@ export const CustomHero: React.FC = () => {
             lineHeight: '1.2'
           }}
         >
-          # Leading Marketing Agency
+          # Leading Branding Agency
         </p>
 
         {/* Main Heading */}

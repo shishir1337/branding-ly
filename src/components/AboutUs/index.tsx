@@ -63,10 +63,9 @@ export const AboutUs: React.FC = () => {
               }}
             >
               <span style={{ color: '#000000' }}>
-                We are full Marketing agency helping brands{' '}
-                grow connector help your company to lead{' '}
-                through tailored strategies blending the{' '}
-                creativity. We Are{' '}
+                Who We Are – Your Trusted Branding & Marketing Agency in Bangladesh
+                <br />
+                We Are{' '}
               </span>
               <span style={{ color: 'hsl(23, 100%, 56%)' }}>Branding-ly.</span>
             </h3>
@@ -74,28 +73,52 @@ export const AboutUs: React.FC = () => {
             {/* Two Column Text Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-5 sm:mb-6 md:mb-8">
               {/* Left Text */}
-              <p 
-                className="text-black"
-                style={{
-                  fontSize: 'clamp(14px, 1.8vw, 16px)',
-                  lineHeight: 'clamp(1.5, 1.6, 1.6)'
-                }}
-              >
-                At Branding-ly, we know how important marketing is. Positioned as a leading marketing agency in Dhaka, we don't just want to be a regular marketing agency; we aim to be an integral part of the businesses we serve.
-                <br /><br />
-                Founded in 2022, our main goal is to cater marketing needs of all types of businesses..
-              </p>
+              <div className="text-black space-y-4">
+                <p 
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: 'clamp(1.5, 1.6, 1.6)'
+                  }}
+                >
+                  Hi, we're <strong>BRANDING-LY</strong> – a full-service marketing agency in Bangladesh born right here in Dhaka. Founded in 2022, we've been obsessed with one thing since day one: helping businesses grow faster.
+                </p>
+                <p 
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: 'clamp(1.5, 1.6, 1.6)'
+                  }}
+                >
+                  We're not your typical advertising agency in Bangladesh. We don't do cookie-cutter solutions or fancy jargon. Instead, we focus on what matters – getting you customers, building your brand, and making sure every penny you spend with us comes back multiplied.
+                </p>
+                <p 
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: 'clamp(1.5, 1.6, 1.6)'
+                  }}
+                >
+                  At Branding-ly, we know how important marketing is. Positioned as a leading marketing agency in Dhaka, we don't just want to be a regular marketing agency; we aim to be an integral part of the businesses we serve.
+                </p>
+              </div>
 
               {/* Right Text */}
-              <p 
-                className="text-black"
-                style={{
-                  fontSize: 'clamp(14px, 1.8vw, 16px)',
-                  lineHeight: 'clamp(1.5, 1.6, 1.6)'
-                }}
-              >
-                Unlike any other marketing company in Dhaka, we want to change how marketing works. We want to mix creativity, smart data, and cool technology to make marketing even better
-              </p>
+              <div className="text-black space-y-4">
+                <p 
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: 'clamp(1.5, 1.6, 1.6)'
+                  }}
+                >
+                  Our main goal is to cater marketing needs of all types of businesses. Unlike any other marketing company in Dhaka, we want to change how marketing works. We want to mix creativity, smart data, and cool technology to make marketing even better.
+                </p>
+                <p 
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: 'clamp(1.5, 1.6, 1.6)'
+                  }}
+                >
+                  Whether you need a new website, killer social media content, or a complete marketing overhaul, we've got your back. Our team combines creative firepower with strategic thinking to deliver campaigns that don't just look good – they work.
+                </p>
+              </div>
             </div>
 
             {/* CTA Button */}
