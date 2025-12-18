@@ -27,6 +27,7 @@ export const RecentPosts: React.FC = async () => {
       slug: true,
       meta: true,
       publishedAt: true,
+      authors: true,
       populatedAuthors: true,
       heroImage: true,
     },
