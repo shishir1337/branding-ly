@@ -9,17 +9,18 @@ import Link from 'next/link'
 export const CustomHero: React.FC = () => {
   return (
     <div 
-      className="relative w-full py-20 flex flex-col items-center justify-center"
+      className="relative w-full py-12 sm:py-16 md:py-20 flex flex-col items-center justify-center"
       style={{ backgroundColor: '#070515' }}
     >
-      <div className="container flex flex-col items-center text-center">
+      <div className="container flex flex-col items-center text-center px-4 sm:px-6">
         {/* Leading Marketing Agency Text */}
         <p 
-          className="font-bold"
+          className="font-bold mb-2 sm:mb-4 md:mb-5"
           style={{ 
             color: 'hsl(23, 100%, 56%)',
-            fontSize: '16px',
-            fontWeight: 700
+            fontSize: 'clamp(12px, 2vw, 16px)',
+            fontWeight: 700,
+            lineHeight: '1.2'
           }}
         >
           # Leading Marketing Agency
@@ -27,16 +28,16 @@ export const CustomHero: React.FC = () => {
 
         {/* Main Heading */}
         <h1 
-          className="mb-4"
+          className="mb-2 sm:mb-4 md:mb-2 px-2 sm:px-4 md:px-0"
           style={{ 
             color: '#FFFFFF',
             textAlign: 'center',
             fontFamily: 'Anton, sans-serif',
-            fontSize: '64px',
+            fontSize: 'clamp(28px, 7vw, 64px)',
             fontStyle: 'normal',
             fontWeight: 400,
-            lineHeight: '80px',
-            letterSpacing: '-1.28px'
+            lineHeight: 'clamp(36px, 9vw, 80px)',
+            letterSpacing: 'clamp(-0.56px, -0.015vw, -1.28px)'
           }}
         >
           <span>
@@ -47,59 +48,71 @@ export const CustomHero: React.FC = () => {
         </h1>
 
         {/* Review Section */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-2 md:mb-5">
           {/* Review Platform Image */}
-          <div className="flex-shrink-0" style={{ height: '31px' }}>
+          <div className="flex-shrink-0" style={{ height: 'clamp(22px, 3.5vw, 31px)' }}>
             <Image
               src="/reviewplatform.png"
               alt="Review Platform"
               width={55}
               height={31}
               className="h-full w-auto"
+              style={{ height: 'clamp(22px, 3.5vw, 31px)' }}
             />
           </div>
 
           {/* Rating Section */}
           <div className="flex flex-col items-start">
             {/* Rating and Stars */}
-            <div className="flex items-center gap-2 mb-1" style={{ height: '31px' }}>
-              <span className="text-white text-2xl font-semibold">5.0</span>
+            <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 mb-0.5" style={{ height: 'clamp(22px, 3.5vw, 31px)' }}>
+              <span 
+                className="text-white font-semibold whitespace-nowrap"
+                style={{ fontSize: 'clamp(16px, 2.5vw, 24px)' }}
+              >
+                5.0
+              </span>
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="fill-current"
+                    className="fill-current flex-shrink-0"
                     style={{ 
                       color: 'hsl(23, 100%, 56%)',
-                      width: '20px',
-                      height: '20px'
+                      width: 'clamp(14px, 2vw, 20px)',
+                      height: 'clamp(14px, 2vw, 20px)'
                     }}
                   />
                 ))}
               </div>
             </div>
             {/* Review Text */}
-            <p className="text-white text-sm">Based on 44+ reviews</p>
+            <p 
+              className="text-white text-left whitespace-nowrap"
+              style={{ fontSize: 'clamp(11px, 1.8vw, 14px)' }}
+            >
+              Based on 44+ reviews
+            </p>
           </div>
         </div>
 
         {/* CTA Button */}
         <HoverBorderGradient
           as="div"
-          containerClassName="rounded-full cursor-pointer [&>div:last-child]:!bg-[hsl(23,100%,56%)]"
-          className="!bg-[hsl(23,100%,56%)] text-white flex items-center gap-2 text-lg font-medium"
+          containerClassName="rounded-full cursor-pointer [&>div:last-child]:!bg-[hsl(23,100%,56%)] w-fit mx-auto"
+          className="!bg-[hsl(23,100%,56%)] text-white flex items-center justify-center gap-2 font-medium"
           style={{
-            paddingTop: '15px',
-            paddingBottom: '15px',
-            paddingLeft: '40px',
-            paddingRight: '40px'
+            paddingTop: 'clamp(12px, 1.8vw, 15px)',
+            paddingBottom: 'clamp(12px, 1.8vw, 15px)',
+            paddingLeft: 'clamp(24px, 4.5vw, 40px)',
+            paddingRight: 'clamp(24px, 4.5vw, 40px)',
+            fontSize: 'clamp(14px, 2vw, 18px)'
           }}
           duration={1}
           clockwise={true}
         >
-          <Link href="/contact" className="flex items-center gap-2">
+          <Link href="/contact" className="flex items-center gap-2 whitespace-nowrap">
             <span>Book A Call</span>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
           </Link>
         </HoverBorderGradient>
       </div>
