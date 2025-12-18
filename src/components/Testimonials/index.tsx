@@ -11,7 +11,9 @@ interface Testimonial {
 }
 
 // Sample testimonials with varying sizes for masonry effect
+// Organized to balance heights: tall cards (344px, 331px) paired with short cards (239px)
 const testimonials: Testimonial[] = [
+  // Column 1: Tall + Short
   {
     quote: "Working with this team was a game-changer. Their strategy, execution, and results exceeded all expectations — we saw instant growth and success.",
     author: "John Doe",
@@ -20,23 +22,17 @@ const testimonials: Testimonial[] = [
     height: 331
   },
   {
-    quote: "The marketing strategies they implemented transformed our business. We've seen incredible ROI and brand recognition.",
-    author: "Sarah Smith",
-    role: "Marketing Director, TechCorp",
-    width: 396,
-    height: 239
-  },
-  {
     quote: "Outstanding results and professional service. Highly recommend their expertise.",
     author: "Michael Johnson",
     role: "Founder, StartupXYZ",
     width: 396,
     height: 239
   },
+  // Column 2: Short + Tall
   {
-    quote: "They understand our vision and deliver beyond expectations. Truly exceptional team.",
-    author: "Emily Davis",
-    role: "CMO, BrandCo",
+    quote: "The marketing strategies they implemented transformed our business. We've seen incredible ROI and brand recognition.",
+    author: "Sarah Smith",
+    role: "Marketing Director, TechCorp",
     width: 396,
     height: 239
   },
@@ -47,12 +43,28 @@ const testimonials: Testimonial[] = [
     width: 396,
     height: 344
   },
+  // Column 3: Short + Tall
+  {
+    quote: "They understand our vision and deliver beyond expectations. Truly exceptional team.",
+    author: "Emily Davis",
+    role: "CMO, BrandCo",
+    width: 396,
+    height: 239
+  },
   {
     quote: "The team's creativity and attention to detail is unmatched. We've achieved remarkable growth since working together.",
     author: "Lisa Anderson",
     role: "CEO, InnovateNow",
     width: 396,
     height: 344
+  },
+  // Column 4: Tall + Short
+  {
+    quote: "Professional, creative, and results-oriented. They've become an integral part of our success story.",
+    author: "Jennifer Martinez",
+    role: "Marketing Head, NextGen",
+    width: 396,
+    height: 331
   },
   {
     quote: "Best marketing decision we ever made. Results speak for themselves.",
@@ -61,13 +73,7 @@ const testimonials: Testimonial[] = [
     width: 396,
     height: 239
   },
-  {
-    quote: "Professional, creative, and results-oriented. They've become an integral part of our success story.",
-    author: "Jennifer Martinez",
-    role: "Marketing Head, NextGen",
-    width: 396,
-    height: 331
-  },
+  // Column 5: Short + Tall
   {
     quote: "Exceptional service and measurable results. Couldn't be happier with our partnership.",
     author: "James Taylor",
@@ -167,117 +173,121 @@ export const Testimonials: React.FC = () => {
         {/* Scrolling Container */}
         <div className="overflow-x-hidden w-full">
           <div className="flex animate-testimonials gap-4 sm:gap-6" style={{ width: 'fit-content' }}>
-              {/* Group testimonials into columns of 2 cards each */}
-              {Array.from({ length: Math.ceil(infiniteTestimonials.length / 2) }).map((_, colIndex) => {
-                const topCard = infiniteTestimonials[colIndex * 2]
-                const bottomCard = infiniteTestimonials[colIndex * 2 + 1]
-                
-                return (
-                  <div
-                    key={`column-${colIndex}`}
-                    className="flex-shrink-0 flex flex-col gap-4 sm:gap-6"
-                    style={{ width: '396px' }}
-                  >
-                    {/* Top Card */}
-                    {topCard && (
-                      <div
+            {/* Group testimonials into columns of 2 cards each */}
+            {Array.from({ length: Math.ceil(infiniteTestimonials.length / 2) }).map((_, colIndex) => {
+              const topCard = infiniteTestimonials[colIndex * 2]
+              const bottomCard = infiniteTestimonials[colIndex * 2 + 1]
+              
+              return (
+                <div
+                  key={`column-${colIndex}`}
+                  className="flex-shrink-0 flex flex-col gap-4 sm:gap-6"
+                  style={{ width: '396px' }}
+                >
+                  {/* Top Card */}
+                  {topCard && (
+                    <div
+                      className="transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+                      style={{
+                        width: `${topCard.width}px`,
+                        height: `${topCard.height}px`,
+                        borderRadius: '9px',
+                        background: '#F8F8F8',
+                        boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.25)',
+                        padding: '24px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        cursor: 'default'
+                      }}
+                    >
+                      <p 
+                        className="text-black mb-4"
                         style={{
-                          width: `${topCard.width}px`,
-                          height: `${topCard.height}px`,
-                          borderRadius: '9px',
-                          background: '#F8F8F8',
-                          boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.25)',
-                          padding: '24px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between'
+                          fontSize: 'clamp(14px, 1.8vw, 16px)',
+                          lineHeight: '1.6',
+                          fontFamily: 'Geist, sans-serif'
                         }}
                       >
+                        "{topCard.quote}"
+                      </p>
+                      <div>
                         <p 
-                          className="text-black mb-4"
+                          className="text-black font-semibold mb-1"
                           style={{
                             fontSize: 'clamp(14px, 1.8vw, 16px)',
-                            lineHeight: '1.6',
                             fontFamily: 'Geist, sans-serif'
                           }}
                         >
-                          "{topCard.quote}"
+                          {topCard.author}
                         </p>
-                        <div>
-                          <p 
-                            className="text-black font-semibold mb-1"
-                            style={{
-                              fontSize: 'clamp(14px, 1.8vw, 16px)',
-                              fontFamily: 'Geist, sans-serif'
-                            }}
-                          >
-                            {topCard.author}
-                          </p>
-                          <p 
-                            className="text-[#898989]"
-                            style={{
-                              fontSize: 'clamp(12px, 1.5vw, 14px)',
-                              fontFamily: 'Geist, sans-serif'
-                            }}
-                          >
-                            {topCard.role}
-                          </p>
-                        </div>
+                        <p 
+                          className="text-[#898989]"
+                          style={{
+                            fontSize: 'clamp(12px, 1.5vw, 14px)',
+                            fontFamily: 'Geist, sans-serif'
+                          }}
+                        >
+                          {topCard.role}
+                        </p>
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    {/* Bottom Card */}
-                    {bottomCard && (
-                      <div
+                  {/* Bottom Card */}
+                  {bottomCard && (
+                    <div
+                      className="transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg"
+                      style={{
+                        width: `${bottomCard.width}px`,
+                        height: `${bottomCard.height}px`,
+                        borderRadius: '9px',
+                        background: '#F8F8F8',
+                        boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.25)',
+                        padding: '24px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        cursor: 'default'
+                      }}
+                    >
+                      <p 
+                        className="text-black mb-4"
                         style={{
-                          width: `${bottomCard.width}px`,
-                          height: `${bottomCard.height}px`,
-                          borderRadius: '9px',
-                          background: '#F8F8F8',
-                          boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.25)',
-                          padding: '24px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between'
+                          fontSize: 'clamp(14px, 1.8vw, 16px)',
+                          lineHeight: '1.6',
+                          fontFamily: 'Geist, sans-serif'
                         }}
                       >
+                        "{bottomCard.quote}"
+                      </p>
+                      <div>
                         <p 
-                          className="text-black mb-4"
+                          className="text-black font-semibold mb-1"
                           style={{
                             fontSize: 'clamp(14px, 1.8vw, 16px)',
-                            lineHeight: '1.6',
                             fontFamily: 'Geist, sans-serif'
                           }}
                         >
-                          "{bottomCard.quote}"
+                          {bottomCard.author}
                         </p>
-                        <div>
-                          <p 
-                            className="text-black font-semibold mb-1"
-                            style={{
-                              fontSize: 'clamp(14px, 1.8vw, 16px)',
-                              fontFamily: 'Geist, sans-serif'
-                            }}
-                          >
-                            {bottomCard.author}
-                          </p>
-                          <p 
-                            className="text-[#898989]"
-                            style={{
-                              fontSize: 'clamp(12px, 1.5vw, 14px)',
-                              fontFamily: 'Geist, sans-serif'
-                            }}
-                          >
-                            {bottomCard.role}
-                          </p>
-                        </div>
+                        <p 
+                          className="text-[#898989]"
+                          style={{
+                            fontSize: 'clamp(12px, 1.5vw, 14px)',
+                            fontFamily: 'Geist, sans-serif'
+                          }}
+                        >
+                          {bottomCard.role}
+                        </p>
                       </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
+        </div>
         </div>
     </div>
   )

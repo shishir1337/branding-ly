@@ -126,5 +126,6 @@ html[data-theme='light'] {
 }
 
 .animate-testimonials {
-  animation: testimonials-scroll 60s linear infinite;
+  animation: testimonials-scroll 50s linear infinite;
+  will-change: transform;
 }
