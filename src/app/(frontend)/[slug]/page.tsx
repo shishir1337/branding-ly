@@ -17,6 +17,7 @@ import { Testimonials } from '@/components/Testimonials'
 import { RecentPosts } from '@/components/RecentPosts'
 import { FAQ } from '@/components/FAQ'
 import { ContactUs } from '@/components/ContactUs'
+import { WhyUs } from '@/components/WhyUs'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -92,6 +93,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <RecentPosts />
           <FAQ />
           <ContactUs />
+          {/* <WhyUs /> */}
         </>
       ) : (
         <RenderHero {...hero} />
