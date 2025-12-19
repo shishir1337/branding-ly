@@ -100,18 +100,21 @@ export const WhyChooseUs: React.FC = () => {
               delay={0.1 + index * 0.1}
               duration={0.6}
               distance={30}
+              className="h-full"
             >
-              <div className="h-full">
-                <FeatureCard feature={feature} delay={100 + index * 100} />
-              </div>
+              <FeatureCard feature={feature} delay={100 + index * 100} />
             </ScrollReveal>
           ))}
 
           {/* Last card - spans 2 rows on large screens, positioned in 4th column */}
-          <ScrollReveal direction="up" delay={0.4} duration={0.6} distance={30}>
-            <div className="h-full lg:row-span-2 lg:row-start-1 lg:col-start-4">
-              <FeatureCard feature={features[6]} isWide delay={400} />
-            </div>
+          <ScrollReveal
+            direction="up"
+            delay={0.4}
+            duration={0.6}
+            distance={30}
+            className="h-full lg:row-span-2 lg:row-start-1 lg:col-start-4"
+          >
+            <FeatureCard feature={features[6]} isWide delay={400} />
           </ScrollReveal>
 
           {/* Remaining 3 cards */}
@@ -122,10 +125,9 @@ export const WhyChooseUs: React.FC = () => {
               delay={0.5 + index * 0.1}
               duration={0.6}
               distance={30}
+              className="h-full"
             >
-              <div className="h-full">
-                <FeatureCard feature={feature} delay={500 + index * 100} />
-              </div>
+              <FeatureCard feature={feature} delay={500 + index * 100} />
             </ScrollReveal>
           ))}
         </div>
