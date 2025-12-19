@@ -148,7 +148,6 @@ export const FAQ: React.FC = () => {
                 fontWeight: 400,
                 lineHeight: 'clamp(40px, 8vw, 79.547px)',
                 letterSpacing: 'clamp(-0.8px, -0.04vw, -2.25px)',
-                textTransform: 'uppercase'
               }}
             >
               <span style={{ color: '#000000' }}>

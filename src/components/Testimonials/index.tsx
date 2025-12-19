@@ -15,31 +15,31 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   // Column 1: Tall + Short
   {
-    quote: "Working with this team was a game-changer. Their strategy, execution, and results exceeded all expectations — we saw instant growth and success.",
-    author: "John Doe",
-    role: "CEO, Marewoto",
+    quote: "Brandingly created our entire brand identity from scratch. The logo, website, marketing materials – everything was perfect. Highly recommended!",
+    author: "Startup Founder",
+    role: "Dhaka",
     width: 396,
     height: 331
   },
   {
-    quote: "Outstanding results and professional service. Highly recommend their expertise.",
-    author: "Michael Johnson",
-    role: "Founder, StartupXYZ",
+    quote: "Best decision we made was hiring BRANDING-LY for our digital marketing. Lead generation increased by 400% in 3 months.",
+    author: "Manufacturing Company",
+    role: "Bangladesh",
     width: 396,
     height: 239
   },
   // Column 2: Short + Tall
   {
-    quote: "The marketing strategies they implemented transformed our business. We've seen incredible ROI and brand recognition.",
-    author: "Sarah Smith",
-    role: "Marketing Director, TechCorp",
+    quote: "Their event management team organized our product launch flawlessly. Professional, creative, and stress-free experience.",
+    author: "FMCG Brand",
+    role: "Dhaka",
     width: 396,
     height: 239
   },
   {
-    quote: "Our partnership has been incredible. They've helped us reach new heights with innovative campaigns and data-driven strategies that actually work.",
-    author: "Robert Wilson",
-    role: "VP Marketing, GrowthInc",
+    quote: "Working with Branding-ly has transformed our online presence. Our website traffic doubled, and sales are at an all-time high.",
+    author: "E-commerce Business",
+    role: "Dhaka",
     width: 396,
     height: 344
   },
