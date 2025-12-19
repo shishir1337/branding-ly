@@ -55,7 +55,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             asChild 
             variant="default" 
             size="default"
-            style={{ backgroundColor: 'hsl(23, 100%, 56%)', color: 'white' }}
+            style={{ backgroundColor: 'hsl(23, 100%, 56%)', color: 'white', borderRadius: '38px' }}
             className="hover:opacity-90"
           >
             <Link href="/contact">Contact Us</Link>
@@ -111,7 +111,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 asChild 
                 variant="default" 
                 size="default"
-                style={{ backgroundColor: 'hsl(23, 100%, 56%)', color: 'white' }}
+                style={{ backgroundColor: 'hsl(23, 100%, 56%)', color: 'white', borderRadius: '38px' }}
                 className="hover:opacity-90 w-full mt-2"
               >
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
