@@ -212,7 +212,7 @@ export const Testimonials: React.FC = () => {
                           fontFamily: 'Geist, sans-serif'
                         }}
                       >
-                        "{topCard.quote}"
+                        &ldquo;{topCard.quote}&rdquo;
                       </p>
                       <div>
                         <p 
@@ -262,7 +262,7 @@ export const Testimonials: React.FC = () => {
                           fontFamily: 'Geist, sans-serif'
                         }}
                       >
-                        "{bottomCard.quote}"
+                        &ldquo;{bottomCard.quote}&rdquo;
                       </p>
                       <div>
                         <p 

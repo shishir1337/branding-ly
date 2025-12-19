@@ -84,7 +84,7 @@ export const AboutUs: React.FC = () => {
                     lineHeight: 'clamp(1.5, 1.6, 1.6)'
                   }}
                 >
-                  Hi, we're <strong>BRANDING-LY</strong> – a full-service marketing agency in Bangladesh born right here in Dhaka. Founded in 2022, we've been obsessed with one thing since day one: helping businesses grow faster.
+                  Hi, we&apos;re <strong>BRANDING-LY</strong> – a full-service marketing agency in Bangladesh born right here in Dhaka. Founded in 2022, we&apos;ve been obsessed with one thing since day one: helping businesses grow faster.
                 </p>
                 <p 
                   style={{
@@ -92,7 +92,7 @@ export const AboutUs: React.FC = () => {
                     lineHeight: 'clamp(1.5, 1.6, 1.6)'
                   }}
                 >
-                  We're not your typical advertising agency in Bangladesh. We don't do cookie-cutter solutions or fancy jargon. Instead, we focus on what matters – getting you customers, building your brand, and making sure every penny you spend with us comes back multiplied.
+                  We&apos;re not your typical advertising agency in Bangladesh. We don&apos;t do cookie-cutter solutions or fancy jargon. Instead, we focus on what matters – getting you customers, building your brand, and making sure every penny you spend with us comes back multiplied.
                 </p>
                 <p 
                   style={{
@@ -100,7 +100,7 @@ export const AboutUs: React.FC = () => {
                     lineHeight: 'clamp(1.5, 1.6, 1.6)'
                   }}
                 >
-                  At Branding-ly, we know how important marketing is. Positioned as a leading marketing agency in Dhaka, we don't just want to be a regular marketing agency; we aim to be an integral part of the businesses we serve.
+                  At Branding-ly, we know how important marketing is. Positioned as a leading marketing agency in Dhaka, we don&apos;t just want to be a regular marketing agency; we aim to be an integral part of the businesses we serve.
                 </p>
               </div>
 
@@ -120,7 +120,7 @@ export const AboutUs: React.FC = () => {
                     lineHeight: 'clamp(1.5, 1.6, 1.6)'
                   }}
                 >
-                  Whether you need a new website, killer social media content, or a complete marketing overhaul, we've got your back. Our team combines creative firepower with strategic thinking to deliver campaigns that don't just look good – they work.
+                  Whether you need a new website, killer social media content, or a complete marketing overhaul, we&apos;ve got your back. Our team combines creative firepower with strategic thinking to deliver campaigns that don&apos;t just look good – they work.
                 </p>
               </div>
             </div>

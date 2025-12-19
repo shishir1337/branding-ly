@@ -71,7 +71,7 @@ export const ContactUs: React.FC = () => {
         if (!data.docs || data.docs.length === 0) {
           response = await fetch(`${getClientSideURL()}/api/forms`)
           data = await response.json()
-          const contactForm = data.docs?.find((form: any) => 
+          const contactForm = data.docs?.find((form: { title?: string; id?: string | number }) => 
             form.title?.toLowerCase().includes('contact')
           )
           if (contactForm) {
@@ -558,7 +558,7 @@ export const ContactUs: React.FC = () => {
               >
                 {isLoading ? 'Submitting...' : hasSubmitted ? 'Submitted!' : (
                   <>
-                    Let's Connect
+                    Let&apos;s Connect
                     <ArrowRight size={20} />
                   </>
                 )}
