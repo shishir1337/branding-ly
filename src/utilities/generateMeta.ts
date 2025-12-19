@@ -26,12 +26,10 @@ export const generateMeta = async (args: {
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const title = doc?.meta?.title || 'Leading Branding & Marketing Agency in Bangladesh'
 
   return {
-    description: doc?.meta?.description,
+    description: doc?.meta?.description || 'Top branding & marketing agency in Bangladesh. We help businesses grow through strategic marketing, creative design, and campaigns that deliver real results.',
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
       images: ogImage

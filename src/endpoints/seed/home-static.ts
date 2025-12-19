@@ -80,8 +80,8 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
     },
   },
   meta: {
-    description: 'An open-source website built with Payload and Next.js.',
-    title: 'Payload Website Template',
+    description: 'Top branding & marketing agency in Bangladesh. We help businesses grow through strategic marketing, creative design, and campaigns that deliver real results.',
+    title: 'Leading Branding & Marketing Agency in Bangladesh',
   },
   title: 'Home',
   layout: [],
