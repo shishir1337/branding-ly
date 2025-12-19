@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Check } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { CircleCheck, ArrowRight } from 'lucide-react'
+import { getClientSideURL } from '@/utilities/getURL'
 
 interface ChecklistItem {
   mainText: string
@@ -52,6 +53,44 @@ export const ContactUs: React.FC = () => {
     message: ''
   })
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [formID, setFormID] = useState<number | null>(null)
+
+  // Fetch the Contact Us form ID from Payload CMS
+  useEffect(() => {
+    const fetchFormID = async () => {
+      try {
+        // Try to find form by title (exact match first)
+        let response = await fetch(`${getClientSideURL()}/api/forms?where[title][equals]=Contact Us`)
+        let data = await response.json()
+        
+        // If not found, try case-insensitive search
+        if (!data.docs || data.docs.length === 0) {
+          response = await fetch(`${getClientSideURL()}/api/forms`)
+          data = await response.json()
+          const contactForm = data.docs?.find((form: any) => 
+            form.title?.toLowerCase().includes('contact')
+          )
+          if (contactForm) {
+            setFormID(contactForm.id)
+            return
+          }
+        }
+        
+        if (data.docs && data.docs.length > 0) {
+          setFormID(data.docs[0].id)
+        } else {
+          console.warn('Contact Us form not found. Make sure the form title is "Contact Us" in Payload CMS admin.')
+        }
+      } catch (err) {
+        console.error('Error fetching form:', err)
+      }
+    }
+
+    fetchFormID()
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -68,17 +107,75 @@ export const ContactUs: React.FC = () => {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validate all required fields
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.service || !formData.budget || !formData.message) {
-      alert('Please fill in all required fields')
+      setError('Please fill in all required fields')
       return
     }
-    
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+
+    if (!formID) {
+      setError('Form configuration error. Please contact support.')
+      return
+    }
+
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      // Format data for Payload CMS form submission
+      const submissionData = [
+        { field: 'firstName', value: formData.firstName },
+        { field: 'lastName', value: formData.lastName },
+        { field: 'email', value: formData.email },
+        { field: 'service', value: formData.service },
+        { field: 'budget', value: formData.budget },
+        { field: 'message', value: formData.message }
+      ]
+
+      const response = await fetch(`${getClientSideURL()}/api/form-submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          form: formID,
+          submissionData: submissionData,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.status >= 400) {
+        setIsLoading(false)
+        setError(result.errors?.[0]?.message || 'Failed to submit form. Please try again.')
+        return
+      }
+
+      setIsLoading(false)
+      setHasSubmitted(true)
+      
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        service: '',
+        budget: '',
+        message: ''
+      })
+
+      // Show success message for 5 seconds
+      setTimeout(() => {
+        setHasSubmitted(false)
+      }, 5000)
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setIsLoading(false)
+      setError('Something went wrong. Please try again later.')
+    }
   }
 
   return (
@@ -131,7 +228,7 @@ export const ContactUs: React.FC = () => {
                         color: 'hsl(23, 100%, 56%)'
                       }}
                     >
-                      <Check 
+                      <CircleCheck 
                         style={{
                           width: 'clamp(20px, 2.5vw, 24px)',
                           height: 'clamp(20px, 2.5vw, 24px)'
@@ -187,11 +284,10 @@ export const ContactUs: React.FC = () => {
                       color: 'hsl(23, 100%, 56%)',
                       fontSize: 'clamp(12px, 1.5vw, 14px)',
                       fontWeight: 400,
-                      fontFamily: 'Anton, sans-serif',
-                      textTransform: 'uppercase'
+                      fontFamily: 'Anton, sans-serif'
                     }}
                   >
-                    FIRST NAME
+                    First Name <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -220,11 +316,10 @@ export const ContactUs: React.FC = () => {
                       color: 'hsl(23, 100%, 56%)',
                       fontSize: 'clamp(12px, 1.5vw, 14px)',
                       fontWeight: 400,
-                      fontFamily: 'Anton, sans-serif',
-                      textTransform: 'uppercase'
+                      fontFamily: 'Anton, sans-serif'
                     }}
                   >
-                    LAST NAME
+                    Last Name <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -256,11 +351,10 @@ export const ContactUs: React.FC = () => {
                     color: 'hsl(23, 100%, 56%)',
                     fontSize: 'clamp(12px, 1.5vw, 14px)',
                     fontWeight: 400,
-                    fontFamily: 'Anton, sans-serif',
-                    textTransform: 'uppercase'
+                    fontFamily: 'Anton, sans-serif'
                   }}
                 >
-                  EMAIL
+                  Email <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                 </label>
                 <input
                   type="email"
@@ -291,11 +385,10 @@ export const ContactUs: React.FC = () => {
                     color: 'hsl(23, 100%, 56%)',
                     fontSize: 'clamp(12px, 1.5vw, 14px)',
                     fontWeight: 400,
-                    fontFamily: 'Anton, sans-serif',
-                    textTransform: 'uppercase'
+                    fontFamily: 'Anton, sans-serif'
                   }}
                 >
-                  SERVICE REQUIRED
+                  Service Required <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                 </label>
                 <select
                   id="service"
@@ -330,11 +423,10 @@ export const ContactUs: React.FC = () => {
                     color: 'hsl(23, 100%, 56%)',
                     fontSize: 'clamp(12px, 1.5vw, 14px)',
                     fontWeight: 400,
-                    fontFamily: 'Anton, sans-serif',
-                    textTransform: 'uppercase'
+                    fontFamily: 'Anton, sans-serif'
                   }}
                 >
-                  PROJECT DETAILS
+                  Project Details <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                 </label>
                 <div className="flex flex-wrap gap-2 sm:gap-3">
                   {budgetOptions.map((option, index) => (
@@ -381,11 +473,10 @@ export const ContactUs: React.FC = () => {
                     color: 'hsl(23, 100%, 56%)',
                     fontSize: 'clamp(12px, 1.5vw, 14px)',
                     fontWeight: 400,
-                    fontFamily: 'Anton, sans-serif',
-                    textTransform: 'uppercase'
+                    fontFamily: 'Anton, sans-serif'
                   }}
                 >
-                  PROJECT DETAILS
+                  Project Details <span style={{ color: 'hsl(23, 100%, 56%)' }}>*</span>
                 </label>
                 <textarea
                   id="message"
@@ -407,24 +498,66 @@ export const ContactUs: React.FC = () => {
                 />
               </div>
 
+              {/* Success Message */}
+              {hasSubmitted && (
+                <div 
+                  className="w-full py-3 px-6 rounded-md text-center"
+                  style={{
+                    backgroundColor: '#10b981',
+                    color: '#fff',
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    fontFamily: 'Geist, sans-serif',
+                    borderRadius: '12px'
+                  }}
+                >
+                  Thank you! Your message has been submitted successfully.
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div 
+                  className="w-full py-3 px-6 rounded-md text-center"
+                  style={{
+                    backgroundColor: '#ef4444',
+                    color: '#fff',
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    fontFamily: 'Geist, sans-serif',
+                    borderRadius: '12px'
+                  }}
+                >
+                  {error}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3 px-6 text-white font-semibold transition-colors"
+                disabled={isLoading || hasSubmitted}
+                className="w-full py-3 px-6 text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 style={{
-                  backgroundColor: 'hsl(23, 100%, 56%)',
+                  backgroundColor: isLoading || hasSubmitted ? '#9ca3af' : 'hsl(23, 100%, 56%)',
                   fontSize: 'clamp(14px, 1.8vw, 16px)',
                   fontFamily: 'Geist, sans-serif',
                   borderRadius: '12px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'hsl(23, 100%, 50%)'
+                  if (!isLoading && !hasSubmitted) {
+                    e.currentTarget.style.backgroundColor = 'hsl(23, 100%, 50%)'
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'hsl(23, 100%, 56%)'
+                  if (!isLoading && !hasSubmitted) {
+                    e.currentTarget.style.backgroundColor = 'hsl(23, 100%, 56%)'
+                  }
                 }}
               >
-                Let's Connect
+                {isLoading ? 'Submitting...' : hasSubmitted ? 'Submitted!' : (
+                  <>
+                    Let's Connect
+                    <ArrowRight size={20} />
+                  </>
+                )}
               </button>
             </form>
           </div>

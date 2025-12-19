@@ -1,0 +1,145 @@
+import { RequiredDataFromCollectionSlug } from 'payload'
+
+export const contactUsForm: RequiredDataFromCollectionSlug<'forms'> = {
+  confirmationMessage: {
+    root: {
+      type: 'root',
+      children: [
+        {
+          type: 'heading',
+          children: [
+            {
+              type: 'text',
+              detail: 0,
+              format: 0,
+              mode: 'normal',
+              style: '',
+              text: 'Thank you! Your message has been submitted successfully.',
+              version: 1,
+            },
+          ],
+          direction: 'ltr',
+          format: '',
+          indent: 0,
+          tag: 'h2',
+          version: 1,
+        },
+      ],
+      direction: 'ltr',
+      format: '',
+      indent: 0,
+      version: 1,
+    },
+  },
+  confirmationType: 'message',
+  createdAt: new Date().toISOString(),
+  emails: [
+    {
+      emailFrom: '"Brandingly" <noreply@brandingly.com>',
+      emailTo: '{{email}}',
+      message: {
+        root: {
+          type: 'root',
+          children: [
+            {
+              type: 'paragraph',
+              children: [
+                {
+                  type: 'text',
+                  detail: 0,
+                  format: 0,
+                  mode: 'normal',
+                  style: '',
+                  text: 'Thank you for contacting us! We have received your inquiry and will get back to you within 24 hours.',
+                  version: 1,
+                },
+              ],
+              direction: 'ltr',
+              format: '',
+              indent: 0,
+              textFormat: 0,
+              version: 1,
+            },
+          ],
+          direction: 'ltr',
+          format: '',
+          indent: 0,
+          version: 1,
+        },
+      },
+      subject: "Thank you for contacting Brandingly",
+    },
+  ],
+  fields: [
+    {
+      name: 'firstName',
+      blockName: 'firstName',
+      blockType: 'text',
+      label: 'First Name',
+      required: true,
+      width: 50,
+    },
+    {
+      name: 'lastName',
+      blockName: 'lastName',
+      blockType: 'text',
+      label: 'Last Name',
+      required: true,
+      width: 50,
+    },
+    {
+      name: 'email',
+      blockName: 'email',
+      blockType: 'email',
+      label: 'Email',
+      required: true,
+      width: 100,
+    },
+    {
+      name: 'service',
+      blockName: 'service',
+      blockType: 'select',
+      label: 'Service Required',
+      required: true,
+      width: 100,
+      options: [
+        { label: 'Marketing Strategy & Planning', value: 'Marketing Strategy & Planning' },
+        { label: 'Graphic Design & Branding', value: 'Graphic Design & Branding' },
+        { label: 'Web Design & Development', value: 'Web Design & Development' },
+        { label: 'Content Writing', value: 'Content Writing' },
+        { label: 'Event Management', value: 'Event Management' },
+        { label: 'Videoshoot & Photography', value: 'Videoshoot & Photography' },
+        { label: 'Video Production & Editing', value: 'Video Production & Editing' },
+        { label: 'Printing Solutions', value: 'Printing Solutions' },
+      ],
+    },
+    {
+      name: 'budget',
+      blockName: 'budget',
+      blockType: 'select',
+      label: 'Project Budget',
+      required: true,
+      width: 100,
+      options: [
+        { label: 'Less than $5K', value: 'Less than $5K' },
+        { label: '$5K - $10K', value: '$5K - $10K' },
+        { label: '$10K - $20K', value: '$10K - $20K' },
+        { label: '$20K - $50K', value: '$20K - $50K' },
+        { label: 'More than $50K', value: 'More than $50K' },
+      ],
+    },
+    {
+      name: 'message',
+      blockName: 'message',
+      blockType: 'textarea',
+      label: 'Project Details',
+      required: true,
+      width: 100,
+    },
+  ],
+  redirect: undefined,
+  submitButtonLabel: "Let's Connect",
+  title: 'Contact Us',
+  updatedAt: new Date().toISOString(),
+}
+
