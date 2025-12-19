@@ -25,11 +25,11 @@ export function Footer() {
             <h2
               style={{
                 fontFamily: 'Anton, sans-serif',
-                fontSize: '70px',
+                fontSize: 'clamp(32px, 8vw, 70px)',
                 fontStyle: 'normal',
                 fontWeight: 400,
                 lineHeight: '110%',
-                letterSpacing: '-2.8px',
+                letterSpacing: 'clamp(-1.2px, -0.04vw, -2.8px)',
                 textTransform: 'uppercase'
               }}
             >
@@ -42,7 +42,7 @@ export function Footer() {
           {/* Right Side - Description and Newsletter */}
           <div className="flex flex-col justify-start">
             <p
-              className="mb-6"
+              className="mb-4 sm:mb-6"
               style={{
                 fontSize: 'clamp(14px, 1.8vw, 16px)',
                 fontFamily: 'Geist, sans-serif',
@@ -93,14 +93,14 @@ export function Footer() {
         </div>
 
         {/* Four Column Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8 border-t border-white/20 pt-8 sm:pt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 pt-8 sm:pt-12">
           {/* Column 1: Logo and Get in Touch */}
           <div>
-            <Link href="/" className="block mb-6">
+            <Link href="/" className="block mb-4 sm:mb-6">
               <Logo />
             </Link>
             <h3
-              className="mb-4"
+              className="mb-3 sm:mb-4"
               style={{
                 fontSize: 'clamp(14px, 1.8vw, 16px)',
                 fontWeight: 600,
