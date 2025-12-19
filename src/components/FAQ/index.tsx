@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 interface FAQItem {
   question: string
@@ -123,7 +124,8 @@ export const FAQ: React.FC = () => {
       <div className="container px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-12">
           {/* Left Column */}
-          <div className="flex flex-col justify-between">
+          <ScrollReveal direction="right" delay={0.1} duration={0.7} distance={50}>
+            <div className="flex flex-col justify-between">
             <div>
               {/* FAQ Title */}
               <h2 
@@ -200,9 +202,11 @@ export const FAQ: React.FC = () => {
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Right Column - Accordion */}
-          <div className="flex flex-col">
+          <ScrollReveal direction="left" delay={0.2} duration={0.7} distance={50}>
+            <div className="flex flex-col">
             <div className="w-full">
               {faqData.map((item, index) => (
                 <FAQAccordionItem
@@ -215,6 +219,7 @@ export const FAQ: React.FC = () => {
               ))}
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </div>

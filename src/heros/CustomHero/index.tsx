@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, Star } from 'lucide-react'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import Link from 'next/link'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 export const CustomHero: React.FC = () => {
   return (
@@ -14,41 +15,46 @@ export const CustomHero: React.FC = () => {
     >
       <div className="container flex flex-col items-center text-center px-4 sm:px-6">
         {/* Leading Marketing Agency Text */}
-        <p 
-          className="font-bold mb-2 sm:mb-4 md:mb-5"
-          style={{ 
-            color: 'hsl(23, 100%, 56%)',
-            fontSize: 'clamp(12px, 2vw, 16px)',
-            fontWeight: 700,
-            lineHeight: '1.2'
-          }}
-        >
-          # Leading Branding Agency
-        </p>
+        <ScrollReveal direction="fade" delay={0.1} duration={0.6}>
+          <p 
+            className="font-bold mb-2 sm:mb-4 md:mb-5"
+            style={{ 
+              color: 'hsl(23, 100%, 56%)',
+              fontSize: 'clamp(12px, 2vw, 16px)',
+              fontWeight: 700,
+              lineHeight: '1.2'
+            }}
+          >
+            # Leading Branding Agency
+          </p>
+        </ScrollReveal>
 
         {/* Main Heading */}
-        <h1 
-          className="mb-2 sm:mb-4 md:mb-2 px-2 sm:px-4 md:px-0"
-          style={{ 
-            color: '#FFFFFF',
-            textAlign: 'center',
-            fontFamily: 'Anton, sans-serif',
-            fontSize: 'clamp(28px, 7vw, 64px)',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            lineHeight: 'clamp(36px, 9vw, 80px)',
-            letterSpacing: 'clamp(-0.56px, -0.015vw, -1.28px)'
-          }}
-        >
-          <span>
-            TRANSFORMING<br />
-            IDEAS INTO REAL WORLD<br />
-          </span>
-          <span style={{ color: 'hsl(23, 100%, 56%)' }}>RESULTS</span>
-        </h1>
+        <ScrollReveal direction="up" delay={0.2} duration={0.8} distance={30}>
+          <h1 
+            className="mb-2 sm:mb-4 md:mb-2 px-2 sm:px-4 md:px-0"
+            style={{ 
+              color: '#FFFFFF',
+              textAlign: 'center',
+              fontFamily: 'Anton, sans-serif',
+              fontSize: 'clamp(28px, 7vw, 64px)',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: 'clamp(36px, 9vw, 80px)',
+              letterSpacing: 'clamp(-0.56px, -0.015vw, -1.28px)'
+            }}
+          >
+            <span>
+              TRANSFORMING<br />
+              IDEAS INTO REAL WORLD<br />
+            </span>
+            <span style={{ color: 'hsl(23, 100%, 56%)' }}>RESULTS</span>
+          </h1>
+        </ScrollReveal>
 
         {/* Review Section */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-2 md:mb-5">
+        <ScrollReveal direction="up" delay={0.4} duration={0.6} distance={20}>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-2 md:mb-5">
           {/* Review Platform Image */}
           <div className="flex-shrink-0" style={{ height: 'clamp(22px, 3.5vw, 31px)' }}>
             <Image
@@ -94,9 +100,11 @@ export const CustomHero: React.FC = () => {
             </p>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* CTA Button */}
-        <HoverBorderGradient
+        <ScrollReveal direction="up" delay={0.6} duration={0.6} distance={20}>
+          <HoverBorderGradient
           as="div"
           containerClassName="rounded-full cursor-pointer [&>div:last-child]:!bg-[hsl(23,100%,56%)] w-fit mx-auto"
           className="!bg-[hsl(23,100%,56%)] text-white flex items-center justify-center gap-2 font-medium"
@@ -115,6 +123,7 @@ export const CustomHero: React.FC = () => {
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
           </Link>
         </HoverBorderGradient>
+        </ScrollReveal>
       </div>
     </div>
   )

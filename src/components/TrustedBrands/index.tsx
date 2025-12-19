@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 // Generate array of client image paths
 const clientImages = Array.from({ length: 20 }, (_, i) => `/clients/${i + 1}.png`)
@@ -12,19 +13,21 @@ export const TrustedBrands: React.FC = () => {
 
   return (
     <div className="w-full bg-white py-4 sm:py-6 md:py-8">
-      <div className="container mb-4 sm:mb-6 md:mb-8">
-        {/* Section Title */}
-        <p 
-          className="text-center font-medium"
-          style={{ 
-            color: '#1D2D35',
-            fontSize: 'clamp(14px, 2vw, 18px)',
-            opacity: 0.7
-          }}
-        >
-          Trusted & Collaborating with global industry leaders
-        </p>
-      </div>
+      <ScrollReveal direction="fade" delay={0.1} duration={0.6}>
+        <div className="container mb-4 sm:mb-6 md:mb-8">
+          {/* Section Title */}
+          <p 
+            className="text-center font-medium"
+            style={{ 
+              color: '#1D2D35',
+              fontSize: 'clamp(14px, 2vw, 18px)',
+              opacity: 0.7
+            }}
+          >
+            Trusted & Collaborating with global industry leaders
+          </p>
+        </div>
+      </ScrollReveal>
 
       {/* Marquee Container - Full Width */}
       <div className="w-full overflow-hidden relative">

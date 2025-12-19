@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 export const AboutUs: React.FC = () => {
   return (
@@ -18,37 +19,40 @@ export const AboutUs: React.FC = () => {
       <div className="container px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 sm:gap-8 lg:gap-12">
           {/* Left Column */}
-          <div className="flex flex-col">
-            {/* About Us Title */}
-            <h2 
-              className="mb-4 sm:mb-6 pl-0 sm:pl-4 lg:pl-8"
-              style={{
-                color: 'hsl(23, 100%, 56%)',
-                fontSize: 'clamp(14px, 2vw, 16px)',
-                fontWeight: 700,
-                fontFamily: 'Geist, sans-serif'
-              }}
-            >
-              About us
-            </h2>
-
-            {/* About Us Image */}
-            <div className="flex-shrink-0">
-              <Image
-                src="/aboutus.png"
-                alt="About Us"
-                width={396.396}
-                height={411.208}
-                className="w-full h-auto"
+          <ScrollReveal direction="right" delay={0.1} duration={0.7} distance={50}>
+            <div className="flex flex-col">
+              {/* About Us Title */}
+              <h2 
+                className="mb-4 sm:mb-6 pl-0 sm:pl-4 lg:pl-8"
                 style={{
-                  height: 'auto'
+                  color: 'hsl(23, 100%, 56%)',
+                  fontSize: 'clamp(14px, 2vw, 16px)',
+                  fontWeight: 700,
+                  fontFamily: 'Geist, sans-serif'
                 }}
-              />
+              >
+                About us
+              </h2>
+
+              {/* About Us Image */}
+              <div className="flex-shrink-0">
+                <Image
+                  src="/aboutus.png"
+                  alt="About Us"
+                  width={396.396}
+                  height={411.208}
+                  className="w-full h-auto"
+                  style={{
+                    height: 'auto'
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right Column */}
-          <div className="flex flex-col">
+          <ScrollReveal direction="left" delay={0.2} duration={0.7} distance={50}>
+            <div className="flex flex-col">
             {/* Main Heading */}
             <h3 
               className="mb-4 sm:mb-6 md:mb-8"
@@ -138,6 +142,7 @@ export const AboutUs: React.FC = () => {
               </Button>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </div>

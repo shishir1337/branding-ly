@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { CircleCheck, ArrowRight } from 'lucide-react'
 import { getClientSideURL } from '@/utilities/getURL'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 interface ChecklistItem {
   mainText: string
@@ -183,7 +184,8 @@ export const ContactUs: React.FC = () => {
       <div className="container px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 lg:gap-12">
           {/* Left Column */}
-          <div className="flex flex-col justify-between">
+          <ScrollReveal direction="right" delay={0.1} duration={0.7} distance={50}>
+            <div className="flex flex-col justify-between">
             <div>
               {/* Contact Us Title */}
               <h2 
@@ -262,9 +264,11 @@ export const ContactUs: React.FC = () => {
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Right Column - Contact Form */}
-          <div className="flex flex-col">
+          <ScrollReveal direction="left" delay={0.2} duration={0.7} distance={50}>
+            <div className="flex flex-col">
             <form 
               onSubmit={handleSubmit} 
               className="w-full space-y-4 sm:space-y-6 p-6 sm:p-8"
@@ -561,6 +565,7 @@ export const ContactUs: React.FC = () => {
               </button>
             </form>
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 interface Testimonial {
   quote: string
@@ -98,7 +99,8 @@ export const Testimonials: React.FC = () => {
     <div className="w-full bg-white py-12 sm:py-16 md:py-20">
       <div className="container px-4 sm:px-6">
         {/* Header Section */}
-        <div className="text-center mb-8 sm:mb-12">
+        <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
+          <div className="text-center mb-8 sm:mb-12">
           {/* "Our Testimonials" Title */}
           <p 
             className="mb-4 sm:mb-6"
@@ -149,6 +151,7 @@ export const Testimonials: React.FC = () => {
             We partner with ambitious brands, delivering measurable results and experiences clients are proud to talk about.
           </p>
         </div>
+        </ScrollReveal>
 
       </div>
 

@@ -7,6 +7,8 @@ import { formatAuthors } from '@/utilities/formatAuthors'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { PostCardWrapper } from './PostCardWrapper'
+import { ScrollReveal } from '@/components/animations/ScrollReveal'
 
 export const RecentPosts: React.FC = async () => {
   const payload = await getPayload({ config: configPromise })
@@ -41,7 +43,8 @@ export const RecentPosts: React.FC = async () => {
     >
       <div className="container px-4 sm:px-6">
         {/* Header Section */}
-        <div className="text-center mb-8 sm:mb-12">
+        <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
+          <div className="text-center mb-8 sm:mb-12">
           {/* "Our Blogs" Title */}
           <p 
             className="mb-4 sm:mb-6"
@@ -73,13 +76,14 @@ export const RecentPosts: React.FC = async () => {
             <span style={{ color: '#000000' }}>
               Stay Updated with OurL<br/>Digital Solutions{' '}
             </span>
-            <span style={{ color: 'hsl(23, 100%, 56%)' }}>Blog</span>
+            <span style={{ color: 'hsl(23, 100%, 56%)' }}>Blog            </span>
           </h2>
         </div>
+        </ScrollReveal>
 
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-10">
-          {posts.docs.map((post) => {
+          {posts.docs.map((post, index) => {
             const image = post.heroImage && typeof post.heroImage === 'object' 
               ? post.heroImage 
               : post.meta?.image && typeof post.meta.image === 'object'
@@ -91,14 +95,14 @@ export const RecentPosts: React.FC = async () => {
               : 'Anonymous'
 
             return (
-              <article
-                key={post.id}
-                className="bg-white overflow-hidden"
-                style={{
-                  borderRadius: '15px',
-                  boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.1)'
-                }}
-              >
+              <PostCardWrapper key={post.id} index={index}>
+                <article
+                  className="bg-white overflow-hidden"
+                  style={{
+                    borderRadius: '15px',
+                    boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.1)'
+                  }}
+                >
                 {/* Image */}
                 <div className="relative w-full h-48 sm:h-56 md:h-64 overflow-hidden">
                   {image ? (
@@ -175,12 +179,14 @@ export const RecentPosts: React.FC = async () => {
                   </Button>
                 </div>
               </article>
+              </PostCardWrapper>
             )
           })}
         </div>
 
         {/* See All Blog Posts Button */}
-        <div className="flex justify-center">
+        <ScrollReveal direction="up" delay={0.4} duration={0.6} distance={20}>
+          <div className="flex justify-center">
           <Button
             asChild
             className="w-full sm:w-auto flex items-center gap-2"
@@ -202,6 +208,7 @@ export const RecentPosts: React.FC = async () => {
             </Link>
           </Button>
         </div>
+        </ScrollReveal>
       </div>
     </div>
   )
