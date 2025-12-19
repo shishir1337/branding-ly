@@ -48,7 +48,7 @@ export const NeedHelp: React.FC = () => {
                   color: '#000000',
                 }}
               >
-                Couldn't Find the{' '}
+                Couldn&apos;t Find the{' '}
                 <span style={{ color: 'hsl(23, 100%, 56%)' }}>service your need?</span>
               </h3>
 
@@ -79,7 +79,7 @@ export const NeedHelp: React.FC = () => {
                   color: '#666666',
                 }}
               >
-                Don't worry, our team of experts can help you navigate the maze of options and
+                Don&apos;t worry, our team of experts can help you navigate the maze of options and
                 create a customized solution tailored to your unique needs.
               </p>
 
