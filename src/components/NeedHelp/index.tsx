@@ -90,7 +90,7 @@ export const NeedHelp: React.FC = () => {
                   alt="Arrow"
                   width={60}
                   height={60}
-                  className="hidden md:block absolute -top-8 left-1/2 -translate-x-[110%] w-auto h-auto z-10"
+                  className="hidden md:block absolute -top-8 left-1/2 -translate-x-[110%] w-auto h-auto z-0 pointer-events-none"
                 />
                 <Button
                   asChild
@@ -100,8 +100,9 @@ export const NeedHelp: React.FC = () => {
                     color: 'white',
                     fontSize: 'clamp(14px, 1.8vw, 16px)',
                     padding: '12px 32px',
+                    borderRadius: '38px',
                   }}
-                  className="hover:opacity-90 relative"
+                  className="hover:opacity-90 relative z-10"
                 >
                   <Link href="/contact">Contact Us</Link>
                 </Button>

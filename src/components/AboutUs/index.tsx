@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
+import { ArrowRight } from 'lucide-react'
 
 export const AboutUs: React.FC = () => {
   return (
@@ -134,11 +135,15 @@ export const AboutUs: React.FC = () => {
                 style={{ 
                   backgroundColor: 'hsl(23, 100%, 56%)', 
                   color: 'white',
-                  fontSize: 'clamp(14px, 1.8vw, 16px)'
+                  fontSize: 'clamp(14px, 1.8vw, 16px)',
+                  borderRadius: '38px',
                 }}
-                className="hover:opacity-90 w-full sm:w-auto"
+                className="hover:opacity-90 w-full sm:w-auto flex items-center gap-2"
               >
-                <Link href="/about">More About Us</Link>
+                <Link href="/about" className="flex items-center gap-2">
+                  More About Us
+                  <ArrowRight size={16} />
+                </Link>
               </Button>
             </div>
           </div>

@@ -12,6 +12,7 @@ import {
   Camera,
   Video,
   Printer,
+  ArrowRight,
 } from 'lucide-react'
 
 interface Service {
@@ -209,14 +210,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       <Button
         variant="outline"
         size="sm"
-        className="w-full sm:w-auto flex-shrink-0"
+        className="w-fit flex-shrink-0 self-start flex items-center gap-2"
         style={{
-          borderColor: isHovered ? '#FFF' : '#000',
+          borderColor: isHovered ? 'hsl(23, 100%, 56%)' : '#000',
           color: isHovered ? '#FFF' : '#000',
-          backgroundColor: 'transparent',
+          backgroundColor: isHovered ? 'hsl(23, 100%, 56%)' : 'transparent',
+          borderRadius: '38px',
+          padding: '6px 16px',
         }}
       >
         Learn More
+        <ArrowRight size={16} />
       </Button>
     </div>
   )
