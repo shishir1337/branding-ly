@@ -2,39 +2,7 @@
 
 import React, { useState } from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-
-const technologies = [
-  {
-    title: 'WordPress',
-    description:
-      'Complete content management freedom. You can add, edit, and update everything yourself without touching code.',
-  },
-  {
-    title: 'WooCommerce',
-    description:
-      'Built-in payment systems for bKash, Nagad, Rocket, cards, and all popular Bangladesh payment methods.',
-  },
-  {
-    title: 'Quality PHP & MySQL',
-    description:
-      "When you need something special that standard tools can't do – we code it from scratch exactly how you need it.",
-  },
-  {
-    title: 'Secure Hosting',
-    description:
-      'Your website needs protection. SSL certificates, daily backups, malware scanning, and firewall included.',
-  },
-  {
-    title: 'React & Modern JavaScript',
-    description:
-      'Interactive features, smooth animations, and app-like experiences. Modern technology for modern businesses.',
-  },
-  {
-    title: 'HTML5, CSS3, Bootstrap',
-    description:
-      'Clean code that loads fast, works everywhere, and makes Google happy. Built right from the ground up.',
-  },
-]
+import type { Service } from '@/payload-types'
 
 interface TechnologyCardProps {
   tech: {
@@ -42,6 +10,10 @@ interface TechnologyCardProps {
     description: string
   }
   index: number
+}
+
+interface TechnologySectionProps {
+  technologies?: Service['technologies']
 }
 
 const TechnologyCard: React.FC<TechnologyCardProps> = ({ tech, index }) => {
@@ -103,7 +75,12 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({ tech, index }) => {
   )
 }
 
-export const TechnologySection: React.FC = () => {
+export const TechnologySection: React.FC<TechnologySectionProps> = ({ technologies }) => {
+  // Don't render if no technologies
+  if (!technologies || technologies.length === 0) {
+    return null
+  }
+
   return (
     <div
       className="w-full py-12 sm:py-16 md:py-20"
@@ -151,9 +128,19 @@ export const TechnologySection: React.FC = () => {
 
         {/* Technologies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {technologies.map((tech, index) => (
-            <TechnologyCard key={index} tech={tech} index={index} />
-          ))}
+          {technologies.map((tech, index) => {
+            if (!tech || typeof tech === 'number') return null
+            return (
+              <TechnologyCard
+                key={index}
+                tech={{
+                  title: tech.title || '',
+                  description: tech.description || '',
+                }}
+                index={index}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

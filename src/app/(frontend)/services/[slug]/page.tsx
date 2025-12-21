@@ -62,19 +62,19 @@ export default async function ServiceDetailPage({ params: paramsPromise }: Args)
 
       <ServiceDetailHero service={service} />
 
-      <TechnologySection />
+      <TechnologySection technologies={service.technologies} />
 
-      <ServicesProvidedSection />
+      <ServicesProvidedSection servicesProvided={service.servicesProvided} />
 
-      <EveryWebsiteIncludesSection />
+      <EveryWebsiteIncludesSection features={service.everyWebsiteIncludes} />
 
-      <ServiceTestimonialsSection />
+      <ServiceTestimonialsSection testimonials={service.testimonials} />
 
-      <PortfolioSection />
+      <PortfolioSection portfolioImages={service.portfolioImages} />
 
-      <WhyChooseSection />
+      <WhyChooseSection features={service.whyChoose} />
 
-      <ProcessSection />
+      <ProcessSection processSteps={service.processSteps} />
 
       {/* Service Content from CMS */}
       {service.content && (

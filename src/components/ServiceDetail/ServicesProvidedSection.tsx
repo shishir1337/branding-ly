@@ -2,59 +2,24 @@
 
 import React, { useState } from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import { Building2, ShoppingCart, Code, CircleCheck } from 'lucide-react'
-
-const services = [
-  {
-    title: 'Corporate Website Development',
-    description:
-      'Professional business website design Dhaka solutions that establish authority, build credibility, and convert visitors into clients. Perfect for professional services, consultancies, and enterprises across Bangladesh.',
-    features: [
-      'Professional design that builds instant trust',
-      'Strategic user journey that guides visitors to contact you',
-      'Mobile responsive design & super-fast loading speeds',
-      'SEO-optimized structure for better Google rankings',
-    ],
-    icon: <Building2 size={32} />,
-  },
-  {
-    title: 'Ecommerce Website Development',
-    description:
-      'Turn your products into steady profit with powerful online stores. Built on WooCommerce – the most reliable ecommerce platform in Bangladesh. Simple enough to manage yourself, powerful enough to grow with your business.',
-    features: [
-      'Stunning product galleries that make customers want to buy',
-      'Secure Bangladesh payment methods (bKash, Nagad, Rocket, Cards)',
-      'Complete inventory tracking & order management dashboard',
-      'Perfect mobile shopping experience for smartphone buyers',
-    ],
-    icon: <ShoppingCart size={32} />,
-  },
-  {
-    title: 'Custom Website Development',
-    description:
-      'Need something different? We build completely custom web solutions from scratch. No cookie-cutter templates, no feature limitations – just your exact vision brought to life with clean code.',
-    features: [
-      'Coded from zero specifically for your business needs',
-      'Custom features and functionality nobody else has',
-      'Seamless integration with your existing business systems',
-      'Built to scale as your business grows bigger',
-    ],
-    icon: <Code size={32} />,
-  },
-]
+import { CircleCheck } from 'lucide-react'
+import { getServiceProvidedIcon } from '@/utilities/getServiceProvidedIcon'
+import type { Service } from '@/payload-types'
 
 interface ServiceProvidedCardProps {
-  service: {
-    title: string
-    description: string
-    features: string[]
-    icon: React.ReactNode
-  }
+  service: NonNullable<Service['servicesProvided']>[number]
   index: number
 }
 
 const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, index }) => {
   const [isHovered, setIsHovered] = useState(false)
+
+  if (!service || typeof service === 'number') return null
+
+  const features = service.features?.filter((f) => f && typeof f === 'object' && f.text) || []
+  const title = service.title || ''
+  const description = service.description || ''
+  const iconName = service.icon || null
 
   return (
     <ScrollReveal
@@ -88,7 +53,7 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
               color: '#000000',
             }}
           >
-            {service.icon}
+            {getServiceProvidedIcon(iconName, 32)}
           </div>
         </div>
 
@@ -105,13 +70,13 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
             color: 'inherit',
           }}
         >
-          {service.title.includes('Website Development') ? (
+          {title.includes('Website Development') ? (
             <>
-              {service.title.replace(' Website Development', '')}{' '}
+              {title.replace(' Website Development', '')}{' '}
               <span style={{ color: 'hsl(23, 100%, 56%)' }}>Website Development</span>
             </>
           ) : (
-            service.title
+            title
           )}
         </h3>
 
@@ -125,40 +90,56 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
             fontFamily: 'Geist, sans-serif',
           }}
         >
-          {service.description}
+          {description}
         </p>
 
         {/* Features List */}
-        <ul className="space-y-2 flex-shrink-0">
-          {service.features.map((feature, featureIndex) => (
-            <li
-              key={featureIndex}
-              className="flex items-start gap-2"
-              style={{
-                fontSize: 'clamp(14px, 1.8vw, 16px)',
-                lineHeight: '1.6',
-                color: 'inherit',
-                fontFamily: 'Geist, sans-serif',
-              }}
-            >
-              <CircleCheck
-                size={20}
-                style={{
-                  color: 'hsl(23, 100%, 56%)',
-                  marginTop: '2px',
-                  flexShrink: 0,
-                }}
-              />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
+        {features.length > 0 && (
+          <ul className="space-y-2 flex-shrink-0">
+            {features.map((feature, featureIndex) => {
+              if (!feature || typeof feature === 'number' || !feature.text) return null
+              return (
+                <li
+                  key={featureIndex}
+                  className="flex items-start gap-2"
+                  style={{
+                    fontSize: 'clamp(14px, 1.8vw, 16px)',
+                    lineHeight: '1.6',
+                    color: 'inherit',
+                    fontFamily: 'Geist, sans-serif',
+                  }}
+                >
+                  <CircleCheck
+                    size={20}
+                    style={{
+                      color: 'hsl(23, 100%, 56%)',
+                      marginTop: '2px',
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span>{feature.text}</span>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </div>
     </ScrollReveal>
   )
 }
 
-export const ServicesProvidedSection: React.FC = () => {
+interface ServicesProvidedSectionProps {
+  servicesProvided?: Service['servicesProvided']
+}
+
+export const ServicesProvidedSection: React.FC<ServicesProvidedSectionProps> = ({
+  servicesProvided,
+}) => {
+  // Don't render if no services provided
+  if (!servicesProvided || servicesProvided.length === 0) {
+    return null
+  }
+
   return (
     <div
       className="w-full py-12 sm:py-16 md:py-20"
@@ -188,7 +169,7 @@ export const ServicesProvidedSection: React.FC = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-          {services.map((service, index) => (
+          {servicesProvided.map((service, index) => (
             <ServiceProvidedCard key={index} service={service} index={index} />
           ))}
         </div>

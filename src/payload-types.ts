@@ -822,6 +822,92 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Technologies used for this service
+   */
+  technologies?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Specific services provided under this category
+   */
+  servicesProvided?:
+    | {
+        title: string;
+        description: string;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        icon?: ('building2' | 'shopping-cart' | 'code') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Standard features included with every website/service
+   */
+  everyWebsiteIncludes?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Customer testimonials for this service
+   */
+  testimonials?:
+    | {
+        quote: string;
+        name: string;
+        designation: string;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Portfolio/case study images for this service
+   */
+  portfolioImages?:
+    | {
+        image: number | Media;
+        /**
+         * Alt text for the image
+         */
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Features explaining why to choose this service
+   */
+  whyChoose?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Step-by-step process for this service
+   */
+  processSteps?:
+    | {
+        /**
+         * Step number (e.g., "01", "02")
+         */
+        number: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -1407,6 +1493,65 @@ export interface ServicesSelect<T extends boolean = true> {
   order?: T;
   featuredImage?: T;
   content?: T;
+  technologies?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  servicesProvided?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        icon?: T;
+        id?: T;
+      };
+  everyWebsiteIncludes?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        designation?: T;
+        image?: T;
+        id?: T;
+      };
+  portfolioImages?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
+  whyChoose?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  processSteps?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {

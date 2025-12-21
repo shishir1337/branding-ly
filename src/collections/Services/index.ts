@@ -163,6 +163,189 @@ export const Services: CollectionConfig<'services'> = {
                 description: 'Full content for the service detail page',
               },
             },
+            {
+              name: 'technologies',
+              type: 'array',
+              label: 'Technologies We Use',
+              admin: {
+                description: 'Technologies used for this service',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'servicesProvided',
+              type: 'array',
+              label: 'Services We Provide',
+              admin: {
+                description: 'Specific services provided under this category',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                },
+                {
+                  name: 'features',
+                  type: 'array',
+                  label: 'Features/List Items',
+                  fields: [
+                    {
+                      name: 'text',
+                      type: 'text',
+                      required: true,
+                    },
+                  ],
+                },
+                {
+                  name: 'icon',
+                  type: 'select',
+                  options: [
+                    { label: 'Building2 - Corporate', value: 'building2' },
+                    { label: 'ShoppingCart - Ecommerce', value: 'shopping-cart' },
+                    { label: 'Code - Custom Development', value: 'code' },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'everyWebsiteIncludes',
+              type: 'array',
+              label: 'Every Website Includes (Standard Features)',
+              admin: {
+                description: 'Standard features included with every website/service',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'testimonials',
+              type: 'array',
+              label: 'Customer Testimonials',
+              admin: {
+                description: 'Customer testimonials for this service',
+              },
+              fields: [
+                {
+                  name: 'quote',
+                  type: 'textarea',
+                  required: true,
+                },
+                {
+                  name: 'name',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'designation',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                },
+              ],
+            },
+            {
+              name: 'portfolioImages',
+              type: 'array',
+              label: 'Portfolio Images',
+              admin: {
+                description: 'Portfolio/case study images for this service',
+              },
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                },
+                {
+                  name: 'alt',
+                  type: 'text',
+                  admin: {
+                    description: 'Alt text for the image',
+                  },
+                },
+              ],
+              maxRows: 3,
+            },
+            {
+              name: 'whyChoose',
+              type: 'array',
+              label: 'Why Choose Us Features',
+              admin: {
+                description: 'Features explaining why to choose this service',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'processSteps',
+              type: 'array',
+              label: 'Our Process Steps',
+              admin: {
+                description: 'Step-by-step process for this service',
+              },
+              fields: [
+                {
+                  name: 'number',
+                  type: 'text',
+                  required: true,
+                  admin: {
+                    description: 'Step number (e.g., "01", "02")',
+                  },
+                },
+                {
+                  name: 'title',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                },
+              ],
+            },
           ],
           label: 'Content',
         },

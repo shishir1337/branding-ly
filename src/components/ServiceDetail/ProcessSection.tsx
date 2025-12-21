@@ -2,68 +2,23 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
+import type { Service } from '@/payload-types'
 
-const processSteps = [
-  {
-    number: '01',
-    title: 'Discovery Call',
-    description:
-      "Let's talk about your business. What do you do? Who are your customers? What makes you different from competitors? What's working now, what's not? We ask lots of questions because understanding your business deeply is how we build websites that actually work for you.",
-  },
-  {
-    number: '02',
-    title: 'Research & Planning',
-    description:
-      'We study your industry and check what competitors are doing online. Look at successful websites in your field. Figure out what Bangladesh customers in your market respond to. Then map out exactly what your site needs – pages, features, content structure, everything planned before touching design.',
-  },
-  {
-    number: '03',
-    title: 'Design Phase',
-    description:
-      "Our designers create mockups showing exactly how your website will look. You see the design before any coding happens. We share layouts for homepage, service pages, everything important. You give feedback, we refine, until you're completely happy with how it looks.",
-  },
-  {
-    number: '04',
-    title: 'Development',
-    description:
-      'Time to build. Our developers turn approved designs into a real, working website. Writing clean code, adding features, making everything fast and secure. Testing as we go to catch issues early. Building the foundation that powers your online presence.',
-  },
-  {
-    number: '05',
-    title: 'Content Integration',
-    description:
-      'We add your content – service descriptions, team bios, company information, images, everything. Organized logically so visitors find what they need easily. Optimized for search engines so Google understands what each page offers. Content that informs and converts.',
-  },
-  {
-    number: '06',
-    title: 'Testing',
-    description:
-      "Before launch, we test everything thoroughly. Every link clicked. Every form submitted. Every page checked on phones, tablets, and computers. Different browsers tested. Loading speed verified. Nothing goes live until we're certain everything works flawlessly.",
-  },
-  {
-    number: '07',
-    title: 'Training',
-    description:
-      "Your website, your control. We show you exactly how to manage it. How to update content, add new pages, upload images, post news – whatever you need to do yourself. Simple training session, written guides, video tutorials. You'll feel confident managing your site.",
-  },
-  {
-    number: '08',
-    title: 'Launch & Support',
-    description:
-      "Your website goes live! We handle all technical details – domain setup, hosting configuration, SSL installation, everything. You just celebrate. And after launch, we don't disappear. Questions? Updates needed? We're here providing ongoing support whenever you need us.",
-  },
-]
+interface ProcessSectionProps {
+  processSteps?: Service['processSteps']
+}
 
 interface ProcessStepCardProps {
-  step: {
-    number: string
-    title: string
-    description: string
-  }
+  step: NonNullable<Service['processSteps']>[number]
   index: number
 }
 
 const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
+  if (!step || typeof step === 'number') return null
+
+  const number = step.number || ''
+  const title = step.title || ''
+  const description = step.description || ''
   return (
     <div
       className="group relative overflow-hidden h-full rounded-2xl bg-white p-6 lg:p-8 transition-all duration-500 hover:-translate-y-1"
@@ -98,7 +53,7 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
             color: 'inherit',
           }}
         >
-          {step.number}
+          {number}
         </span>
       </div>
 
@@ -112,7 +67,7 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
             color: 'hsl(23, 100%, 56%)',
           }}
         >
-          {step.title}
+          {title}
         </h3>
         <p
           className="leading-relaxed"
@@ -122,7 +77,7 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
             color: '#666666',
           }}
         >
-          {step.description}
+          {description}
         </p>
       </div>
 
@@ -137,7 +92,12 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
   )
 }
 
-export const ProcessSection: React.FC = () => {
+export const ProcessSection: React.FC<ProcessSectionProps> = ({ processSteps }) => {
+  // Don't render if no process steps
+  if (!processSteps || processSteps.length === 0) {
+    return null
+  }
+
   return (
     <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
       <div className="container px-4 sm:px-6">
@@ -180,18 +140,21 @@ export const ProcessSection: React.FC = () => {
 
         {/* Process Steps */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {processSteps.map((step, index) => (
-            <ScrollReveal
-              key={index}
-              direction="up"
-              delay={0.1 + index * 0.1}
-              duration={0.6}
-              distance={30}
-              className="h-full"
-            >
-              <ProcessStepCard step={step} index={index} />
-            </ScrollReveal>
-          ))}
+          {processSteps.map((step, index) => {
+            if (!step || typeof step === 'number') return null
+            return (
+              <ScrollReveal
+                key={index}
+                direction="up"
+                delay={0.1 + index * 0.1}
+                duration={0.6}
+                distance={30}
+                className="h-full"
+              >
+                <ProcessStepCard step={step} index={index} />
+              </ScrollReveal>
+            )
+          })}
         </div>
       </div>
     </div>
