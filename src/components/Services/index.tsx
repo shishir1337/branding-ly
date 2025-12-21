@@ -6,14 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { ArrowRight } from 'lucide-react'
 import { getServiceIcon } from '@/utilities/getServiceIcon'
-
-interface Service {
-  id: string
-  title: string
-  description: string
-  icon: string
-  slug: string
-}
+import type { Service } from '@/payload-types'
 
 interface ServicesProps {
   services: Service[]
@@ -124,7 +117,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
             color: '#000000',
           }}
         >
-          {getServiceIcon(service.icon, 32)}
+          {getServiceIcon(service.icon || 'target', 32)}
         </div>
       </div>
 
