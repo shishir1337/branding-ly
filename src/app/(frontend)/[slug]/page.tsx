@@ -68,6 +68,18 @@ export default async function Page({ params: paramsPromise }: Args) {
     page = homeStatic
   }
 
+  // Handle contact page - show ContactUs component even if page doesn't exist in CMS
+  if (decodedSlug === 'contact') {
+    return (
+      <article>
+        <PageClient />
+        <PayloadRedirects disableNotFound url={url} />
+        {draft && <LivePreviewListener />}
+        <ContactUs />
+      </article>
+    )
+  }
+
   if (!page) {
     return <PayloadRedirects url={url} />
   }
@@ -95,9 +107,11 @@ export default async function Page({ params: paramsPromise }: Args) {
           {/* <WhyUs /> */}
         </>
       ) : (
-        <RenderHero {...hero} />
+        <>
+          <RenderHero {...hero} />
+          <RenderBlocks blocks={layout} />
+        </>
       )}
-      <RenderBlocks blocks={layout} />
     </article>
   )
 }
