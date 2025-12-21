@@ -1,79 +1,25 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import {
-  Target,
-  Palette,
-  Globe,
-  FileText,
-  Calendar,
-  Camera,
-  Video,
-  Printer,
-  ArrowRight,
-} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { getServiceIcon } from '@/utilities/getServiceIcon'
 
 interface Service {
-  icon: React.ReactNode
+  id: string
   title: string
   description: string
-  learnMoreLink?: string
+  icon: string
+  slug: string
 }
 
-const services: Service[] = [
-  {
-    icon: <Target size={32} />,
-    title: 'Marketing Strategy & Planning',
-    description:
-      'We plan your success roadmap. Our marketing consultation service helps you understand your market, find the right customers, and beat competitors. No guesswork – just clear strategy and planning that works.',
-  },
-  {
-    icon: <Palette size={32} />,
-    title: 'Graphic Design & Branding',
-    description:
-      'From logos to complete brand identity, we create designs that make people stop and notice. Our graphic design team handles everything – social media graphics, brochures, business cards, and all branding marketing collateral your business needs.',
-  },
-  {
-    icon: <Globe size={32} />,
-    title: 'Web Design & Development',
-    description:
-      'Your website is your digital showroom. We build custom website development solutions that look amazing and convert visitors into customers. Fast, mobile-friendly, and built to sell.',
-  },
-  {
-    icon: <FileText size={32} />,
-    title: 'Content Writing',
-    description:
-      'Words that sell. Our content writing team creates website copy, blog articles, and marketing content that speaks directly to your Bangladesh audience. Simple, clear, persuasive.',
-  },
-  {
-    icon: <Calendar size={32} />,
-    title: 'Event Management',
-    description:
-      'Planning an event? We handle everything – event logistics, exhibition booths, mascot rental, and 360 photobooth rental. You focus on your guests; we handle the rest.',
-  },
-  {
-    icon: <Camera size={32} />,
-    title: 'Videoshoot & Photography',
-    description:
-      'Professional visuals that showcase your products perfectly. We do product photography, restaurant food photography, and drone videography for real estate, events, and corporate needs.',
-  },
-  {
-    icon: <Video size={32} />,
-    title: 'Video Production & Editing',
-    description:
-      'From TVC/OVC production to reels and shorts editing, we create videos that grab attention. Our animation and motion graphics service brings your ideas to life.',
-  },
-  {
-    icon: <Printer size={32} />,
-    title: 'Printing Solutions',
-    description:
-      'High-quality printing for all your business needs. Business cards, brochures, flyers, and banners – we deliver professional printing solutions that perfectly represent your brand.',
-  },
-]
+interface ServicesProps {
+  services: Service[]
+}
 
-export const Services: React.FC = () => {
+export const Services: React.FC<ServicesProps> = ({ services }) => {
   return (
     <div
       className="w-full py-12 sm:py-16 md:py-20"
@@ -128,7 +74,7 @@ export const Services: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => (
             <ScrollReveal
-              key={index}
+              key={service.id}
               direction="up"
               delay={0.1 + index * 0.1}
               duration={0.6}
@@ -178,7 +124,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
             color: '#000000',
           }}
         >
-          {service.icon}
+          {getServiceIcon(service.icon, 32)}
         </div>
       </div>
 
@@ -207,21 +153,23 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       </p>
 
       {/* Learn More Button */}
-      <Button
-        variant="outline"
-        size="sm"
-        className="w-fit flex-shrink-0 self-start flex items-center gap-2"
-        style={{
-          borderColor: isHovered ? 'hsl(23, 100%, 56%)' : '#000',
-          color: isHovered ? '#FFF' : '#000',
-          backgroundColor: isHovered ? 'hsl(23, 100%, 56%)' : 'transparent',
-          borderRadius: '38px',
-          padding: '6px 16px',
-        }}
-      >
-        Learn More
-        <ArrowRight size={16} />
-      </Button>
+      <Link href={`/services/${service.slug}`}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-fit flex-shrink-0 self-start flex items-center gap-2"
+          style={{
+            borderColor: isHovered ? 'hsl(23, 100%, 56%)' : '#000',
+            color: isHovered ? '#FFF' : '#000',
+            backgroundColor: isHovered ? 'hsl(23, 100%, 56%)' : 'transparent',
+            borderRadius: '38px',
+            padding: '6px 16px',
+          }}
+        >
+          Learn More
+          <ArrowRight size={16} />
+        </Button>
+      </Link>
     </div>
   )
 }

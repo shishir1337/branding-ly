@@ -3,13 +3,39 @@ import { PageHeader } from '@/components/PageHeader'
 import { Services } from '@/components/Services'
 import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { NeedHelp } from '@/components/NeedHelp'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 
 export const metadata: Metadata = {
   title: 'Services | Brandingly',
   description: 'Transforming Vision into Real Results with Innovative Strategic Digital Solutions.',
 }
 
-export default function ServicesPage() {
+export const revalidate = 600
+
+export default async function ServicesPage() {
+  const payload = await getPayload({ config: configPromise })
+
+  const services = await payload.find({
+    collection: 'services',
+    depth: 0,
+    limit: 100,
+    overrideAccess: false,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+    sort: 'order',
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      icon: true,
+      slug: true,
+    },
+  })
+
   return (
     <article>
       <PageHeader
@@ -22,7 +48,7 @@ export default function ServicesPage() {
           </>
         }
       />
-      <Services />
+      <Services services={services.docs} />
       <WhyChooseUs />
       <NeedHelp />
     </article>
