@@ -180,7 +180,7 @@ export const ContactUs: React.FC = () => {
   }
 
   return (
-    <div className="w-full py-12 sm:py-16 md:py-20" style={{ background: '#F8F8F8' }}>
+    <div id="contact" className="w-full py-12 sm:py-16 md:py-20" style={{ background: '#F8F8F8' }}>
       <div className="container px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 lg:gap-12">
           {/* Left Column */}
