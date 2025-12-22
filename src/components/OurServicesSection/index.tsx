@@ -106,31 +106,18 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column */}
           <div className="flex flex-col">
-            {/* Label with Service Count */}
-            <div className="flex items-center gap-3 mb-4">
-              <p
-                style={{
-                  fontFamily: 'Geist, sans-serif',
-                  fontSize: 'clamp(14px, 2vw, 16px)',
-                  fontWeight: 600,
-                  color: 'hsl(23, 100%, 56%)',
-                }}
-              >
-                Our Services
-              </p>
-              <span
-                className="px-3 py-1 rounded-full"
-                style={{
-                  backgroundColor: 'hsl(23, 100%, 56%)',
-                  color: '#FFFFFF',
-                  fontSize: 'clamp(11px, 1.5vw, 13px)',
-                  fontWeight: 600,
-                  fontFamily: 'Geist, sans-serif',
-                }}
-              >
-                {services.length} Services
-              </span>
-            </div>
+            {/* Label */}
+            <p
+              className="mb-4"
+              style={{
+                fontFamily: 'Geist, sans-serif',
+                fontSize: 'clamp(14px, 2vw, 16px)',
+                fontWeight: 600,
+                color: 'hsl(23, 100%, 56%)',
+              }}
+            >
+              Our Services
+            </p>
 
             {/* Heading */}
             <h2
@@ -253,7 +240,7 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
           </div>
 
           {/* Right Column - Vertical Carousel */}
-          <FollowerPointerCard title="Click to view">
+          <FollowerPointerCard title="Learn More">
             <div
               ref={carouselRef}
               className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
