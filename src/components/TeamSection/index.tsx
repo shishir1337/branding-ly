@@ -87,7 +87,7 @@ export const TeamSection: React.FC = () => {
                 color: '#666666',
               }}
             >
-              Great marketing doesn't come from machines or templates. It comes from talented people
+              Great marketing doesn&apos;t come from machines or templates. It comes from talented people
               who care deeply about their craft and your success.
             </p>
           </div>

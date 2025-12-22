@@ -130,7 +130,7 @@ export const OurProcess: React.FC = () => {
                 color: '#666666',
               }}
             >
-              Good results don't happen by accident. They come from following a proven system that
+              Good results don&apos;t happen by accident. They come from following a proven system that
               balances creativity with strategy, speed with quality.
             </p>
           </div>
@@ -151,7 +151,7 @@ export const OurProcess: React.FC = () => {
                 duration={0.6}
                 distance={30}
               >
-                <ProcessStepCard step={step} index={index} isLast={index === processSteps.length - 1} />
+                <ProcessStepCard step={step} />
               </ScrollReveal>
             ))}
           </div>
@@ -163,11 +163,9 @@ export const OurProcess: React.FC = () => {
 
 interface ProcessStepCardProps {
   step: ProcessStep
-  index: number
-  isLast: boolean
 }
 
-const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index, isLast }) => {
+const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
   return (
     <div className="relative flex flex-col md:flex-row gap-6 md:gap-8">
       {/* Left side - Number and Icon (desktop) */}

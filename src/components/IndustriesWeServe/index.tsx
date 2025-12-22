@@ -109,7 +109,7 @@ export const IndustriesWeServe: React.FC = () => {
                 color: '#000000',
               }}
             >
-              We've worked across every major sector in Bangladesh:
+              We&apos;ve worked across every major sector in Bangladesh:
             </h2>
           </div>
         </ScrollReveal>
