@@ -17,22 +17,20 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
   const [isHovered, setIsHovered] = useState(false)
   const carouselRef = React.useRef<HTMLDivElement>(null)
 
-  // Ensure we have services
-  if (!services || services.length === 0) {
-    return null
-  }
-
   // Handle navigation
   const handleNext = useCallback(() => {
+    if (!services || services.length === 0) return
     setCurrentIndex((prev) => (prev + 1) % services.length)
-  }, [services.length])
+  }, [services])
 
   const handlePrev = useCallback(() => {
+    if (!services || services.length === 0) return
     setCurrentIndex((prev) => (prev - 1 + services.length) % services.length)
-  }, [services.length])
+  }, [services])
 
   // Keyboard navigation
   useEffect(() => {
+    if (!services || services.length === 0) return
     const handleKeyPress = (e: KeyboardEvent) => {
       if (carouselRef.current?.contains(document.activeElement) || document.activeElement === document.body) {
         if (e.key === 'ArrowUp') {
@@ -47,10 +45,11 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [handleNext, handlePrev])
+  }, [handleNext, handlePrev, services])
 
   // Mouse wheel navigation
   useEffect(() => {
+    if (!services || services.length === 0) return
     const handleWheel = (e: WheelEvent) => {
       if (carouselRef.current?.contains(e.target as Node)) {
         e.preventDefault()
@@ -67,10 +66,11 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
       carousel.addEventListener('wheel', handleWheel, { passive: false })
       return () => carousel.removeEventListener('wheel', handleWheel)
     }
-  }, [handleNext, handlePrev])
+  }, [handleNext, handlePrev, services])
 
   // Auto-advance carousel (pauses on hover)
   useEffect(() => {
+    if (!services || services.length === 0) return
     if (isHovered) return
 
     const interval = setInterval(() => {
@@ -78,7 +78,7 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
     }, 5000) // Change every 5 seconds
 
     return () => clearInterval(interval)
-  }, [services.length, isHovered])
+  }, [services, isHovered])
 
   // Get visible cards (always 3 cards)
   const getVisibleCards = () => {
@@ -91,6 +91,11 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
       })
     }
     return cards
+  }
+
+  // Ensure we have services
+  if (!services || services.length === 0) {
+    return null
   }
 
   const visibleCards = getVisibleCards()
@@ -273,7 +278,6 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
                 {visibleCards.map(({ service, position }) => {
                   const isCenter = position === 1
                   const isTop = position === 0
-                  const isBottom = position === 2
 
                   return (
                     <div

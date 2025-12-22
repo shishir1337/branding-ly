@@ -4,8 +4,6 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const revalidateService: CollectionAfterChangeHook = ({
   doc,
-  previousDoc,
-  req: { payload },
   operation,
 }) => {
   if (doc?._status === 'published' || operation === 'update') {

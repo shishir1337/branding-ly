@@ -142,7 +142,7 @@ interface FeatureCardProps {
   delay?: number
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isWide = false, delay = 0 }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isWide = false, delay: _delay = 0 }) => {
   return (
     <div
       className={`group relative overflow-hidden h-full rounded-2xl bg-white p-6 lg:p-8 transition-all duration-500 hover:-translate-y-1 ${

@@ -4,7 +4,6 @@ import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import Image from 'next/image'
 import type { Service } from '@/payload-types'
-import type { Media } from '@/payload-types'
 
 interface PortfolioSectionProps {
   portfolioImages?: Service['portfolioImages']

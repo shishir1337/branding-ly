@@ -15,7 +15,7 @@ interface FeatureCardProps {
   delay?: number
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isWide = false, delay = 0 }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isWide = false, delay: _delay = 0 }) => {
   if (!feature || typeof feature === 'number') return null
 
   const title = feature.title || ''

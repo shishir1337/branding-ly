@@ -195,7 +195,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding contact forms...`)
 
-  const [contactForm, contactUsForm] = await Promise.all([
+  const [contactForm, _contactUsForm] = await Promise.all([
     payload.create({
       collection: 'forms',
       depth: 0,
@@ -210,7 +210,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_, contactPage] = await Promise.all([
+  const [, contactPage] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,

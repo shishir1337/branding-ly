@@ -4,7 +4,6 @@ import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { AnimatedTestimonials } from '@/components/ui/animated-testimonials'
 import type { Service } from '@/payload-types'
-import type { Media } from '@/payload-types'
 
 interface ServiceTestimonialsSectionProps {
   testimonials?: Service['testimonials']

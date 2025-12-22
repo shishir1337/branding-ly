@@ -13,7 +13,7 @@ interface ProcessStepCardProps {
   index: number
 }
 
-const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step, index }) => {
+const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
   if (!step || typeof step === 'number') return null
 
   const number = step.number || ''
