@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, ChevronUp, ChevronDown } from 'lucide-react'
@@ -14,6 +14,8 @@ interface OurServicesSectionProps {
 
 export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const carouselRef = React.useRef<HTMLDivElement>(null)
 
   // Ensure we have services
   if (!services || services.length === 0) {
@@ -21,22 +23,62 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
   }
 
   // Handle navigation
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % services.length)
-  }
+  }, [services.length])
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + services.length) % services.length)
-  }
+  }, [services.length])
 
-  // Auto-advance carousel (optional)
+  // Keyboard navigation
   useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (carouselRef.current?.contains(document.activeElement) || document.activeElement === document.body) {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          handlePrev()
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          handleNext()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [handleNext, handlePrev])
+
+  // Mouse wheel navigation
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (carouselRef.current?.contains(e.target as Node)) {
+        e.preventDefault()
+        if (e.deltaY > 0) {
+          handleNext()
+        } else {
+          handlePrev()
+        }
+      }
+    }
+
+    const carousel = carouselRef.current
+    if (carousel) {
+      carousel.addEventListener('wheel', handleWheel, { passive: false })
+      return () => carousel.removeEventListener('wheel', handleWheel)
+    }
+  }, [handleNext, handlePrev])
+
+  // Auto-advance carousel (pauses on hover)
+  useEffect(() => {
+    if (isHovered) return
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % services.length)
     }, 5000) // Change every 5 seconds
 
     return () => clearInterval(interval)
-  }, [services.length])
+  }, [services.length, isHovered])
 
   // Get visible cards (always 3 cards)
   const getVisibleCards = () => {
@@ -64,18 +106,31 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column */}
           <div className="flex flex-col">
-            {/* Label */}
-            <p
-              className="mb-4"
-              style={{
-                fontFamily: 'Geist, sans-serif',
-                fontSize: 'clamp(14px, 2vw, 16px)',
-                fontWeight: 600,
-                color: 'hsl(23, 100%, 56%)',
-              }}
-            >
-              Our Services
-            </p>
+            {/* Label with Service Count */}
+            <div className="flex items-center gap-3 mb-4">
+              <p
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: 'clamp(14px, 2vw, 16px)',
+                  fontWeight: 600,
+                  color: 'hsl(23, 100%, 56%)',
+                }}
+              >
+                Our Services
+              </p>
+              <span
+                className="px-3 py-1 rounded-full"
+                style={{
+                  backgroundColor: 'hsl(23, 100%, 56%)',
+                  color: '#FFFFFF',
+                  fontSize: 'clamp(11px, 1.5vw, 13px)',
+                  fontWeight: 600,
+                  fontFamily: 'Geist, sans-serif',
+                }}
+              >
+                {services.length} Services
+              </span>
+            </div>
 
             {/* Heading */}
             <h2
@@ -128,39 +183,86 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
             </Link>
 
             {/* Carousel Navigation */}
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handlePrev}
-                className="flex items-center justify-center w-12 h-12 rounded-full transition-all hover:scale-110"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  border: '2px solid hsl(23, 100%, 56%)',
-                  color: 'hsl(23, 100%, 56%)',
-                  boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
-                }}
-                aria-label="Previous service"
-              >
-                <ChevronUp size={24} />
-              </button>
-              <button
-                onClick={handleNext}
-                className="flex items-center justify-center w-12 h-12 rounded-full transition-all hover:scale-110"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  border: '2px solid hsl(23, 100%, 56%)',
-                  color: 'hsl(23, 100%, 56%)',
-                  boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
-                }}
-                aria-label="Next service"
-              >
-                <ChevronDown size={24} />
-              </button>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handlePrev}
+                  className="flex items-center justify-center w-12 h-12 rounded-full transition-all hover:scale-110 active:scale-95"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    border: '2px solid hsl(23, 100%, 56%)',
+                    color: 'hsl(23, 100%, 56%)',
+                    boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
+                  }}
+                  aria-label="Previous service"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ChevronUp size={24} />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="flex items-center justify-center w-12 h-12 rounded-full transition-all hover:scale-110 active:scale-95"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    border: '2px solid hsl(23, 100%, 56%)',
+                    color: 'hsl(23, 100%, 56%)',
+                    boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
+                  }}
+                  aria-label="Next service"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <ChevronDown size={24} />
+                </button>
+              </div>
+
+              {/* Service Indicator Dots */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <span
+                  className="text-xs"
+                  style={{
+                    fontFamily: 'Geist, sans-serif',
+                    color: '#666',
+                    fontSize: '12px',
+                  }}
+                >
+                  {currentIndex + 1} / {services.length}
+                </span>
+                <div className="flex gap-1.5">
+                  {services.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentIndex(index)}
+                      className="transition-all duration-300 rounded-full"
+                      style={{
+                        width: index === currentIndex ? '24px' : '8px',
+                        height: '8px',
+                        backgroundColor:
+                          index === currentIndex
+                            ? 'hsl(23, 100%, 56%)'
+                            : 'rgba(255, 117, 31, 0.3)',
+                        cursor: 'pointer',
+                      }}
+                      aria-label={`Go to service ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Right Column - Vertical Carousel */}
           <FollowerPointerCard title="Click to view">
-            <div className="relative h-[600px] lg:h-[700px] overflow-hidden">
+            <div
+              ref={carouselRef}
+              className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              tabIndex={0}
+              role="region"
+              aria-label="Services carousel"
+            >
               {/* Mask overlay for fade effect */}
               <div
                 className="absolute top-0 left-0 right-0 z-10 pointer-events-none"
@@ -189,16 +291,20 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
                   return (
                     <div
                       key={`${service.id}-${position}`}
-                      className="absolute left-0 right-0 transition-all duration-500 ease-in-out px-4"
+                      className="absolute left-0 right-0 transition-all duration-700 ease-out px-4"
                       style={{
                         transform: isCenter
-                          ? 'translateY(-50%) scale(1)'
+                          ? 'translateY(-50%) scale(1) translateZ(0)'
                           : isTop
-                            ? 'translateY(-100%) scale(0.85)'
-                            : 'translateY(0%) scale(0.85)',
-                        opacity: isCenter ? 1 : 0.5,
+                            ? 'translateY(-100%) scale(0.85) translateZ(0)'
+                            : 'translateY(0%) scale(0.85) translateZ(0)',
+                        opacity: isCenter ? 1 : isTop ? 0.4 : 0.4,
                         zIndex: isCenter ? 20 : 10,
                         top: isCenter ? '50%' : isTop ? '25%' : '75%',
+                        filter: isCenter
+                          ? 'none'
+                          : 'blur(1px) brightness(0.95)',
+                        willChange: 'transform, opacity',
                       }}
                     >
                       <ServiceCard service={service} isActive={isCenter} />
@@ -223,14 +329,27 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive }) => {
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="block p-6 sm:p-8 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+      className="block p-6 sm:p-8 transition-all duration-300 cursor-pointer"
       style={{
         borderRadius: '14px',
         background: '#FFF',
         boxShadow: isActive
-          ? '0 0 15px 0 rgba(0, 0, 0, 0.3)'
+          ? '0 10px 30px -5px rgba(255, 117, 31, 0.3), 0 0 15px 0 rgba(0, 0, 0, 0.2)'
           : '0 0 5px 0 rgba(0, 0, 0, 0.25)',
         transform: isActive ? 'scale(1)' : 'scale(0.9)',
+        border: isActive ? '2px solid rgba(255, 117, 31, 0.2)' : '2px solid transparent',
+      }}
+      onMouseEnter={(e) => {
+        if (!isActive) {
+          e.currentTarget.style.transform = 'scale(0.92)'
+          e.currentTarget.style.opacity = '0.6'
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!isActive) {
+          e.currentTarget.style.transform = 'scale(0.9)'
+          e.currentTarget.style.opacity = '0.4'
+        }
       }}
     >
       {/* Icon */}
