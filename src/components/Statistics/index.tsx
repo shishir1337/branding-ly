@@ -147,11 +147,23 @@ const StatCard: React.FC<StatItem & { index: number }> = ({ icon, label, value, 
   )
 }
 
-export const Statistics: React.FC = () => {
+interface StatisticsProps {
+  customBackground?: boolean
+}
+
+export const Statistics: React.FC<StatisticsProps> = ({ customBackground = false }) => {
+  const backgroundStyle = customBackground
+    ? {
+        background:
+          'radial-gradient(139.25% 144.68% at 100% -32.85%, #FFDFAF 21.12%, rgba(255, 238, 223, 0.47) 73.2%, #FFF 89.16%)',
+      }
+    : { backgroundColor: '#FFFFFF' }
+
   return (
-    <div 
+    <div
       id="statistics-section"
-      className="w-full bg-white py-12 sm:py-16 md:py-20"
+      className="w-full py-12 sm:py-16 md:py-20"
+      style={backgroundStyle}
     >
       <div className="container px-4 sm:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">

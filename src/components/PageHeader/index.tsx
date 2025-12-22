@@ -1,13 +1,20 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 interface PageHeaderProps {
-  title: string
-  subtitle: string | React.ReactNode
+  title: string | React.ReactNode
+  subtitle?: string | React.ReactNode
   titleColor?: string
   subtitleColor?: string
   backgroundColor?: string
+  ctaButton?: {
+    text: string
+    href?: string
+    onClick?: () => void
+  }
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -16,6 +23,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   titleColor = 'hsl(23, 100%, 56%)',
   subtitleColor = '#FFF',
   backgroundColor = '#070515',
+  ctaButton,
 }) => {
   return (
     <div
@@ -41,20 +49,60 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         </h1>
 
         {/* Subtitle */}
-        <p
-          style={{
-            color: subtitleColor,
-            textAlign: 'center',
-            fontFamily: 'Anton, sans-serif',
-            fontSize: 'clamp(24px, 5vw, 40px)',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            lineHeight: 'normal',
-            letterSpacing: 'clamp(-0.48px, -0.01vw, -0.8px)',
-          }}
-        >
-          {subtitle}
-        </p>
+        {subtitle && (
+          <p
+            className="mb-6 sm:mb-8"
+            style={{
+              color: subtitleColor,
+              textAlign: 'center',
+              fontFamily: 'Anton, sans-serif',
+              fontSize: 'clamp(24px, 5vw, 40px)',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: 'normal',
+              letterSpacing: 'clamp(-0.48px, -0.01vw, -0.8px)',
+            }}
+          >
+            {subtitle}
+          </p>
+        )}
+
+        {/* CTA Button */}
+        {ctaButton && (
+          <>
+            {ctaButton.href ? (
+              <Button
+                size="lg"
+                className="flex items-center gap-2"
+                style={{
+                  backgroundColor: 'hsl(23, 100%, 56%)',
+                  color: '#FFFFFF',
+                  borderRadius: '38px',
+                  padding: '12px 24px',
+                  fontSize: 'clamp(14px, 1.8vw, 16px)',
+                }}
+                asChild
+              >
+                <Link href={ctaButton.href}>{ctaButton.text}</Link>
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                className="flex items-center gap-2"
+                style={{
+                  backgroundColor: 'hsl(23, 100%, 56%)',
+                  color: '#FFFFFF',
+                  borderRadius: '38px',
+                  padding: '12px 24px',
+                  fontSize: 'clamp(14px, 1.8vw, 16px)',
+                }}
+                onClick={ctaButton.onClick}
+              >
+                {ctaButton.text}
+              </Button>
+            )}
+          </>
+        )}
       </div>
     </div>
   )
