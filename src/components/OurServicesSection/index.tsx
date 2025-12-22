@@ -55,7 +55,7 @@ export const OurServicesSection: React.FC<OurServicesSectionProps> = ({ services
 
   return (
     <div
-      className="w-full py-12 sm:py-16 md:py-20"
+      className="w-full"
       style={{
         background: '#F8F8F8',
       }}
