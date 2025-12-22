@@ -147,21 +147,21 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
 
       {/* Learn More Button */}
       <Link href={`/services/${service.slug}`}>
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-fit flex-shrink-0 self-start flex items-center gap-2"
-          style={{
-            borderColor: isHovered ? 'hsl(23, 100%, 56%)' : '#000',
-            color: isHovered ? '#FFF' : '#000',
-            backgroundColor: isHovered ? 'hsl(23, 100%, 56%)' : 'transparent',
-            borderRadius: '38px',
-            padding: '6px 16px',
-          }}
-        >
-          Learn More
-          <ArrowRight size={16} />
-        </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        className="w-fit flex-shrink-0 self-start flex items-center gap-2"
+        style={{
+          borderColor: isHovered ? 'hsl(23, 100%, 56%)' : '#000',
+          color: isHovered ? '#FFF' : '#000',
+          backgroundColor: isHovered ? 'hsl(23, 100%, 56%)' : 'transparent',
+          borderRadius: '38px',
+          padding: '6px 16px',
+        }}
+      >
+        Learn More
+        <ArrowRight size={16} />
+      </Button>
       </Link>
     </div>
   )

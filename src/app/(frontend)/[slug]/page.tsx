@@ -17,6 +17,7 @@ import { Testimonials } from '@/components/Testimonials'
 import { RecentPosts } from '@/components/RecentPosts'
 import { FAQ } from '@/components/FAQ'
 import { ContactUs } from '@/components/ContactUs'
+import { OurServicesSection } from '@/components/OurServicesSection'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -100,6 +101,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <TrustedBrands />
           <AboutUs />
           <Statistics />
+          <OurServicesSection services={await queryServices()} />
           <Testimonials />
           <RecentPosts />
           <FAQ />
@@ -108,7 +110,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         </>
       ) : (
         <>
-          <RenderHero {...hero} />
+        <RenderHero {...hero} />
           <RenderBlocks blocks={layout} />
         </>
       )}
@@ -146,4 +148,30 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
+})
+
+const queryServices = cache(async () => {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'services',
+    depth: 0,
+    limit: 100,
+    overrideAccess: false,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+    sort: 'order',
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      icon: true,
+      slug: true,
+    },
+  })
+
+  return result.docs || []
 })
