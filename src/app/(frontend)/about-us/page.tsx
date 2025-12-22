@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 import { PageHeader } from '@/components/PageHeader'
 import { Statistics } from '@/components/Statistics'
+import { OurValues } from '@/components/OurValues'
+import { TeamSection } from '@/components/TeamSection'
+import { OurProcess } from '@/components/OurProcess'
+import { IndustriesWeServe } from '@/components/IndustriesWeServe'
+import { AboutUsFAQ } from '@/components/AboutUsFAQ'
 
 export const metadata: Metadata = {
   title: 'About Us | Brandingly',
@@ -26,6 +31,11 @@ export default async function AboutUsPage() {
         }}
       />
       <Statistics customBackground />
+      <OurValues />
+      <TeamSection />
+      <OurProcess />
+      <IndustriesWeServe />
+      <AboutUsFAQ />
     </article>
   )
 }
