@@ -3,6 +3,7 @@ import type { Metadata } from 'next/types'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
+import { BlogHero } from '@/components/BlogHero'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
@@ -27,36 +28,50 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const posts = await payload.find({
     collection: 'posts',
-    depth: 1,
+    depth: 2,
     limit: 12,
     page: sanitizedPageNumber,
     overrideAccess: false,
+    sort: '-publishedAt',
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+    select: {
+      title: true,
+      slug: true,
+      categories: true,
+      meta: true,
+      publishedAt: true,
+      authors: true,
+      populatedAuthors: true,
+      heroImage: true,
+    },
   })
 
   return (
-    <div className="pt-24 pb-24">
-      <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+    <div>
+      <BlogHero />
+      <div className="pt-12 pb-24">
+        <PageClient />
+
+        <div className="container mb-8">
+          <PageRange
+            collection="posts"
+            currentPage={posts.page}
+            limit={12}
+            totalDocs={posts.totalDocs}
+          />
         </div>
-      </div>
 
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
+        <CollectionArchive posts={posts.docs} />
 
-      <CollectionArchive posts={posts.docs} />
-
-      <div className="container">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
+        <div className="container">
+          {posts?.page && posts?.totalPages > 1 && (
+            <Pagination page={posts.page} totalPages={posts.totalPages} />
+          )}
+        </div>
       </div>
     </div>
   )
