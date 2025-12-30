@@ -18,30 +18,23 @@ import RichText from '@/components/RichText'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const services = await payload.find({
-      collection: 'services',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
+  const payload = await getPayload({ config: configPromise })
+  const services = await payload.find({
+    collection: 'services',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
 
-    const params = services.docs.map(({ slug }) => {
-      return { slug }
-    })
+  const params = services.docs.map(({ slug }) => {
+    return { slug }
+  })
 
-    return params
-  } catch (error) {
-    // If database is not accessible during build, return empty array
-    // Pages will be generated on-demand instead
-    console.warn('Failed to generate static params for services:', error)
-    return []
-  }
+  return params
 }
 
 type Args = {
