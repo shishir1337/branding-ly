@@ -24,6 +24,10 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     components: {
+      // Custom logo for admin panel
+      graphics: {
+        Logo: '@/components/AdminLogo',
+      },
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
