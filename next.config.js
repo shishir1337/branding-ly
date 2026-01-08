@@ -18,6 +18,10 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      {
+        hostname: 'brandingly.agency',
+        protocol: 'https',
+      },
     ],
   },
   webpack: (webpackConfig) => {
