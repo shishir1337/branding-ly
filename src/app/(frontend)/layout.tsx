@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
@@ -36,6 +37,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
           <Footer />
         </Providers>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-M1L37FJB51"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-M1L37FJB51');
+          `}
+        </Script>
       </body>
     </html>
   )
@@ -47,6 +61,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     creator: '@payloadcms',
+  },
+  verification: {
+    google: 'U2yLbYwtLrxtwI0NhA3JZv2mMhun1mkTiCfJ4xSzXbo',
   },
   icons: {
     icon: [
