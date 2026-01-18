@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 
 import { cn } from '@/utilities/ui'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
@@ -37,19 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
           <Footer />
         </Providers>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-M1L37FJB51"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-M1L37FJB51');
-          `}
-        </Script>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
       </body>
     </html>
   )
