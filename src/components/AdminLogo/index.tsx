@@ -1,8 +1,9 @@
+import Image from 'next/image'
 import React from 'react'
 
 export default function AdminLogo() {
   return (
-    <img
+    <Image
       src="/media/brandingly-logo-light.png"
       alt="Branding-ly"
       width={193}

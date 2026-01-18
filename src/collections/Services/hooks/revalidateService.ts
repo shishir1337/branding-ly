@@ -7,7 +7,7 @@ export const revalidateService: CollectionAfterChangeHook = ({
   operation,
 }) => {
   if (doc?._status === 'published' || operation === 'update') {
-    revalidateTag('services')
+    revalidateTag('sitemap')
     revalidatePath('/services')
     if (doc?.slug) {
       revalidatePath(`/services/${doc.slug}`)
@@ -15,7 +15,7 @@ export const revalidateService: CollectionAfterChangeHook = ({
   }
 
   if (operation === 'create' && doc?._status === 'published') {
-    revalidateTag('services')
+    revalidateTag('sitemap')
     revalidatePath('/services')
   }
 }

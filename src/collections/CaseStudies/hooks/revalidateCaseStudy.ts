@@ -16,7 +16,7 @@ export const revalidateCaseStudy: CollectionAfterChangeHook<CaseStudy> = ({
       payload.logger.info(`Revalidating case study at path: ${path}`)
 
       revalidatePath(path)
-      revalidateTag('case-studies-sitemap')
+      revalidateTag('sitemap')
     }
 
     // If the case study was previously published, we need to revalidate the old path
@@ -26,7 +26,7 @@ export const revalidateCaseStudy: CollectionAfterChangeHook<CaseStudy> = ({
       payload.logger.info(`Revalidating old case study at path: ${oldPath}`)
 
       revalidatePath(oldPath)
-      revalidateTag('case-studies-sitemap')
+      revalidateTag('sitemap')
     }
   }
   return doc
