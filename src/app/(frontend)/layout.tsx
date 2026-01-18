@@ -44,19 +44,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'LocalBusiness',
-              name: 'Branding-ly',
-              image: 'https://brandingly.agency/brandingly-logo.png',
-              '@id': 'https://brandingly.agency',
+              '@type': 'MarketingAgency',
+              name: 'Brandingly',
+              alternateName: 'BRANDING-LY',
               url: 'https://brandingly.agency',
-              telephone: '+8801969602224',
+              logo: 'https://brandingly.agency/brandingly-logo.png',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: 'Dhaka',
+                streetAddress: 'Apart# 402, House# 08, Road# 01, Block: F, Banani',
                 addressLocality: 'Dhaka',
+                postalCode: '1213',
                 addressCountry: 'BD',
               },
+              telephone: '+880-1336-351622',
               email: 'info@brandingly.agency',
+              priceRange: '$$',
+              areaServed: 'Bangladesh',
             }),
           }}
         />
