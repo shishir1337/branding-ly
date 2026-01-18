@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+import NextImage from 'next/image'
 
 interface Props {
   className?: string
@@ -10,20 +11,17 @@ interface Props {
 export const Logo = (props: Props) => {
   const { loading: loadingFromProps, priority: priorityFromProps, className } = props
 
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
+  const priority = priorityFromProps === 'high' || loadingFromProps === 'eager'
 
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Branding-ly logo"
-      width={193}
-      height={34}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="/brandingly-logo.png"
-    />
+    <div className={clsx('relative max-w-[9.375rem] w-full h-[34px]', className)}>
+      <NextImage
+        alt="Branding-ly logo"
+        fill
+        priority={priority}
+        className="object-contain"
+        src="/brandingly-logo.png"
+      />
+    </div>
   )
 }
