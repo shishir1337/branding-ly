@@ -197,10 +197,13 @@ export function Footer() {
               OTHER PAGES
             </h3>
             <nav className="space-y-2">
-              {['Privacy Policy', 'Terms & Conditions'].map((page) => (
+              {[
+                { label: 'Privacy Policy', href: '/privacy-policy' },
+                { label: 'Terms & Conditions', href: '/terms-and-conditions' },
+              ].map((page) => (
                 <Link
-                  key={page}
-                  href={`/${page.toLowerCase().replace(' ', '-').replace('&', '')}`}
+                  key={page.label}
+                  href={page.href}
                   className="block hover:opacity-80 transition-opacity"
                   style={{
                     fontSize: 'clamp(13px, 1.6vw, 15px)',
@@ -209,7 +212,7 @@ export function Footer() {
                     opacity: 0.9
                   }}
                 >
-                  {page}
+                  {page.label}
                 </Link>
               ))}
             </nav>

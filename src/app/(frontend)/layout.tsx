@@ -38,6 +38,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
         </Providers>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
+        <script
+          id="schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: 'Branding-ly',
+              image: 'https://brandingly.agency/brandingly-logo.png',
+              '@id': 'https://brandingly.agency',
+              url: 'https://brandingly.agency',
+              telephone: '+8801969602224',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Dhaka',
+                addressLocality: 'Dhaka',
+                addressCountry: 'BD',
+              },
+              email: 'info@brandingly.agency',
+            }),
+          }}
+        />
       </body>
     </html>
   )
@@ -58,5 +80,19 @@ export const metadata: Metadata = {
       { url: '/favicon.ico', sizes: '32x32' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
+  },
+  alternates: {
+    canonical: './',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }

@@ -188,7 +188,7 @@ export const ContactUs: React.FC = () => {
             <div className="flex flex-col justify-between">
             <div>
               {/* Contact Us Title */}
-              <h2 
+              <h1 
                 className="mb-4 sm:mb-6 pl-0 sm:pl-4 lg:pl-8"
                 style={{
                   color: 'hsl(23, 100%, 56%)',
@@ -198,7 +198,7 @@ export const ContactUs: React.FC = () => {
                 }}
               >
                 CONTACT US
-              </h2>
+              </h1>
 
               {/* Main Heading */}
               <h3 
