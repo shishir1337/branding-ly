@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { ArrowRight, Facebook, Linkedin, Youtube } from 'lucide-react'
 import { Logo } from '@/components/Logo/Logo'
 
 export function Footer() {
@@ -234,7 +234,7 @@ export function Footer() {
             </h3>
             <div className="flex gap-4">
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/brandinglybd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
@@ -242,7 +242,7 @@ export function Footer() {
               >
                 <Facebook size={24} />
               </a>
-              <a
+              {/* <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -250,9 +250,9 @@ export function Footer() {
                 style={{ color: '#FFFFFF' }}
               >
                 <Instagram size={24} />
-              </a>
+              </a> */}
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/company/branding-ly"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
@@ -261,13 +261,13 @@ export function Footer() {
                 <Linkedin size={24} />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://www.youtube.com/channel/UCw59sWCf5z-NCOO0wV59_wQ"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
                 style={{ color: '#FFFFFF' }}
               >
-                <Twitter size={24} />
+                <Youtube size={24} />
               </a>
             </div>
           </div>
