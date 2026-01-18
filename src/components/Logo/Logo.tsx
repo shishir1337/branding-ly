@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import NextImage from 'next/image'
+import Image from 'next/image'
 
 interface Props {
   className?: string
@@ -15,7 +15,7 @@ export const Logo = (props: Props) => {
 
   return (
     <div className={clsx('relative max-w-[9.375rem] w-full h-[34px]', className)}>
-      <NextImage
+      <Image
         alt="Branding-ly logo"
         fill
         priority={priority}
