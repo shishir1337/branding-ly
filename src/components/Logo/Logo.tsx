@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import React from 'react'
 import Image from 'next/image'
+import React from 'react'
 
 interface Props {
   className?: string
@@ -14,14 +14,13 @@ export const Logo = (props: Props) => {
   const priority = priorityFromProps === 'high' || loadingFromProps === 'eager'
 
   return (
-    <div className={clsx('relative max-w-[9.375rem] w-full h-[34px]', className)}>
-      <Image
-        alt="Branding-ly logo"
-        fill
-        priority={priority}
-        className="object-contain"
-        src="/brandingly-logo.png"
-      />
-    </div>
+    <Image
+      alt="Branding-ly logo"
+      width={150}
+      height={34}
+      priority={priority}
+      className={clsx('w-auto h-[34px]', className)}
+      src="/brandingly-logo.png"
+    />
   )
 }
