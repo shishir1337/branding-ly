@@ -25,18 +25,6 @@ export const CaseStudyDetailHero: React.FC<CaseStudyDetailHeroProps> = ({ caseSt
         className="relative w-full min-h-[70vh] flex flex-col items-center justify-center overflow-hidden"
         style={{ backgroundColor: '#070515' }}
       >
-        {/* Featured Image as Background with Overlay */}
-        {featuredImage && (
-          <div className="absolute inset-0 w-full h-full">
-            <Media
-              resource={featuredImage}
-              size="100vw"
-              className="w-full h-full object-cover opacity-30"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#070515]/80 via-[#070515]/90 to-[#070515]" />
-          </div>
-        )}
-
         {/* Content */}
         <div className="relative container flex flex-col items-center text-center px-4 sm:px-6 py-16 sm:py-20 md:py-24 z-10">
           {/* Category Badge */}

@@ -6,6 +6,8 @@ import { TeamSection } from '@/components/TeamSection'
 import { OurProcess } from '@/components/OurProcess'
 import { IndustriesWeServe } from '@/components/IndustriesWeServe'
 import { AboutUsFAQ } from '@/components/AboutUsFAQ'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 export const metadata: Metadata = {
   title: 'About Us | Brandingly',
@@ -15,6 +17,25 @@ export const metadata: Metadata = {
 export const revalidate = 600
 
 export default async function AboutUsPage() {
+  const payload = await getPayload({ config: configPromise })
+
+  const teamMembersResult = await payload.find({
+    collection: 'team-members',
+    depth: 1,
+    limit: 50,
+    overrideAccess: false,
+    sort: 'order',
+    select: {
+      id: true,
+      name: true,
+      role: true,
+      image: true,
+      order: true,
+    },
+  })
+
+  const teamMembers = teamMembersResult.docs || []
+
   return (
     <article>
       <PageHeader
@@ -32,7 +53,7 @@ export default async function AboutUsPage() {
       />
       <Statistics customBackground />
       <OurValues />
-      <TeamSection />
+      <TeamSection teamMembers={teamMembers} />
       <OurProcess />
       <IndustriesWeServe />
       <AboutUsFAQ />

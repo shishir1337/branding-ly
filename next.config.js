@@ -22,6 +22,10 @@ const nextConfig = {
         hostname: 'brandingly.agency',
         protocol: 'https',
       },
+      {
+        hostname: 'cdn.brandingly.agency',
+        protocol: 'https',
+      },
     ],
   },
   webpack: (webpackConfig) => {

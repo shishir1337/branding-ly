@@ -37,6 +37,7 @@ const testimonials: Testimonial[] = [
     width: 396,
     height: 239
   },
+
   {
     quote: "Working with Branding-ly has transformed our online presence. Our website traffic doubled, and sales are at an all-time high.",
     author: "E-commerce Business",
