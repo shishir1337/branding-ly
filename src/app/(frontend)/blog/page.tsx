@@ -1,6 +1,7 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import { BlogHero } from '@/components/BlogHero'
@@ -65,8 +66,10 @@ export default async function Page() {
   )
 }
 
-export function generateMetadata(): Metadata {
-  return {
-    title: `Payload Website Template Posts`,
-  }
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEOMetadata('blog', {
+    path: '/blog',
+    defaultTitle: 'Blog | Brandingly',
+    defaultDescription: 'Ideas, insights and updates from the Brandingly team.',
+  })
 }

@@ -118,10 +118,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'page-seo': PageSeo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'page-seo': PageSeoSelect<false> | PageSeoSelect<true>;
   };
   locale: null;
   user: User & {
@@ -2148,6 +2150,77 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Set meta title and meta description for main site pages (Home, Services, About Us, Blog, Case Studies, Contact). These appear in browser tabs and search results.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-seo".
+ */
+export interface PageSeo {
+  id: number;
+  home?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  services?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  aboutUs?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  blog?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  caseStudies?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  contact?: {
+    /**
+     * Shown in browser tab and search results. Leave empty to use default.
+     */
+    metaTitle?: string | null;
+    /**
+     * Short summary for search results. Leave empty to use default.
+     */
+    metaDescription?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -2188,6 +2261,51 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-seo_select".
+ */
+export interface PageSeoSelect<T extends boolean = true> {
+  home?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  services?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  aboutUs?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  blog?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  caseStudies?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  contact?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
       };
   updatedAt?: T;
   createdAt?: T;

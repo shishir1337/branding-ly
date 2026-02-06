@@ -19,6 +19,7 @@ import { FAQ } from '@/components/FAQ'
 import { ContactUs } from '@/components/ContactUs'
 import { OurServicesSection } from '@/components/OurServicesSection'
 import { generateMeta } from '@/utilities/generateMeta'
+import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -122,9 +123,20 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
+
+  // Contact page is rendered without a Page doc; use Page SEO global
+  if (decodedSlug === 'contact') {
+    return getPageSEOMetadata('contact', { path: '/contact' })
+  }
+
   const page = await queryPageBySlug({
     slug: decodedSlug,
   })
+
+  // Home fallback when no Page doc (e.g. static seed); use Page SEO global
+  if (!page && decodedSlug === 'home') {
+    return getPageSEOMetadata('home', { path: '/' })
+  }
 
   return generateMeta({ doc: page })
 }

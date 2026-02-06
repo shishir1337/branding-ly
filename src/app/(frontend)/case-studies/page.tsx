@@ -3,10 +3,14 @@ import { PageHeader } from '@/components/PageHeader'
 import { CaseStudies } from '@/components/CaseStudies'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
-export const metadata: Metadata = {
-  title: 'Case Studies | Brandingly',
-  description: 'Ideas, Insights & Iterations - Explore our portfolio of successful projects.',
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEOMetadata('caseStudies', {
+    path: '/case-studies',
+    defaultTitle: 'Case Studies | Brandingly',
+    defaultDescription: 'Ideas, Insights & Iterations - Explore our portfolio of successful projects.',
+  })
 }
 
 export const revalidate = 600

@@ -8,10 +8,14 @@ import { IndustriesWeServe } from '@/components/IndustriesWeServe'
 import { AboutUsFAQ } from '@/components/AboutUsFAQ'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
-export const metadata: Metadata = {
-  title: 'About Us | Brandingly',
-  description: 'It all begins with a simple conversation.',
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEOMetadata('aboutUs', {
+    path: '/about-us',
+    defaultTitle: 'About Us | Brandingly',
+    defaultDescription: 'It all begins with a simple conversation.',
+  })
 }
 
 export const revalidate = 600

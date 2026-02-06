@@ -5,10 +5,15 @@ import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { NeedHelp } from '@/components/NeedHelp'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
-export const metadata: Metadata = {
-  title: 'Services | Brandingly',
-  description: 'Transforming Vision into Real Results with Innovative Strategic Digital Solutions.',
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSEOMetadata('services', {
+    path: '/services',
+    defaultTitle: 'Services | Brandingly',
+    defaultDescription:
+      'Transforming Vision into Real Results with Innovative Strategic Digital Solutions.',
+  })
 }
 
 export const revalidate = 600

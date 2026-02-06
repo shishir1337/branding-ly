@@ -16,6 +16,7 @@ import { Services } from './collections/Services'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { PageSEO } from './globals/PageSEO'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -78,7 +79,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Media, Categories, Services, CaseStudies, TeamMembers, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, PageSEO],
   plugins: [
     ...plugins,
     s3Storage({

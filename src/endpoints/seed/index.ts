@@ -22,7 +22,8 @@ const collections: CollectionSlug[] = [
   'team-members',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer']
+// Only header and footer have navItems to clear; page-seo has different shape
+const globalsToClear: ('header' | 'footer')[] = ['header', 'footer']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -45,9 +46,9 @@ export const seed = async ({
   // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
-  // clear the database
+  // clear the database (header and footer only; page-seo has no navItems)
   await Promise.all(
-    globals.map((global) =>
+    globalsToClear.map((global) =>
       payload.updateGlobal({
         slug: global,
         data: {
