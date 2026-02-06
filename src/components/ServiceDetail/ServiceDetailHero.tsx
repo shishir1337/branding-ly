@@ -41,8 +41,6 @@ export const ServiceDetailHero: React.FC<ServiceDetailHeroProps> = ({ service })
             }}
           >
             <span style={{ color: 'hsl(23, 100%, 56%)' }}>{service.title}</span>
-            <br />
-            <span style={{ color: '#FFFFFF' }}>Services in Bangladesh</span>
           </h1>
         </ScrollReveal>
 
