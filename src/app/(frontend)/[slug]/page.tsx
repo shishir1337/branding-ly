@@ -19,6 +19,7 @@ import { FAQ } from '@/components/FAQ'
 import { ContactUs } from '@/components/ContactUs'
 import { OurServicesSection } from '@/components/OurServicesSection'
 import { generateMeta } from '@/utilities/generateMeta'
+import { PageSEOSchema } from '@/components/PageSEOSchema'
 import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -74,6 +75,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (decodedSlug === 'contact') {
     return (
       <article>
+        <PageSEOSchema pageKey="contact" />
         <PageClient />
         <PayloadRedirects disableNotFound url={url} />
         {draft && <LivePreviewListener />}
@@ -98,6 +100,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {decodedSlug === 'home' ? (
         <>
+          <PageSEOSchema pageKey="home" />
           <CustomHero />
           <TrustedBrands />
           <AboutUs />

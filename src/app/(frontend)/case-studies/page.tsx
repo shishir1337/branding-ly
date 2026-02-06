@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { CaseStudies } from '@/components/CaseStudies'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { PageSEOSchema } from '@/components/PageSEOSchema'
 import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -42,6 +43,7 @@ export default async function CaseStudiesPage() {
 
   return (
     <article>
+      <PageSEOSchema pageKey="caseStudies" />
       <PageHeader
         title="Case Studies"
         subtitle={

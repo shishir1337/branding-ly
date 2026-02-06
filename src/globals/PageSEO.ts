@@ -20,6 +20,16 @@ const metaFields = [
       description: 'Short summary for search results. Leave empty to use default.',
     },
   },
+  {
+    name: 'customSchema',
+    type: 'textarea' as const,
+    required: false,
+    label: 'Custom Schema (JSON-LD)',
+    admin: {
+      description:
+        'Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.',
+    },
+  },
 ]
 
 export const PageSEO: GlobalConfig = {

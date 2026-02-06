@@ -5,6 +5,7 @@ import { WhyChooseUs } from '@/components/WhyChooseUs'
 import { NeedHelp } from '@/components/NeedHelp'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { PageSEOSchema } from '@/components/PageSEOSchema'
 import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,6 +44,7 @@ export default async function ServicesPage() {
 
   return (
     <article>
+      <PageSEOSchema pageKey="services" />
       <PageHeader
         title="Services"
         subtitle={

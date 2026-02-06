@@ -8,6 +8,7 @@ import { IndustriesWeServe } from '@/components/IndustriesWeServe'
 import { AboutUsFAQ } from '@/components/AboutUsFAQ'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { PageSEOSchema } from '@/components/PageSEOSchema'
 import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -42,6 +43,7 @@ export default async function AboutUsPage() {
 
   return (
     <article>
+      <PageSEOSchema pageKey="aboutUs" />
       <PageHeader
         title="About us"
         subtitle={

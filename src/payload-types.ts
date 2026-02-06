@@ -2166,6 +2166,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   services?: {
     /**
@@ -2176,6 +2180,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   aboutUs?: {
     /**
@@ -2186,6 +2194,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   blog?: {
     /**
@@ -2196,6 +2208,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   caseStudies?: {
     /**
@@ -2206,6 +2222,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   contact?: {
     /**
@@ -2216,6 +2236,10 @@ export interface PageSeo {
      * Short summary for search results. Leave empty to use default.
      */
     metaDescription?: string | null;
+    /**
+     * Optional JSON-LD schema for this page (e.g. Organization, WebPage, FAQPage). Paste valid JSON. For multiple schemas use a JSON array. Leave empty to use no custom schema.
+     */
+    customSchema?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2276,36 +2300,42 @@ export interface PageSeoSelect<T extends boolean = true> {
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   services?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   aboutUs?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   blog?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   caseStudies?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   contact?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
+        customSchema?: T;
       };
   updatedAt?: T;
   createdAt?: T;

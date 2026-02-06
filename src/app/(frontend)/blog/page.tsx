@@ -1,6 +1,7 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { PageSEOSchema } from '@/components/PageSEOSchema'
 import { getPageSEOMetadata } from '@/utilities/getPageSEOMetadata'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
@@ -41,6 +42,7 @@ export default async function Page() {
 
   return (
     <div>
+      <PageSEOSchema pageKey="blog" />
       <BlogHero />
       <div className="pt-12 pb-24">
         <PageClient />

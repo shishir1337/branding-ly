@@ -16,9 +16,10 @@ export type PageSEOKey =
   | 'caseStudies'
   | 'contact'
 
-type PageSEOSection = {
+export type PageSEOSection = {
   metaTitle?: string | null
   metaDescription?: string | null
+  customSchema?: string | null
 }
 
 const queryPageSEO = cache(async () => {
@@ -29,6 +30,25 @@ const queryPageSEO = cache(async () => {
   })
   return global as Record<PageSEOKey, PageSEOSection> | null
 })
+
+/**
+ * Returns the custom JSON-LD schema string for a page if set and valid.
+ * Returns null if not set or invalid JSON.
+ */
+export async function getPageSEOSchema(pageKey: PageSEOKey): Promise<string | null> {
+  const seo = await queryPageSEO()
+  const section = seo?.[pageKey] as PageSEOSection | undefined
+  const raw = section?.customSchema?.trim()
+  if (!raw) return null
+  try {
+    const parsed = JSON.parse(raw) as unknown
+    // Must be object or array (JSON-LD can be one or multiple schemas)
+    if (typeof parsed !== 'object' || parsed === null) return null
+    return JSON.stringify(parsed)
+  } catch {
+    return null
+  }
+}
 
 /**
  * Returns metadata for a fixed page (Home, Services, About Us, Blog, Case Studies, Contact)
