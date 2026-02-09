@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, ChevronUp, ChevronDown } from 'lucide-react'
 import { getServiceIcon } from '@/utilities/getServiceIcon'
 import { FollowerPointerCard } from '@/components/ui/following-pointer'
+import RichText from '@/components/RichText'
 import type { Service } from '@/payload-types'
 
 interface OurServicesSectionProps {
@@ -370,15 +371,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive }) => {
       </h3>
 
       {/* Description */}
-      <p
+      <div
         style={{
           fontSize: 'clamp(14px, 1.8vw, 16px)',
           lineHeight: '1.6',
           color: '#000000',
         }}
       >
-        {service.description}
-      </p>
+        <RichText data={service.description} enableProse={false} enableGutter={false} />
+      </div>
     </Link>
   )
 }

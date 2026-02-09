@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { ArrowRight } from 'lucide-react'
 import { getServiceIcon } from '@/utilities/getServiceIcon'
+import RichText from '@/components/RichText'
 import type { Service } from '@/payload-types'
 
 interface ServicesProps {
@@ -134,7 +135,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       </h3>
 
       {/* Description - flex-grow to fill available space */}
-      <p
+      <div
         className="mb-4 sm:mb-6 flex-grow"
         style={{
           fontSize: 'clamp(14px, 1.8vw, 16px)',
@@ -142,8 +143,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
           color: 'inherit',
         }}
       >
-        {service.description}
-      </p>
+        <RichText data={service.description} enableProse={false} enableGutter={false} />
+      </div>
 
       {/* Learn More Button */}
       <Link href={`/services/${service.slug}`}>

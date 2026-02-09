@@ -3,24 +3,35 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import Image from 'next/image'
-import type { Service } from '@/payload-types'
 
-interface PortfolioSectionProps {
-  portfolioImages?: Service['portfolioImages']
+type PortfolioImageItem = {
+  image?: unknown
+  alt?: string | null
+  id?: string | null
 }
 
-export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ portfolioImages }) => {
-  // Don't render if no portfolio images
+interface PortfolioSectionProps {
+  portfolioImages?: PortfolioImageItem[] | null
+  sectionTitle?: string | null
+  sectionSubtitle?: string | null
+}
+
+export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
+  portfolioImages,
+  sectionTitle: titleProp,
+  sectionSubtitle: subtitleProp,
+}) => {
   if (!portfolioImages || portfolioImages.length === 0) {
     return null
   }
+  const sectionTitle = titleProp ?? 'Our Portfolios'
+  const sectionSubtitle = subtitleProp ?? 'Case Studies'
+
   return (
     <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
       <div className="container px-4 sm:px-6">
-        {/* Header Section */}
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="mb-8 sm:mb-12">
-            {/* "Our Portfolios" */}
             <p
               className="mb-4 sm:mb-6 text-left"
               style={{
@@ -33,10 +44,8 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ portfolioIma
                 color: 'hsl(23, 100%, 56%)',
               }}
             >
-              Our Portfolios
+              {sectionTitle}
             </p>
-
-            {/* Subtitle */}
             <h2
               className="text-left"
               style={{
@@ -48,7 +57,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ portfolioIma
                 color: '#000000',
               }}
             >
-              Case Studies
+              {sectionSubtitle}
             </h2>
           </div>
         </ScrollReveal>
@@ -61,8 +70,8 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ portfolioIma
             if (!image || typeof image === 'number') return null
 
             const imageUrl =
-              typeof image === 'object' && 'url' in image && image.url
-                ? image.url
+              typeof image === 'object' && image !== null && 'url' in image && typeof (image as { url?: string }).url === 'string'
+                ? (image as { url: string }).url
                 : '/webdesigncase1.png'
             const altText = item.alt || `Portfolio case study ${index + 1}`
 

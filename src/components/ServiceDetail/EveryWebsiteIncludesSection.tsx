@@ -2,10 +2,16 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { Service } from '@/payload-types'
+import RichText from '@/components/RichText'
+
+type EveryWebsiteItem = {
+  title?: string | null
+  description?: unknown
+  id?: string | null
+}
 
 interface FeatureCardProps {
-  feature: NonNullable<Service['everyWebsiteIncludes']>[number]
+  feature: EveryWebsiteItem
   delay?: number
 }
 
@@ -13,7 +19,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, delay: _delay = 0 })
   if (!feature || typeof feature === 'number') return null
 
   const title = feature.title || ''
-  const description = feature.description || ''
+  const description = feature.description || null
   return (
     <div
       className="group relative overflow-hidden h-full rounded-2xl bg-white p-6 lg:p-8 transition-all duration-500 hover:-translate-y-1"
@@ -53,7 +59,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, delay: _delay = 0 })
         >
           {title}
         </h3>
-        <p
+        <div
           className="leading-relaxed"
           style={{
             fontSize: 'clamp(14px, 1.8vw, 16px)',
@@ -61,8 +67,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, delay: _delay = 0 })
             color: '#666666',
           }}
         >
-          {description}
-        </p>
+          <RichText data={(description ?? undefined) as Parameters<typeof RichText>[0]['data']} enableProse={false} enableGutter={false} />
+        </div>
       </div>
 
       {/* Decorative corner accent */}
@@ -77,16 +83,23 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, delay: _delay = 0 })
 }
 
 interface EveryWebsiteIncludesSectionProps {
-  features?: Service['everyWebsiteIncludes']
+  section?: {
+    enabled?: boolean
+    sectionTitle?: string | null
+    sectionSubtitle?: string | null
+    items?: EveryWebsiteItem[] | null
+  }
 }
 
 export const EveryWebsiteIncludesSection: React.FC<EveryWebsiteIncludesSectionProps> = ({
-  features,
+  section,
 }) => {
-  // Don't render if no features
-  if (!features || features.length === 0) {
+  if (!section?.items?.length || section.enabled === false) {
     return null
   }
+
+  const sectionTitle = section.sectionTitle || 'Every Website Includes'
+  const sectionSubtitle = section.sectionSubtitle || 'What Every Website Includes – Standard Features'
 
   return (
     <div
@@ -99,42 +112,44 @@ export const EveryWebsiteIncludesSection: React.FC<EveryWebsiteIncludesSectionPr
         {/* Header Section */}
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="mb-8 sm:mb-12">
-            {/* "Every Website Includes" */}
-            <p
-              className="mb-4 sm:mb-6 text-left"
-              style={{
-                fontFamily: 'Geist, sans-serif',
-                fontSize: '15.909px',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: '140%',
-                letterSpacing: '-0.318px',
-                color: 'hsl(23, 100%, 56%)',
-              }}
-            >
-              Every Website Includes
-            </p>
+            {sectionTitle && (
+              <p
+                className="mb-4 sm:mb-6 text-left"
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: '15.909px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '140%',
+                  letterSpacing: '-0.318px',
+                  color: 'hsl(23, 100%, 56%)',
+                }}
+              >
+                {sectionTitle}
+              </p>
+            )}
 
-            {/* Subtitle */}
-            <h2
-              className="text-left"
-              style={{
-                fontFamily: 'Anton, sans-serif',
-                fontSize: 'clamp(28px, 5vw, 40px)',
-                fontStyle: 'normal',
-                fontWeight: 400,
-                lineHeight: 'normal',
-                color: '#000000',
-              }}
-            >
-              What Every Website Includes – Standard Features
-            </h2>
+            {sectionSubtitle && (
+              <h2
+                className="text-left"
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                  fontSize: 'clamp(28px, 5vw, 40px)',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  color: '#000000',
+                }}
+              >
+                {sectionSubtitle}
+              </h2>
+            )}
           </div>
         </ScrollReveal>
 
         {/* Features Grid - 3 columns for 6 cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {features.map((feature, index) => {
+          {section.items.map((feature, index) => {
             if (!feature || typeof feature === 'number') return null
             return (
               <ScrollReveal

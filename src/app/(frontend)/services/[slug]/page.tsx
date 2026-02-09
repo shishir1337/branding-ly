@@ -6,15 +6,9 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { generateMeta } from '@/utilities/generateMeta'
 import { ServiceDetailHero } from '@/components/ServiceDetail/ServiceDetailHero'
-import { TechnologySection } from '@/components/ServiceDetail/TechnologySection'
-import { ServicesProvidedSection } from '@/components/ServiceDetail/ServicesProvidedSection'
-import { EveryWebsiteIncludesSection } from '@/components/ServiceDetail/EveryWebsiteIncludesSection'
-import { ServiceTestimonialsSection } from '@/components/ServiceDetail/ServiceTestimonialsSection'
-import { PortfolioSection } from '@/components/ServiceDetail/PortfolioSection'
-import { WhyChooseSection } from '@/components/ServiceDetail/WhyChooseSection'
-import { ProcessSection } from '@/components/ServiceDetail/ProcessSection'
+import { RenderServiceSections } from '@/components/ServiceDetail/RenderServiceSections'
+import { CustomJsonLd } from '@/components/ServiceDetail/CustomJsonLd'
 import { ContactUs } from '@/components/ContactUs'
-import RichText from '@/components/RichText'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
@@ -55,6 +49,7 @@ export default async function ServiceDetailPage({ params: paramsPromise }: Args)
 
   return (
     <article>
+      <CustomJsonLd schema={service.meta?.customSchema ?? undefined} />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
@@ -62,28 +57,7 @@ export default async function ServiceDetailPage({ params: paramsPromise }: Args)
 
       <ServiceDetailHero service={service} />
 
-      <TechnologySection technologies={service.technologies} />
-
-      <ServicesProvidedSection servicesProvided={service.servicesProvided} />
-
-      <EveryWebsiteIncludesSection features={service.everyWebsiteIncludes} />
-
-      <ServiceTestimonialsSection testimonials={service.testimonials} />
-
-      <PortfolioSection portfolioImages={service.portfolioImages} />
-
-      <WhyChooseSection features={service.whyChoose} />
-
-      <ProcessSection processSteps={service.processSteps} />
-
-      {/* Service Content from CMS */}
-      {service.content && (
-        <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
-          <div className="container px-4 sm:px-6">
-            <RichText className="max-w-4xl mx-auto" data={service.content} enableGutter={false} />
-          </div>
-        </div>
-      )}
+      <RenderServiceSections sections={service.sections} />
 
       <ContactUs />
     </article>

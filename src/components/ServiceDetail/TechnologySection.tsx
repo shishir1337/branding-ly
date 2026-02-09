@@ -2,18 +2,23 @@
 
 import React, { useState } from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { Service } from '@/payload-types'
-
+import RichText from '@/components/RichText'
 interface TechnologyCardProps {
   tech: {
     title: string
-    description: string
+    description: unknown
   }
   index: number
 }
 
+/** Supports both block shape (sectionTitle, sectionSubtitle, items) and legacy group shape (enabled, ...) */
 interface TechnologySectionProps {
-  technologies?: Service['technologies']
+  technologies?: {
+    enabled?: boolean
+    sectionTitle?: string | null
+    sectionSubtitle?: string | null
+    items?: Array<{ title?: string | null; description?: unknown; id?: string | null }> | null
+  }
 }
 
 const TechnologyCard: React.FC<TechnologyCardProps> = ({ tech, index }) => {
@@ -56,7 +61,7 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({ tech, index }) => {
         >
           {tech.title}
         </h3>
-        <p
+        <div
           style={{
             fontSize: '20px',
             fontStyle: 'normal',
@@ -68,18 +73,20 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({ tech, index }) => {
             opacity: isHovered ? 0.9 : 1,
           }}
         >
-          {tech.description}
-        </p>
+          <RichText data={tech.description as Parameters<typeof RichText>[0]['data']} enableProse={false} enableGutter={false} />
+        </div>
       </div>
     </ScrollReveal>
   )
 }
 
 export const TechnologySection: React.FC<TechnologySectionProps> = ({ technologies }) => {
-  // Don't render if no technologies
-  if (!technologies || technologies.length === 0) {
+  if (!technologies?.items?.length || technologies.enabled === false) {
     return null
   }
+
+  const sectionTitle = technologies.sectionTitle || 'Technology We Use'
+  const sectionSubtitle = technologies.sectionSubtitle || 'We believe in using the best\ntools for each job.'
 
   return (
     <div
@@ -93,49 +100,50 @@ export const TechnologySection: React.FC<TechnologySectionProps> = ({ technologi
         {/* Header Section */}
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="mb-8 sm:mb-12">
-            {/* "Technology We Use" */}
-            <p
-              className="mb-4 sm:mb-6 text-left"
-              style={{
-                fontFamily: 'Geist, sans-serif',
-                fontSize: '15.909px',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: '140%',
-                letterSpacing: '-0.318px',
-                color: 'hsl(23, 100%, 56%)',
-              }}
-            >
-              Technology We Use
-            </p>
-
-            {/* Subtitle */}
-            <h2
-              className="text-left"
-              style={{
-                fontFamily: 'Anton, sans-serif',
-                fontSize: 'clamp(28px, 5vw, 40px)',
-                fontStyle: 'normal',
-                fontWeight: 400,
-                lineHeight: 'normal',
-                color: '#000000',
-              }}
-            >
-              We believe in using the best<br/>tools for each job.
-            </h2>
+            {sectionTitle && (
+              <p
+                className="mb-4 sm:mb-6 text-left"
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: '15.909px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '140%',
+                  letterSpacing: '-0.318px',
+                  color: 'hsl(23, 100%, 56%)',
+                }}
+              >
+                {sectionTitle}
+              </p>
+            )}
+            {sectionSubtitle && (
+              <h2
+                className="text-left"
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                  fontSize: 'clamp(28px, 5vw, 40px)',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  color: '#000000',
+                  whiteSpace: 'pre-line',
+                }}
+              >
+                {sectionSubtitle}
+              </h2>
+            )}
           </div>
         </ScrollReveal>
 
-        {/* Technologies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {technologies.map((tech, index) => {
+          {technologies.items.map((tech, index) => {
             if (!tech || typeof tech === 'number') return null
             return (
               <TechnologyCard
                 key={index}
                 tech={{
                   title: tech.title || '',
-                  description: tech.description || '',
+                  description: tech.description ?? null,
                 }}
                 index={index}
               />

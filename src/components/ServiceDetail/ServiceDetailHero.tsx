@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
+import RichText from '@/components/RichText'
 import type { Service } from '@/payload-types'
 
 interface ServiceDetailHeroProps {
@@ -44,9 +45,9 @@ export const ServiceDetailHero: React.FC<ServiceDetailHeroProps> = ({ service })
           </h1>
         </ScrollReveal>
 
-        {/* Description */}
+        {/* Description - div not p so RichText can render block elements (div/p) without invalid nesting */}
         <ScrollReveal direction="up" delay={0.4} duration={0.6} distance={20}>
-          <p
+          <div
             className="mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto"
             style={{
               color: '#FFFFFF',
@@ -58,8 +59,8 @@ export const ServiceDetailHero: React.FC<ServiceDetailHeroProps> = ({ service })
               lineHeight: '1.6',
             }}
           >
-            {service.description}
-          </p>
+            <RichText data={service.description} enableProse={false} enableGutter={false} className="[&_.payload-richtext]:text-white" />
+          </div>
         </ScrollReveal>
 
         {/* CTA Button */}

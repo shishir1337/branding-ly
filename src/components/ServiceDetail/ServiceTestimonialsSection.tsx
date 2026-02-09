@@ -3,34 +3,49 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { AnimatedTestimonials } from '@/components/ui/animated-testimonials'
-import type { Service } from '@/payload-types'
+import { lexicalToPlainText } from '@/utilities/lexicalToPlainText'
 
 interface ServiceTestimonialsSectionProps {
-  testimonials?: Service['testimonials']
+  section?: {
+    enabled?: boolean
+    items?: Array<{
+      quote?: unknown
+      name?: string | null
+      designation?: string | null
+      image?: unknown
+      id?: string | null
+    }> | null
+  }
 }
 
 export const ServiceTestimonialsSection: React.FC<ServiceTestimonialsSectionProps> = ({
-  testimonials,
+  section,
 }) => {
-  // Don't render if no testimonials
-  if (!testimonials || testimonials.length === 0) {
+  if (!section?.items?.length || section.enabled === false) {
     return null
   }
 
-  // Transform CMS testimonials to AnimatedTestimonials format
-  const formattedTestimonials = testimonials
+  const formattedTestimonials = section.items
     .filter((t) => t && typeof t === 'object')
     .map((testimonial) => {
       if (!testimonial || typeof testimonial === 'number') return null
       const image = testimonial.image
       let imageUrl = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
-      if (image && typeof image === 'object' && 'url' in image) {
-        imageUrl = image.url || imageUrl
+      if (image && typeof image === 'object' && 'url' in image && typeof (image as { url?: string }).url === 'string') {
+        imageUrl = (image as { url: string }).url || imageUrl
       }
 
+      const quoteData = testimonial.quote
+      const quoteText =
+        typeof quoteData === 'object' && quoteData !== null && 'root' in quoteData
+          ? lexicalToPlainText((quoteData as { root?: unknown }).root)
+          : typeof quoteData === 'string'
+            ? quoteData
+            : ''
+
       return {
-        quote: testimonial.quote || '',
+        quote: quoteText,
         name: testimonial.name || '',
         designation: testimonial.designation || '',
         src: imageUrl,

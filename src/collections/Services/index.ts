@@ -1,21 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { serviceSectionBlocks } from '../../blocks/sections'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidateService } from './hooks/revalidateService'
+import { serviceRichTextEditor } from '../../fields/serviceRichText'
 
 import {
   MetaDescriptionField,
@@ -40,6 +30,7 @@ export const Services: CollectionConfig<'services'> = {
     description: true,
     icon: true,
     featuredImage: true,
+    sections: true,
     meta: {
       image: true,
       description: true,
@@ -71,52 +62,21 @@ export const Services: CollectionConfig<'services'> = {
     },
     {
       name: 'description',
-      type: 'textarea',
+      type: 'richText',
+      editor: serviceRichTextEditor,
       required: true,
       admin: {
-        description: 'Short description shown on the services listing page',
+        description: 'Short description shown on the services listing page (supports formatting and links)',
       },
     },
     {
       name: 'icon',
-      type: 'select',
+      type: 'text',
       required: true,
-      options: [
-        {
-          label: 'Target - Marketing Strategy & Planning',
-          value: 'target',
-        },
-        {
-          label: 'Palette - Graphic Design & Branding',
-          value: 'palette',
-        },
-        {
-          label: 'Globe - Web Design & Development',
-          value: 'globe',
-        },
-        {
-          label: 'FileText - Content Writing',
-          value: 'file-text',
-        },
-        {
-          label: 'Calendar - Event Management',
-          value: 'calendar',
-        },
-        {
-          label: 'Camera - Videoshoot & Photography',
-          value: 'camera',
-        },
-        {
-          label: 'Video - Video Production & Editing',
-          value: 'video',
-        },
-        {
-          label: 'Printer - Printing Solutions',
-          value: 'printer',
-        },
-      ],
+      defaultValue: 'target',
       admin: {
-        description: 'Icon to display for this service',
+        description:
+          'Lucide icon name (e.g. heart, target, file-text). Use the name from the icon URL on lucide.dev — e.g. https://lucide.dev/icons/heart → enter "heart". Hyphenated names like "file-text" and "shopping-cart" are valid.',
       },
     },
     {
@@ -139,211 +99,18 @@ export const Services: CollectionConfig<'services'> = {
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Featured image for the service detail page',
+                description: 'Featured image for the service detail page hero',
               },
             },
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
+              name: 'sections',
+              type: 'blocks',
+              label: 'Page Sections',
               admin: {
-                description: 'Full content for the service detail page',
+                description:
+                  'Add, remove, and reorder sections. Each service can have different sections (e.g. Technologies, Process, Portfolio, Rich Text) in any order.',
               },
-            },
-            {
-              name: 'technologies',
-              type: 'array',
-              label: 'Technologies We Use',
-              admin: {
-                description: 'Technologies used for this service',
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'servicesProvided',
-              type: 'array',
-              label: 'Services We Provide',
-              admin: {
-                description: 'Specific services provided under this category',
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-                {
-                  name: 'features',
-                  type: 'array',
-                  label: 'Features/List Items',
-                  fields: [
-                    {
-                      name: 'text',
-                      type: 'text',
-                      required: true,
-                    },
-                  ],
-                },
-                {
-                  name: 'icon',
-                  type: 'select',
-                  options: [
-                    { label: 'Building2 - Corporate', value: 'building2' },
-                    { label: 'ShoppingCart - Ecommerce', value: 'shopping-cart' },
-                    { label: 'Code - Custom Development', value: 'code' },
-                  ],
-                },
-              ],
-            },
-            {
-              name: 'everyWebsiteIncludes',
-              type: 'array',
-              label: 'Every Website Includes (Standard Features)',
-              admin: {
-                description: 'Standard features included with every website/service',
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'testimonials',
-              type: 'array',
-              label: 'Customer Testimonials',
-              admin: {
-                description: 'Customer testimonials for this service',
-              },
-              fields: [
-                {
-                  name: 'quote',
-                  type: 'textarea',
-                  required: true,
-                },
-                {
-                  name: 'name',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'designation',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                },
-              ],
-            },
-            {
-              name: 'portfolioImages',
-              type: 'array',
-              label: 'Portfolio Images',
-              admin: {
-                description: 'Portfolio/case study images for this service',
-              },
-              fields: [
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                  required: true,
-                },
-                {
-                  name: 'alt',
-                  type: 'text',
-                  admin: {
-                    description: 'Alt text for the image',
-                  },
-                },
-              ],
-              maxRows: 3,
-            },
-            {
-              name: 'whyChoose',
-              type: 'array',
-              label: 'Why Choose Us Features',
-              admin: {
-                description: 'Features explaining why to choose this service',
-              },
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'processSteps',
-              type: 'array',
-              label: 'Our Process Steps',
-              admin: {
-                description: 'Step-by-step process for this service',
-              },
-              fields: [
-                {
-                  name: 'number',
-                  type: 'text',
-                  required: true,
-                  admin: {
-                    description: 'Step number (e.g., "01", "02")',
-                  },
-                },
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
+              blocks: serviceSectionBlocks,
             },
           ],
           label: 'Content',
@@ -369,6 +136,24 @@ export const Services: CollectionConfig<'services'> = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
+            {
+              name: 'customSchema',
+              type: 'textarea',
+              label: 'Custom Schema (JSON-LD)',
+              admin: {
+                description:
+                  'Optional. Paste valid JSON-LD (e.g. Service, FAQPage, Organization). Output in a <script type="application/ld+json"> tag on this service page. Leave empty to omit.',
+              },
+              validate: (val) => {
+                if (val == null || String(val).trim() === '') return true
+                try {
+                  JSON.parse(String(val))
+                  return true
+                } catch {
+                  return 'Must be valid JSON.'
+                }
+              },
+            },
           ],
         },
       ],

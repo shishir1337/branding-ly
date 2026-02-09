@@ -2,14 +2,25 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { Service } from '@/payload-types'
+import RichText from '@/components/RichText'
+
+type ProcessStepItem = {
+  number?: string | null
+  title?: string | null
+  description?: unknown
+  id?: string | null
+}
 
 interface ProcessSectionProps {
-  processSteps?: Service['processSteps']
+  section?: {
+    enabled?: boolean
+    sectionTitle?: string | null
+    items?: ProcessStepItem[] | null
+  }
 }
 
 interface ProcessStepCardProps {
-  step: NonNullable<Service['processSteps']>[number]
+  step: ProcessStepItem
   index: number
 }
 
@@ -18,7 +29,7 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
 
   const number = step.number || ''
   const title = step.title || ''
-  const description = step.description || ''
+  const description = step.description ?? null
   return (
     <div
       className="group relative overflow-hidden h-full rounded-2xl bg-white p-6 lg:p-8 transition-all duration-500 hover:-translate-y-1"
@@ -69,7 +80,7 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
         >
           {title}
         </h3>
-        <p
+        <div
           className="leading-relaxed"
           style={{
             fontSize: 'clamp(14px, 1.8vw, 16px)',
@@ -77,8 +88,8 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
             color: '#666666',
           }}
         >
-          {description}
-        </p>
+          <RichText data={(description ?? undefined) as Parameters<typeof RichText>[0]['data']} enableProse={false} enableGutter={false} />
+        </div>
       </div>
 
       {/* Decorative corner accent */}
@@ -92,35 +103,37 @@ const ProcessStepCard: React.FC<ProcessStepCardProps> = ({ step }) => {
   )
 }
 
-export const ProcessSection: React.FC<ProcessSectionProps> = ({ processSteps }) => {
-  // Don't render if no process steps
-  if (!processSteps || processSteps.length === 0) {
+export const ProcessSection: React.FC<ProcessSectionProps> = ({ section }) => {
+  if (!section?.items?.length || section.enabled === false) {
     return null
   }
+
+  const sectionTitle = section.sectionTitle || 'Our Process'
+  const sectionSubtitle = section.sectionTitle
+    ? null
+    : 'We follow a process to ensure your website exceeds expectations'
 
   return (
     <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
       <div className="container px-4 sm:px-6">
-        {/* Header Section */}
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="mb-8 sm:mb-12">
-            {/* "Our Process" */}
-            <p
-              className="mb-4 sm:mb-6 text-left"
-              style={{
-                fontFamily: 'Geist, sans-serif',
-                fontSize: '15.909px',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: '140%',
-                letterSpacing: '-0.318px',
-                color: 'hsl(23, 100%, 56%)',
-              }}
-            >
-              Our Process
-            </p>
-
-            {/* Subtitle */}
+            {sectionTitle && (
+              <p
+                className="mb-4 sm:mb-6 text-left"
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: '15.909px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '140%',
+                  letterSpacing: '-0.318px',
+                  color: 'hsl(23, 100%, 56%)',
+                }}
+              >
+                {sectionTitle}
+              </p>
+            )}
             <h2
               className="text-left"
               style={{
@@ -131,16 +144,21 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ processSteps }) 
                 lineHeight: 'normal',
               }}
             >
-              <span style={{ color: '#000000' }}>We follow a </span>
-              <span style={{ color: 'hsl(23, 100%, 56%)' }}>process</span>
-              <span style={{ color: '#000000' }}> to ensure<br />your website exceeds expectations</span>
+              {section.sectionTitle ? (
+                section.sectionTitle
+              ) : (
+                <>
+                  <span style={{ color: '#000000' }}>We follow a </span>
+                  <span style={{ color: 'hsl(23, 100%, 56%)' }}>process</span>
+                  <span style={{ color: '#000000' }}> to ensure<br />your website exceeds expectations</span>
+                </>
+              )}
             </h2>
           </div>
         </ScrollReveal>
 
-        {/* Process Steps */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {processSteps.map((step, index) => {
+          {section.items.map((step, index) => {
             if (!step || typeof step === 'number') return null
             return (
               <ScrollReveal
@@ -160,4 +178,3 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ processSteps }) 
     </div>
   )
 }
-

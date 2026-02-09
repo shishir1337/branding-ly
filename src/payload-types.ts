@@ -208,7 +208,39 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | {
+        /**
+         * Small label above the main heading (e.g. "FAQ")
+         */
+        sectionTitle?: string | null;
+        /**
+         * Main heading (e.g. "Everything You Need to Know")
+         */
+        heading?: string | null;
+        /**
+         * Optional short intro text below the heading
+         */
+        description?: string | null;
+        /**
+         * Optional image (left column). Leave empty to use default FAQ image or hide.
+         */
+        image?: (number | null) | Media;
+        items: {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'faq';
+      }
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -795,25 +827,9 @@ export interface Service {
   id: number;
   title: string;
   /**
-   * Short description shown on the services listing page
+   * Short description shown on the services listing page (supports formatting and links)
    */
-  description: string;
-  /**
-   * Icon to display for this service
-   */
-  icon: 'target' | 'palette' | 'globe' | 'file-text' | 'calendar' | 'camera' | 'video' | 'printer';
-  /**
-   * Order in which services appear (lower numbers first)
-   */
-  order: number;
-  /**
-   * Featured image for the service detail page
-   */
-  featuredImage?: (number | null) | Media;
-  /**
-   * Full content for the service detail page
-   */
-  content?: {
+  description: {
     root: {
       type: string;
       children: {
@@ -827,92 +843,287 @@ export interface Service {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   /**
-   * Technologies used for this service
+   * Lucide icon name (e.g. heart, target, file-text). Use the name from the icon URL on lucide.dev — e.g. https://lucide.dev/icons/heart → enter "heart". Hyphenated names like "file-text" and "shopping-cart" are valid.
    */
-  technologies?:
-    | {
-        title: string;
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
+  icon: string;
   /**
-   * Specific services provided under this category
+   * Order in which services appear (lower numbers first)
    */
-  servicesProvided?:
-    | {
-        title: string;
-        description: string;
-        features?:
-          | {
-              text: string;
+  order: number;
+  /**
+   * Featured image for the service detail page hero
+   */
+  featuredImage?: (number | null) | Media;
+  /**
+   * Add, remove, and reorder sections. Each service can have different sections (e.g. Technologies, Process, Portfolio, Rich Text) in any order.
+   */
+  sections?:
+    | (
+        | {
+            /**
+             * Small heading above the main title (e.g. "Technology We Use")
+             */
+            sectionTitle?: string | null;
+            /**
+             * Main heading (e.g. "We believe in using the best tools for each job.")
+             */
+            sectionSubtitle?: string | null;
+            items: {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
               id?: string | null;
-            }[]
-          | null;
-        icon?: ('building2' | 'shopping-cart' | 'code') | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Standard features included with every website/service
-   */
-  everyWebsiteIncludes?:
-    | {
-        title: string;
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Customer testimonials for this service
-   */
-  testimonials?:
-    | {
-        quote: string;
-        name: string;
-        designation: string;
-        image?: (number | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Portfolio/case study images for this service
-   */
-  portfolioImages?:
-    | {
-        image: number | Media;
-        /**
-         * Alt text for the image
-         */
-        alt?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Features explaining why to choose this service
-   */
-  whyChoose?:
-    | {
-        title: string;
-        description: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Step-by-step process for this service
-   */
-  processSteps?:
-    | {
-        /**
-         * Step number (e.g., "01", "02")
-         */
-        number: string;
-        title: string;
-        description: string;
-        id?: string | null;
-      }[]
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'technologies';
+          }
+        | {
+            /**
+             * Section heading (e.g. "Services We Provide")
+             */
+            sectionTitle?: string | null;
+            items: {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              features?:
+                | {
+                    text: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              /**
+               * Lucide icon name (e.g. building2, shopping-cart, code, heart). Use the name from lucide.dev — e.g. https://lucide.dev/icons/heart → enter "heart".
+               */
+              icon?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'servicesProvided';
+          }
+        | {
+            /**
+             * Small heading (e.g. "Every Website Includes")
+             */
+            sectionTitle?: string | null;
+            /**
+             * Main heading (e.g. "What Every Website Includes – Standard Features")
+             */
+            sectionSubtitle?: string | null;
+            items: {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'everyWebsiteIncludes';
+          }
+        | {
+            items: {
+              quote: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              name: string;
+              designation: string;
+              image?: (number | null) | Media;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            /**
+             * Small heading (e.g. "Our Portfolios")
+             */
+            sectionTitle?: string | null;
+            /**
+             * Main heading (e.g. "Case Studies")
+             */
+            sectionSubtitle?: string | null;
+            items: {
+              image: number | Media;
+              /**
+               * Alt text for the image
+               */
+              alt?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolio';
+          }
+        | {
+            /**
+             * Section heading (e.g. "Why Choose Brandingly")
+             */
+            sectionTitle?: string | null;
+            items: {
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'whyChoose';
+          }
+        | {
+            /**
+             * Section heading (e.g. "Our Process")
+             */
+            sectionTitle?: string | null;
+            items: {
+              /**
+               * Step number (e.g. "01", "02")
+               */
+              number: string;
+              title: string;
+              description: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'processSteps';
+          }
+        | {
+            /**
+             * Optional section heading above the content
+             */
+            heading?: string | null;
+            /**
+             * Freeform content with headings, images, and more
+             */
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            /**
+             * Small label above the main heading (e.g. "FAQ")
+             */
+            sectionTitle?: string | null;
+            /**
+             * Main heading (e.g. "Everything You Need to Know")
+             */
+            heading?: string | null;
+            /**
+             * Optional short intro text below the heading
+             */
+            description?: string | null;
+            /**
+             * Optional image (left column). Leave empty to use default FAQ image or hide.
+             */
+            image?: (number | null) | Media;
+            items: {
+              question: string;
+              answer: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -921,6 +1132,10 @@ export interface Service {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    /**
+     * Optional. Paste valid JSON-LD (e.g. Service, FAQPage, Organization). Output in a <script type="application/ld+json"> tag on this service page. Leave empty to omit.
+     */
+    customSchema?: string | null;
   };
   publishedAt?: string | null;
   /**
@@ -1381,6 +1596,23 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        faq?:
+          | T
+          | {
+              sectionTitle?: T;
+              heading?: T;
+              description?: T;
+              image?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1635,65 +1867,144 @@ export interface ServicesSelect<T extends boolean = true> {
   icon?: T;
   order?: T;
   featuredImage?: T;
-  content?: T;
-  technologies?:
+  sections?:
     | T
     | {
-        title?: T;
-        description?: T;
-        id?: T;
-      };
-  servicesProvided?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        features?:
+        technologies?:
           | T
           | {
-              text?: T;
+              sectionTitle?: T;
+              sectionSubtitle?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
               id?: T;
+              blockName?: T;
             };
-        icon?: T;
-        id?: T;
-      };
-  everyWebsiteIncludes?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        id?: T;
-      };
-  testimonials?:
-    | T
-    | {
-        quote?: T;
-        name?: T;
-        designation?: T;
-        image?: T;
-        id?: T;
-      };
-  portfolioImages?:
-    | T
-    | {
-        image?: T;
-        alt?: T;
-        id?: T;
-      };
-  whyChoose?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        id?: T;
-      };
-  processSteps?:
-    | T
-    | {
-        number?: T;
-        title?: T;
-        description?: T;
-        id?: T;
+        servicesProvided?:
+          | T
+          | {
+              sectionTitle?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    features?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        everyWebsiteIncludes?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionSubtitle?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    quote?: T;
+                    name?: T;
+                    designation?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        portfolio?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionSubtitle?: T;
+              items?:
+                | T
+                | {
+                    image?: T;
+                    alt?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        whyChoose?:
+          | T
+          | {
+              sectionTitle?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        processSteps?:
+          | T
+          | {
+              sectionTitle?: T;
+              items?:
+                | T
+                | {
+                    number?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              heading?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              sectionTitle?: T;
+              heading?: T;
+              description?: T;
+              image?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1701,6 +2012,7 @@ export interface ServicesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        customSchema?: T;
       };
   publishedAt?: T;
   generateSlug?: T;

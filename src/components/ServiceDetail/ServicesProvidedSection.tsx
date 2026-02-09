@@ -3,11 +3,19 @@
 import React, { useState } from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { CircleCheck } from 'lucide-react'
-import { getServiceProvidedIcon } from '@/utilities/getServiceProvidedIcon'
-import type { Service } from '@/payload-types'
+import { getServiceIcon } from '@/utilities/getServiceIcon'
+import RichText from '@/components/RichText'
+
+type ServiceProvidedItem = {
+  title?: string | null
+  description?: unknown
+  features?: Array<{ text?: string | null }> | null
+  icon?: string | null
+  id?: string | null
+}
 
 interface ServiceProvidedCardProps {
-  service: NonNullable<Service['servicesProvided']>[number]
+  service: ServiceProvidedItem
   index: number
 }
 
@@ -53,7 +61,7 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
               color: '#000000',
             }}
           >
-            {getServiceProvidedIcon(iconName, 32)}
+            {getServiceIcon(iconName, 32)}
           </div>
         </div>
 
@@ -80,8 +88,8 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
           )}
         </h3>
 
-        {/* Description */}
-        <p
+        {/* Description - supports richText or string */}
+        <div
           className="mb-4 sm:mb-6 flex-grow"
           style={{
             fontSize: 'clamp(14px, 1.8vw, 16px)',
@@ -90,8 +98,12 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
             fontFamily: 'Geist, sans-serif',
           }}
         >
-          {description}
-        </p>
+          {typeof description === 'object' && description !== null ? (
+            <RichText data={description as Parameters<typeof RichText>[0]['data']} enableProse={false} enableGutter={false} />
+          ) : (
+            String(description ?? '')
+          )}
+        </div>
 
         {/* Features List */}
         {features.length > 0 && (
@@ -129,14 +141,23 @@ const ServiceProvidedCard: React.FC<ServiceProvidedCardProps> = ({ service, inde
 }
 
 interface ServicesProvidedSectionProps {
-  servicesProvided?: Service['servicesProvided']
+  /** Legacy: array of items (no section title) */
+  servicesProvided?: ServiceProvidedItem[]
+  /** Block/section shape: sectionTitle + items */
+  section?: {
+    sectionTitle?: string | null
+    items?: ServiceProvidedItem[] | null
+  }
 }
 
 export const ServicesProvidedSection: React.FC<ServicesProvidedSectionProps> = ({
   servicesProvided,
+  section,
 }) => {
-  // Don't render if no services provided
-  if (!servicesProvided || servicesProvided.length === 0) {
+  const items = section?.items ?? servicesProvided ?? []
+  const sectionTitle = section?.sectionTitle ?? 'Services We Provide'
+
+  if (!items.length) {
     return null
   }
 
@@ -148,7 +169,6 @@ export const ServicesProvidedSection: React.FC<ServicesProvidedSectionProps> = (
       }}
     >
       <div className="container px-4 sm:px-6">
-        {/* Header */}
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="text-center mb-8 sm:mb-12">
             <h2
@@ -162,15 +182,14 @@ export const ServicesProvidedSection: React.FC<ServicesProvidedSectionProps> = (
                 color: '#000000',
               }}
             >
-              Service We Provide
+              {sectionTitle}
             </h2>
           </div>
         </ScrollReveal>
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-          {servicesProvided.map((service, index) => (
-            <ServiceProvidedCard key={index} service={service} index={index} />
+          {items.map((item, index) => (
+            <ServiceProvidedCard key={item?.id ?? index} service={item} index={index} />
           ))}
         </div>
       </div>
