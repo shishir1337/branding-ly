@@ -1,20 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { caseStudySectionBlocks } from '../../blocks/caseStudy'
+import { serviceRichTextEditor } from '../../fields/serviceRichText'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { normalizeLexicalField } from '../../utilities/lexicalFromString'
 import { revalidateDelete, revalidateCaseStudy } from './hooks/revalidateCaseStudy'
 
 import {
@@ -40,13 +31,14 @@ export const CaseStudies: CollectionConfig<'case-studies'> = {
     client: true,
     category: true,
     featuredImage: true,
+    sections: true,
     meta: {
       image: true,
       description: true,
     },
   },
   admin: {
-    defaultColumns: ['title', 'client', 'category', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -71,10 +63,11 @@ export const CaseStudies: CollectionConfig<'case-studies'> = {
     },
     {
       name: 'client',
-      type: 'text',
+      type: 'richText',
       required: true,
+      editor: serviceRichTextEditor,
       admin: {
-        description: 'Client name for this case study',
+        description: 'Client name for this case study (supports formatting and links)',
       },
     },
     {
@@ -109,162 +102,14 @@ export const CaseStudies: CollectionConfig<'case-studies'> = {
               },
             },
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
-              required: true,
+              name: 'sections',
+              type: 'blocks',
+              label: 'Page Sections',
               admin: {
-                description: 'Full content for the case study detail page',
+                description:
+                  'Add, remove, and reorder sections. Each case study can have different sections (e.g. Challenge, Solution, Results, Rich Text, Gallery, Testimonial) in any order.',
               },
-            },
-            {
-              name: 'challenge',
-              type: 'group',
-              label: 'Challenge',
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'solution',
-              type: 'group',
-              label: 'Solution',
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'results',
-              type: 'group',
-              label: 'Results',
-              fields: [
-                {
-                  name: 'title',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'description',
-                  type: 'textarea',
-                  required: true,
-                },
-                {
-                  name: 'metrics',
-                  type: 'array',
-                  label: 'Key Metrics',
-                  fields: [
-                    {
-                      name: 'label',
-                      type: 'text',
-                      required: true,
-                    },
-                    {
-                      name: 'value',
-                      type: 'text',
-                      required: true,
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              name: 'gallery',
-              type: 'array',
-              label: 'Gallery Images',
-              admin: {
-                description: 'Additional images for the case study gallery',
-              },
-              fields: [
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                  required: true,
-                },
-                {
-                  name: 'alt',
-                  type: 'text',
-                  admin: {
-                    description: 'Alt text for the image',
-                  },
-                },
-                {
-                  name: 'caption',
-                  type: 'text',
-                },
-              ],
-            },
-            {
-              name: 'technologies',
-              type: 'array',
-              label: 'Technologies Used',
-              admin: {
-                description: 'Technologies used in this project',
-              },
-              fields: [
-                {
-                  name: 'name',
-                  type: 'text',
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'testimonial',
-              type: 'group',
-              label: 'Client Testimonial',
-              fields: [
-                {
-                  name: 'quote',
-                  type: 'textarea',
-                  required: true,
-                },
-                {
-                  name: 'author',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'position',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                },
-              ],
+              blocks: caseStudySectionBlocks,
             },
           ],
           label: 'Content',
@@ -317,6 +162,22 @@ export const CaseStudies: CollectionConfig<'case-studies'> = {
     slugField(),
   ],
   hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (!doc) return
+        if (typeof doc.client === 'string') {
+          doc.client = normalizeLexicalField(doc.client) as typeof doc.client
+        }
+        const sections = doc.sections
+        if (Array.isArray(sections)) {
+          for (const block of sections) {
+            if (block && typeof block === 'object' && 'description' in block && typeof block.description === 'string') {
+              (block as { description: unknown }).description = normalizeLexicalField(block.description)
+            }
+          }
+        }
+      },
+    ],
     afterChange: [revalidateCaseStudy],
     afterDelete: [revalidateDelete],
   },

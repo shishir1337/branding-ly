@@ -2,10 +2,18 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { CaseStudy } from '@/payload-types'
+import RichText from '@/components/RichText'
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 interface ResultsSectionProps {
-  results?: CaseStudy['results']
+  results?:
+    | {
+        sectionLabel?: string | null
+        title: string
+        description: DefaultTypedEditorState
+        metrics?: Array<{ label: string; value: string }> | null
+      }
+    | null
 }
 
 const MetricCard: React.FC<{ metric: { label: string; value: string }; index: number }> = ({
@@ -62,6 +70,7 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
     return null
   }
 
+  const sectionLabel = (results.sectionLabel?.trim() || 'The Results')
   const metrics = results.metrics || []
 
   return (
@@ -97,7 +106,7 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
                     textTransform: 'uppercase',
                   }}
                 >
-                  The Results
+                  {sectionLabel}
                 </p>
               </div>
 
@@ -124,18 +133,18 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
                   borderLeft: '4px solid hsl(23, 100%, 56%)',
                 }}
               >
-                <p
+                <RichText
+                  data={results.description}
+                  enableGutter={false}
+                  className="case-study-description"
                   style={{
                     fontFamily: 'Geist, sans-serif',
                     fontSize: 'clamp(16px, 2vw, 18px)',
-                    fontStyle: 'normal',
                     fontWeight: 400,
-                    lineHeight: '1.8',
+                    lineHeight: 1.8,
                     color: '#333333',
                   }}
-                >
-                  {results.description}
-                </p>
+                />
               </div>
             </div>
           </ScrollReveal>

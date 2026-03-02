@@ -1,7 +1,9 @@
 import type { TextFieldSingleValidation } from 'payload'
 import {
   BoldFeature,
+  FixedToolbarFeature,
   ItalicFeature,
+  InlineToolbarFeature,
   LinkFeature,
   ParagraphFeature,
   lexicalEditor,
@@ -16,7 +18,7 @@ export const serviceRichTextEditor = lexicalEditor({
     BoldFeature(),
     ItalicFeature(),
     LinkFeature({
-      enabledCollections: ['pages', 'posts', 'services'],
+      enabledCollections: ['pages', 'posts', 'services', 'case-studies'],
       fields: ({ defaultFields }) => {
         const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
           if ('name' in field && field.name === 'url') return false
@@ -42,5 +44,7 @@ export const serviceRichTextEditor = lexicalEditor({
         ]
       },
     }),
+    FixedToolbarFeature(),
+    InlineToolbarFeature(),
   ],
 })

@@ -3,16 +3,34 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { Media } from '@/components/Media'
-import type { CaseStudy } from '@/payload-types'
+import type { Media as MediaType } from '@/payload-types'
 
-interface GallerySectionProps {
-  gallery?: CaseStudy['gallery']
+interface GalleryItem {
+  image: number | MediaType
+  alt?: string | null
+  caption?: string | null
 }
 
-export const GallerySection: React.FC<GallerySectionProps> = ({ gallery }) => {
+interface GallerySectionProps {
+  gallery?: GalleryItem[] | null
+  sectionLabel?: string | null
+  sectionTitle?: string | null
+}
+
+const DEFAULT_LABEL = 'Project Gallery'
+const DEFAULT_TITLE = 'Visual Showcase'
+
+export const GallerySection: React.FC<GallerySectionProps> = ({
+  gallery,
+  sectionLabel: sectionLabelProp,
+  sectionTitle: sectionTitleProp,
+}) => {
   if (!gallery || gallery.length === 0) {
     return null
   }
+
+  const sectionLabel = sectionLabelProp?.trim() || DEFAULT_LABEL
+  const sectionTitle = sectionTitleProp?.trim() || DEFAULT_TITLE
 
   return (
     <div
@@ -37,7 +55,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ gallery }) => {
                 color: 'hsl(23, 100%, 56%)',
               }}
             >
-              Project Gallery
+              {sectionLabel}
             </p>
 
             {/* Title */}
@@ -52,7 +70,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ gallery }) => {
                 color: '#000000',
               }}
             >
-              Visual Showcase
+              {sectionTitle}
             </h2>
           </div>
         </ScrollReveal>

@@ -2,16 +2,27 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { CaseStudy } from '@/payload-types'
+import RichText from '@/components/RichText'
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 interface SolutionSectionProps {
-  solution?: CaseStudy['solution']
+  solution?:
+    | {
+        sectionLabel?: string | null
+        title: string
+        description: DefaultTypedEditorState
+      }
+    | null
 }
+
+const DEFAULT_SECTION_LABEL = 'Our Solution'
 
 export const SolutionSection: React.FC<SolutionSectionProps> = ({ solution }) => {
   if (!solution || !solution.title || !solution.description) {
     return null
   }
+
+  const sectionLabel = (solution.sectionLabel?.trim() || DEFAULT_SECTION_LABEL)
 
   return (
     <div
@@ -52,7 +63,7 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ solution }) =>
                     textTransform: 'uppercase',
                   }}
                 >
-                  Our Solution
+                  {sectionLabel}
                 </p>
               </div>
 
@@ -79,18 +90,18 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ solution }) =>
                   borderLeft: '4px solid hsl(23, 100%, 56%)',
                 }}
               >
-                <p
+                <RichText
+                  data={solution.description}
+                  enableGutter={false}
+                  className="case-study-description"
                   style={{
                     fontFamily: 'Geist, sans-serif',
                     fontSize: 'clamp(16px, 2vw, 18px)',
-                    fontStyle: 'normal',
                     fontWeight: 400,
-                    lineHeight: '1.8',
+                    lineHeight: 1.8,
                     color: '#333333',
                   }}
-                >
-                  {solution.description}
-                </p>
+                />
               </div>
             </div>
           </ScrollReveal>

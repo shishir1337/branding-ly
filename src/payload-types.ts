@@ -1155,25 +1155,9 @@ export interface CaseStudy {
   id: number;
   title: string;
   /**
-   * Client name for this case study
+   * Client name for this case study (supports formatting and links)
    */
-  client: string;
-  /**
-   * Category for this case study
-   */
-  category?: (number | null) | Category;
-  /**
-   * Short excerpt shown on the case studies listing page
-   */
-  excerpt: string;
-  /**
-   * Featured image for the case study listing and detail page
-   */
-  featuredImage: number | Media;
-  /**
-   * Full content for the case study detail page
-   */
-  content: {
+  client: {
     root: {
       type: string;
       children: {
@@ -1188,54 +1172,214 @@ export interface CaseStudy {
     };
     [k: string]: unknown;
   };
-  challenge: {
-    title: string;
-    description: string;
-  };
-  solution: {
-    title: string;
-    description: string;
-  };
-  results: {
-    title: string;
-    description: string;
-    metrics?:
-      | {
-          label: string;
-          value: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
   /**
-   * Additional images for the case study gallery
+   * Category for this case study
    */
-  gallery?:
-    | {
-        image: number | Media;
-        /**
-         * Alt text for the image
-         */
-        alt?: string | null;
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  category?: (number | null) | Category;
   /**
-   * Technologies used in this project
+   * Short excerpt shown on the case studies listing page
    */
-  technologies?:
-    | {
-        name: string;
-        id?: string | null;
-      }[]
+  excerpt: string;
+  /**
+   * Featured image for the case study listing and detail page
+   */
+  featuredImage: number | Media;
+  /**
+   * Add, remove, and reorder sections. Each case study can have different sections (e.g. Challenge, Solution, Results, Rich Text, Gallery, Testimonial) in any order.
+   */
+  sections?:
+    | (
+        | {
+            /**
+             * Small label above the title (e.g. "The Challenge"). Leave empty for default.
+             */
+            sectionLabel?: string | null;
+            /**
+             * Main section heading
+             */
+            title: string;
+            /**
+             * Section content (supports formatting and links)
+             */
+            description: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'challenge';
+          }
+        | {
+            /**
+             * Small label above the title (e.g. "Our Solution"). Leave empty for default.
+             */
+            sectionLabel?: string | null;
+            /**
+             * Main section heading
+             */
+            title: string;
+            /**
+             * Section content (supports formatting and links)
+             */
+            description: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'solution';
+          }
+        | {
+            /**
+             * Small label above the title (e.g. "The Results"). Leave empty for default.
+             */
+            sectionLabel?: string | null;
+            /**
+             * Main section heading
+             */
+            title: string;
+            /**
+             * Section content (supports formatting and links)
+             */
+            description: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            metrics?:
+              | {
+                  label: string;
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'results';
+          }
+        | {
+            /**
+             * Optional section heading above the content
+             */
+            heading?: string | null;
+            /**
+             * Freeform content with headings, images, and more
+             */
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            /**
+             * Small label above the title (e.g. "Technologies Used"). Leave empty for default.
+             */
+            sectionLabel?: string | null;
+            /**
+             * Main section heading (e.g. "Tech Stack"). Leave empty for default.
+             */
+            sectionTitle?: string | null;
+            /**
+             * Technologies used in this project
+             */
+            items?:
+              | {
+                  name: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'technologies';
+          }
+        | {
+            /**
+             * Small label above the title (e.g. "Project Gallery"). Leave empty for default.
+             */
+            sectionLabel?: string | null;
+            /**
+             * Main section heading (e.g. "Visual Showcase"). Leave empty for default.
+             */
+            sectionTitle?: string | null;
+            /**
+             * Add images for the case study gallery
+             */
+            items?:
+              | {
+                  image: number | Media;
+                  /**
+                   * Alt text for the image
+                   */
+                  alt?: string | null;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'gallery';
+          }
+        | {
+            /**
+             * Optional heading above the testimonial (e.g. "What Our Client Says"). Leave empty to hide.
+             */
+            sectionTitle?: string | null;
+            quote: string;
+            author: string;
+            position: string;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonial';
+          }
+      )[]
     | null;
-  testimonial: {
-    quote: string;
-    author: string;
-    position: string;
-    image?: (number | null) | Media;
-  };
   meta?: {
     title?: string | null;
     /**
@@ -2031,53 +2175,92 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   category?: T;
   excerpt?: T;
   featuredImage?: T;
-  content?: T;
-  challenge?:
+  sections?:
     | T
     | {
-        title?: T;
-        description?: T;
-      };
-  solution?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-      };
-  results?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        metrics?:
+        challenge?:
           | T
           | {
-              label?: T;
-              value?: T;
+              sectionLabel?: T;
+              title?: T;
+              description?: T;
               id?: T;
+              blockName?: T;
             };
-      };
-  gallery?:
-    | T
-    | {
-        image?: T;
-        alt?: T;
-        caption?: T;
-        id?: T;
-      };
-  technologies?:
-    | T
-    | {
-        name?: T;
-        id?: T;
-      };
-  testimonial?:
-    | T
-    | {
-        quote?: T;
-        author?: T;
-        position?: T;
-        image?: T;
+        solution?:
+          | T
+          | {
+              sectionLabel?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+        results?:
+          | T
+          | {
+              sectionLabel?: T;
+              title?: T;
+              description?: T;
+              metrics?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              heading?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        technologies?:
+          | T
+          | {
+              sectionLabel?: T;
+              sectionTitle?: T;
+              items?:
+                | T
+                | {
+                    name?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        gallery?:
+          | T
+          | {
+              sectionLabel?: T;
+              sectionTitle?: T;
+              items?:
+                | T
+                | {
+                    image?: T;
+                    alt?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonial?:
+          | T
+          | {
+              sectionTitle?: T;
+              quote?: T;
+              author?: T;
+              position?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T

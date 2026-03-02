@@ -2,16 +2,28 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import type { CaseStudy } from '@/payload-types'
+import { Media } from '@/components/Media'
 
 interface TechnologiesSectionProps {
-  technologies?: CaseStudy['technologies']
+  technologies?: Array<{ name: string }> | null
+  sectionLabel?: string | null
+  sectionTitle?: string | null
 }
 
-export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({ technologies }) => {
+const DEFAULT_LABEL = 'Technologies Used'
+const DEFAULT_TITLE = 'Tech Stack'
+
+export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({
+  technologies,
+  sectionLabel: sectionLabelProp,
+  sectionTitle: sectionTitleProp,
+}) => {
   if (!technologies || technologies.length === 0) {
     return null
   }
+
+  const sectionLabel = sectionLabelProp?.trim() || DEFAULT_LABEL
+  const sectionTitle = sectionTitleProp?.trim() || DEFAULT_TITLE
 
   return (
     <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
@@ -31,7 +43,7 @@ export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({ techno
                 color: 'hsl(23, 100%, 56%)',
               }}
             >
-              Technologies Used
+              {sectionLabel}
             </p>
 
             {/* Title */}
@@ -46,7 +58,7 @@ export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({ techno
                 color: '#000000',
               }}
             >
-              Tech Stack
+              {sectionTitle}
             </h2>
           </div>
         </ScrollReveal>

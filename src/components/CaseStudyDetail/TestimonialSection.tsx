@@ -3,10 +3,15 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { Media } from '@/components/Media'
-import type { CaseStudy } from '@/payload-types'
 
 interface TestimonialSectionProps {
-  testimonial?: CaseStudy['testimonial']
+  testimonial?: {
+    sectionTitle?: string | null
+    quote: string
+    author: string
+    position?: string
+    image?: (number | null) | import('@/payload-types').Media
+  } | null
 }
 
 export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimonial }) => {
@@ -28,6 +33,20 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
       <div className="container px-4 sm:px-6">
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="max-w-4xl mx-auto">
+            {testimonial.sectionTitle?.trim() && (
+              <h2
+                className="mb-6 sm:mb-8 text-left"
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                  fontSize: 'clamp(28px, 5vw, 40px)',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  color: '#000000',
+                }}
+              >
+                {testimonial.sectionTitle.trim()}
+              </h2>
+            )}
             <div
               className="p-8 sm:p-12 rounded-2xl"
               style={{

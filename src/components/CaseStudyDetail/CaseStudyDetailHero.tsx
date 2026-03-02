@@ -3,6 +3,7 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { Media } from '@/components/Media'
+import RichText from '@/components/RichText'
 import type { CaseStudy } from '@/payload-types'
 
 interface CaseStudyDetailHeroProps {
@@ -70,7 +71,7 @@ export const CaseStudyDetailHero: React.FC<CaseStudyDetailHeroProps> = ({ caseSt
           </ScrollReveal>
 
           {/* Client */}
-          {caseStudy.client && (
+          {caseStudy.client && typeof caseStudy.client === 'object' && caseStudy.client.root && (
             <ScrollReveal direction="up" delay={0.3} duration={0.6} distance={20}>
               <div
                 className="mb-6 sm:mb-8 inline-flex items-center gap-3 px-6 py-3 rounded-full"
@@ -90,16 +91,16 @@ export const CaseStudyDetailHero: React.FC<CaseStudyDetailHeroProps> = ({ caseSt
                 >
                   Client:
                 </span>
-                <span
-                  style={{
-                    color: '#FFFFFF',
-                    fontFamily: 'Geist, sans-serif',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                  }}
+                <div
+                  className="[&_.payload-richtext]:text-white [&_.payload-richtext]:text-base [&_.payload-richtext]:font-semibold [&_.payload-richtext]:font-[Geist,sans-serif] [&_.payload-richtext]:m-0 [&_.payload-richtext]:inline"
+                  style={{ display: 'inline' }}
                 >
-                  {caseStudy.client}
-                </span>
+                  <RichText
+                    data={caseStudy.client}
+                    enableGutter={false}
+                    enableProse={false}
+                  />
+                </div>
               </div>
             </ScrollReveal>
           )}

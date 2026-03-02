@@ -8,13 +8,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { CaseStudyDetailHero } from '@/components/CaseStudyDetail/CaseStudyDetailHero'
 import { FeaturedImageSection } from '@/components/CaseStudyDetail/FeaturedImageSection'
-import { ChallengeSection } from '@/components/CaseStudyDetail/ChallengeSection'
-import { SolutionSection } from '@/components/CaseStudyDetail/SolutionSection'
-import { ResultsSection } from '@/components/CaseStudyDetail/ResultsSection'
-import { GallerySection } from '@/components/CaseStudyDetail/GallerySection'
-import { TestimonialSection } from '@/components/CaseStudyDetail/TestimonialSection'
-import { TechnologiesSection } from '@/components/CaseStudyDetail/TechnologiesSection'
-import RichText from '@/components/RichText'
+import { RenderCaseStudySections } from '@/components/CaseStudyDetail/RenderCaseStudySections'
 import { ContactUs } from '@/components/ContactUs'
 
 export async function generateStaticParams() {
@@ -64,26 +58,7 @@ export default async function CaseStudyDetailPage({ params: paramsPromise }: Arg
 
       <FeaturedImageSection featuredImage={caseStudy.featuredImage} />
 
-      <ChallengeSection challenge={caseStudy.challenge} />
-
-      <SolutionSection solution={caseStudy.solution} />
-
-      <ResultsSection results={caseStudy.results} />
-
-      {/* Content */}
-      {caseStudy.content && (
-        <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
-          <div className="container px-4 sm:px-6">
-            <RichText className="max-w-4xl mx-auto" data={caseStudy.content} enableGutter={false} />
-          </div>
-        </div>
-      )}
-
-      <TechnologiesSection technologies={caseStudy.technologies} />
-
-      <GallerySection gallery={caseStudy.gallery} />
-
-      <TestimonialSection testimonial={caseStudy.testimonial} />
+      <RenderCaseStudySections sections={caseStudy.sections} />
 
       <ContactUs />
     </article>
