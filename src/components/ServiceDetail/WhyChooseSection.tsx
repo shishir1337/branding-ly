@@ -102,7 +102,7 @@ export const WhyChooseSection: React.FC<WhyChooseSectionProps> = ({ section }) =
   }
 
   const sectionTitle = section.sectionTitle || 'Why Choose Brandingly'
-  const sectionSubtitle = section.sectionTitle ? null : 'Why Choose Brandingly – What Makes Us Different'
+  const _sectionSubtitle = section.sectionTitle ? null : 'Why Choose Brandingly – What Makes Us Different'
 
   return (
     <div

@@ -109,7 +109,7 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ section }) => {
   }
 
   const sectionTitle = section.sectionTitle || 'Our Process'
-  const sectionSubtitle = section.sectionTitle
+  const _sectionSubtitle = section.sectionTitle
     ? null
     : 'We follow a process to ensure your website exceeds expectations'
 

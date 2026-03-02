@@ -1,4 +1,4 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type { CollectionSlug, Payload, PayloadRequest, File } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contactUsForm as contactUsFormData } from './contact-us-form'

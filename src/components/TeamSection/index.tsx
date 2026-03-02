@@ -15,7 +15,7 @@ const PRIMARY_COLOR = 'hsl(23, 100%, 56%)'
 
 export const TeamSection: React.FC<TeamSectionProps> = ({ teamMembers }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
+  const [_isHovered, setIsHovered] = useState(false)
 
   const handleNext = useCallback(() => {
     if (!teamMembers || teamMembers.length === 0) return

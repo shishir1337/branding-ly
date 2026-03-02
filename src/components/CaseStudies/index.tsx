@@ -81,7 +81,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ caseStudy }) => {
       ? caseStudy.featuredImage
       : null
 
-  const category =
+  const _category =
     caseStudy.category && typeof caseStudy.category === 'object' ? caseStudy.category : null
 
   return (
