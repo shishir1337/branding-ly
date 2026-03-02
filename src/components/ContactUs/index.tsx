@@ -187,8 +187,8 @@ export const ContactUs: React.FC = () => {
           <ScrollReveal direction="right" delay={0.1} duration={0.7} distance={50}>
             <div className="flex flex-col justify-between">
             <div>
-              {/* Contact Us Title */}
-              <h1 
+              {/* Contact Us Title - h2 to avoid duplicate h1 on pages that already have a main h1 (e.g. case study detail) */}
+              <h2 
                 className="mb-4 sm:mb-6 pl-0 sm:pl-4 lg:pl-8"
                 style={{
                   color: 'hsl(23, 100%, 56%)',
@@ -198,7 +198,7 @@ export const ContactUs: React.FC = () => {
                 }}
               >
                 CONTACT US
-              </h1>
+              </h2>
 
               {/* Main Heading */}
               <h3 
