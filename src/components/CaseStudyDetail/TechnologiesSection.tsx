@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import { Media } from '@/components/Media'
 
 interface TechnologiesSectionProps {
   technologies?: Array<{ name: string }> | null
@@ -26,83 +25,105 @@ export const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({
   const sectionTitle = sectionTitleProp?.trim() || DEFAULT_TITLE
 
   return (
-    <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
+    <section className="w-full py-16 sm:py-20 md:py-24 bg-white">
       <div className="container px-4 sm:px-6">
-        <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
-          <div className="mb-8 sm:mb-12">
-            {/* "Technologies Used" */}
-            <p
-              className="mb-4 sm:mb-6 text-left"
-              style={{
-                fontFamily: 'Geist, sans-serif',
-                fontSize: '15.909px',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                lineHeight: '140%',
-                letterSpacing: '-0.318px',
-                color: 'hsl(23, 100%, 56%)',
-              }}
-            >
-              {sectionLabel}
-            </p>
-
-            {/* Title */}
-            <h2
-              className="text-left mb-8 sm:mb-12"
-              style={{
-                fontFamily: 'Anton, sans-serif',
-                fontSize: 'clamp(28px, 5vw, 40px)',
-                fontStyle: 'normal',
-                fontWeight: 400,
-                lineHeight: 'normal',
-                color: '#000000',
-              }}
-            >
-              {sectionTitle}
-            </h2>
-          </div>
-        </ScrollReveal>
-
-        {/* Technologies Grid */}
-        <div className="flex flex-wrap gap-3 sm:gap-4">
-          {technologies.map((tech, index) => {
-            if (!tech || typeof tech === 'number') return null
-
-            return (
-              <ScrollReveal
-                key={index}
-                direction="up"
-                delay={0.1 + index * 0.05}
-                duration={0.6}
-                distance={20}
-              >
-                <div
-                  className="px-4 sm:px-6 py-2 sm:py-3"
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-12">
+          <ScrollReveal
+            direction="up"
+            delay={0.1}
+            duration={0.6}
+            distance={30}
+            className="lg:col-span-4"
+          >
+            <div className="lg:sticky lg:top-24">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-14 h-1 rounded-full" style={{ backgroundColor: 'hsl(23, 100%, 56%)' }} />
+                <p
                   style={{
-                    borderRadius: '20px',
-                    background: '#FFDFAF',
-                    boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.1)',
+                    fontFamily: 'Geist, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    lineHeight: '140%',
+                    letterSpacing: '1px',
+                    color: 'hsl(23, 100%, 56%)',
+                    textTransform: 'uppercase',
                   }}
                 >
-                  <p
-                    style={{
-                      fontSize: 'clamp(14px, 1.8vw, 16px)',
-                      fontStyle: 'normal',
-                      fontWeight: 500,
-                      lineHeight: '1.4',
-                      color: '#000000',
-                      fontFamily: 'Geist, sans-serif',
-                    }}
-                  >
-                    {tech.name}
-                  </p>
-                </div>
-              </ScrollReveal>
-            )
-          })}
+                  {sectionLabel}
+                </p>
+              </div>
+              <h2
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                  fontSize: 'clamp(34px, 5vw, 50px)',
+                  fontWeight: 400,
+                  lineHeight: '1.12',
+                  color: '#000000',
+                  letterSpacing: '-0.5px',
+                }}
+              >
+                {sectionTitle}
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal
+            direction="up"
+            delay={0.2}
+            duration={0.6}
+            distance={30}
+            className="lg:col-span-8"
+          >
+            <div
+              className="rounded-2xl p-6 sm:p-8"
+              style={{
+                background: '#FAFAFA',
+                border: '1px solid rgba(0,0,0,0.05)',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.06)',
+              }}
+            >
+              <div className="flex flex-wrap gap-3 sm:gap-4">
+                {technologies.map((tech, index) => {
+                  if (!tech || typeof tech === 'number') return null
+
+                  return (
+                    <ScrollReveal
+                      key={index}
+                      direction="up"
+                      delay={0.1 + index * 0.04}
+                      duration={0.5}
+                      distance={16}
+                    >
+                      <div
+                        className="px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-300 hover:scale-[1.03]"
+                        style={{
+                          borderRadius: '999px',
+                          background: 'linear-gradient(135deg, #FFDFAF 0%, #FFE8C4 100%)',
+                          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
+                          border: '1px solid rgba(255, 117, 31, 0.15)',
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontSize: 'clamp(14px, 1.7vw, 16px)',
+                            fontWeight: 600,
+                            lineHeight: '1.3',
+                            color: '#111111',
+                            fontFamily: 'Geist, sans-serif',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {tech.name}
+                        </p>
+                      </div>
+                    </ScrollReveal>
+                  )
+                })}
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
-

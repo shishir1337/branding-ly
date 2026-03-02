@@ -13,6 +13,12 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     cacheTag = encodeURIComponent(cacheTag)
   }
 
+  // In development, rewrite production URLs to localhost
+  if (process.env.NODE_ENV !== 'production' && (url.startsWith('https://brandingly.agency') || url.startsWith('http://brandingly.agency'))) {
+    const localUrl = url.replace(/https?:\/\/brandingly\.agency/, 'http://localhost:3000')
+    return cacheTag ? `${localUrl}?${cacheTag}` : localUrl
+  }
+
   // Check if URL already has http/https protocol
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return cacheTag ? `${url}?${cacheTag}` : url

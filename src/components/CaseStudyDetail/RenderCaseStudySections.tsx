@@ -10,11 +10,7 @@ import { TestimonialSection } from './TestimonialSection'
 import { TechnologiesSection } from './TechnologiesSection'
 import RichText from '@/components/RichText'
 
-export function RenderCaseStudySections({
-  sections,
-}: {
-  sections: CaseStudy['sections']
-}) {
+export function RenderCaseStudySections({ sections }: { sections: CaseStudy['sections'] }) {
   if (!sections || sections.length === 0) return null
 
   return (
@@ -60,31 +56,48 @@ export function RenderCaseStudySections({
             )
           case 'richText':
             return (
-              <div
-                key={key}
-                className="w-full py-12 sm:py-16 md:py-20 bg-white"
-              >
+              <div key={key} className="w-full py-16 sm:py-20 md:py-24 bg-white">
                 <div className="container px-4 sm:px-6">
                   <div className="max-w-4xl mx-auto">
                     {block.heading && (
-                      <h2
-                        className="mb-6 sm:mb-8 text-left"
-                        style={{
-                          fontFamily: 'Anton, sans-serif',
-                          fontSize: 'clamp(28px, 5vw, 40px)',
-                          fontWeight: 400,
-                          lineHeight: 'normal',
-                          color: '#000000',
-                        }}
-                      >
-                        {block.heading}
-                      </h2>
+                      <div className="mb-6 sm:mb-8">
+                        {/* Section Label */}
+                        <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                          <div
+                            className="w-14 h-1 rounded-full"
+                            style={{ backgroundColor: 'hsl(23, 100%, 56%)' }}
+                          />
+                        </div>
+                        <h2
+                          className="text-left"
+                          style={{
+                            fontFamily: 'Anton, sans-serif',
+                            fontSize: 'clamp(36px, 6vw, 52px)',
+                            fontWeight: 400,
+                            lineHeight: '1.15',
+                            color: '#000000',
+                            letterSpacing: '-0.5px',
+                          }}
+                        >
+                          {block.heading}
+                        </h2>
+                      </div>
                     )}
-                    <RichText
-                      className="max-w-4xl mx-auto"
-                      data={block.content}
-                      enableGutter={false}
-                    />
+                    <div
+                      className="prose prose-lg max-w-none"
+                      style={{
+                        fontFamily: 'Geist, sans-serif',
+                        fontSize: 'clamp(17px, 2vw, 19px)',
+                        lineHeight: 1.75,
+                        color: '#2A2A2A',
+                      }}
+                    >
+                      <RichText
+                        className="max-w-4xl mx-auto"
+                        data={block.content}
+                        enableGutter={false}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -93,9 +106,13 @@ export function RenderCaseStudySections({
             return (
               <TechnologiesSection
                 key={key}
-                technologies={block.items?.map((item) =>
-                  item && typeof item !== 'number' ? { name: item.name ?? '' } : { name: '' }
-                ).filter((t) => t.name) ?? []}
+                technologies={
+                  block.items
+                    ?.map((item) =>
+                      item && typeof item !== 'number' ? { name: item.name ?? '' } : { name: '' },
+                    )
+                    .filter((t) => t.name) ?? []
+                }
                 sectionLabel={block.sectionLabel ?? undefined}
                 sectionTitle={block.sectionTitle ?? undefined}
               />

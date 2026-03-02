@@ -15,21 +15,17 @@ export const FeaturedImageSection: React.FC<FeaturedImageSectionProps> = ({ feat
   }
 
   return (
-    <div className="w-full py-12 sm:py-16 md:py-20 bg-white">
+    <div className="w-full py-12 sm:py-16 md:py-20 bg-white -mt-1">
       <div className="container px-4 sm:px-6 flex justify-center">
         <ScrollReveal direction="up" delay={0.2} duration={0.8} distance={40}>
-          <div className="max-w-6xl w-full flex justify-center">
+          <div className="max-w-6xl w-full">
             <div
-              className="rounded-2xl overflow-hidden w-full"
+              className="rounded-2xl overflow-hidden w-full relative"
               style={{
-                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)',
               }}
             >
-              <Media
-                resource={featuredImage}
-                size="80vw"
-                className="w-full h-auto mx-auto block"
-              />
+              <Media resource={featuredImage} size="80vw" className="w-full h-auto mx-auto block" />
             </div>
           </div>
         </ScrollReveal>
@@ -37,4 +33,3 @@ export const FeaturedImageSection: React.FC<FeaturedImageSectionProps> = ({ feat
     </div>
   )
 }
-

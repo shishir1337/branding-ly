@@ -6,14 +6,12 @@ import RichText from '@/components/RichText'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 interface ResultsSectionProps {
-  results?:
-    | {
-        sectionLabel?: string | null
-        title: string
-        description: DefaultTypedEditorState
-        metrics?: Array<{ label: string; value: string }> | null
-      }
-    | null
+  results?: {
+    sectionLabel?: string | null
+    title: string
+    description: DefaultTypedEditorState
+    metrics?: Array<{ label: string; value: string }> | null
+  } | null
 }
 
 const MetricCard: React.FC<{ metric: { label: string; value: string }; index: number }> = ({
@@ -21,40 +19,37 @@ const MetricCard: React.FC<{ metric: { label: string; value: string }; index: nu
   index,
 }) => {
   return (
-    <ScrollReveal
-      direction="up"
-      delay={0.1 + index * 0.1}
-      duration={0.6}
-      distance={30}
-    >
+    <ScrollReveal direction="up" delay={0.1 + index * 0.1} duration={0.6} distance={30}>
       <div
-        className="p-6 sm:p-8 text-center"
+        className="p-6 sm:p-8 text-center h-full transition-all duration-300 hover:scale-[1.02]"
         style={{
-          borderRadius: '14px',
+          borderRadius: '16px',
           background: '#FFF',
-          boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.25)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0, 0, 0, 0.05)',
         }}
       >
         <p
-          className="mb-2"
+          className="mb-3"
           style={{
-            fontSize: 'clamp(32px, 4vw, 48px)',
+            fontSize: 'clamp(36px, 5vw, 56px)',
             fontStyle: 'normal',
             fontWeight: 400,
-            lineHeight: 'normal',
+            lineHeight: '1',
             color: 'hsl(23, 100%, 56%)',
             fontFamily: 'Anton, sans-serif',
+            letterSpacing: '-1px',
           }}
         >
           {metric.value}
         </p>
         <p
           style={{
-            fontSize: 'clamp(14px, 1.8vw, 16px)',
+            fontSize: 'clamp(15px, 1.8vw, 17px)',
             fontStyle: 'normal',
-            fontWeight: 400,
-            lineHeight: '1.4',
-            color: '#666666',
+            fontWeight: 500,
+            lineHeight: '1.5',
+            color: '#4A4A4A',
             fontFamily: 'Geist, sans-serif',
           }}
         >
@@ -70,38 +65,30 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
     return null
   }
 
-  const sectionLabel = (results.sectionLabel?.trim() || 'The Results')
+  const sectionLabel = results.sectionLabel?.trim() || 'The Results'
   const metrics = results.metrics || []
 
   return (
-    <div className="w-full py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
-      {/* Decorative Background Element */}
-      <div
-        className="absolute bottom-0 left-0 w-96 h-96 opacity-5"
-        style={{
-          background: 'radial-gradient(circle, hsl(23, 100%, 56%) 0%, transparent 70%)',
-          transform: 'translate(-30%, 30%)',
-        }}
-      />
-      
-      <div className="container px-4 sm:px-6 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
-            <div className="mb-12 sm:mb-16">
-              {/* "The Results" */}
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className="w-12 h-1 rounded-full"
-                  style={{ backgroundColor: 'hsl(23, 100%, 56%)' }}
-                />
+    <section className="w-full py-16 sm:py-20 md:py-24 bg-white">
+      <div className="container px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-12">
+          <ScrollReveal
+            direction="up"
+            delay={0.1}
+            duration={0.6}
+            distance={30}
+            className="lg:col-span-5"
+          >
+            <div className="lg:sticky lg:top-24">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-14 h-1 rounded-full" style={{ backgroundColor: 'hsl(23, 100%, 56%)' }} />
                 <p
                   style={{
                     fontFamily: 'Geist, sans-serif',
-                    fontSize: '15.909px',
-                    fontStyle: 'normal',
+                    fontSize: '13px',
                     fontWeight: 600,
                     lineHeight: '140%',
-                    letterSpacing: '-0.318px',
+                    letterSpacing: '1px',
                     color: 'hsl(23, 100%, 56%)',
                     textTransform: 'uppercase',
                   }}
@@ -109,28 +96,25 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
                   {sectionLabel}
                 </p>
               </div>
-
-              {/* Title */}
               <h2
-                className="mb-6 sm:mb-8"
+                className="mb-6"
                 style={{
                   fontFamily: 'Anton, sans-serif',
-                  fontSize: 'clamp(32px, 6vw, 48px)',
-                  fontStyle: 'normal',
+                  fontSize: 'clamp(34px, 5vw, 50px)',
                   fontWeight: 400,
-                  lineHeight: '1.2',
+                  lineHeight: '1.12',
                   color: '#000000',
+                  letterSpacing: '-0.5px',
                 }}
               >
                 {results.title}
               </h2>
-
-              {/* Description */}
               <div
-                className="p-6 sm:p-8 rounded-2xl mb-8 sm:mb-12"
+                className="rounded-2xl p-6"
                 style={{
-                  backgroundColor: '#F8F8F8',
-                  borderLeft: '4px solid hsl(23, 100%, 56%)',
+                  backgroundColor: '#FAFAFA',
+                  borderLeft: '5px solid hsl(23, 100%, 56%)',
+                  border: '1px solid rgba(0,0,0,0.05)',
                 }}
               >
                 <RichText
@@ -139,20 +123,25 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
                   className="case-study-description"
                   style={{
                     fontFamily: 'Geist, sans-serif',
-                    fontSize: 'clamp(16px, 2vw, 18px)',
+                    fontSize: 'clamp(16px, 1.8vw, 18px)',
                     fontWeight: 400,
-                    lineHeight: 1.8,
-                    color: '#333333',
+                    lineHeight: 1.7,
+                    color: '#2A2A2A',
                   }}
                 />
               </div>
             </div>
           </ScrollReveal>
 
-          {/* Metrics Grid */}
           {metrics.length > 0 && (
-            <ScrollReveal direction="up" delay={0.2} duration={0.6} distance={30}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <ScrollReveal
+              direction="up"
+              delay={0.2}
+              duration={0.6}
+              distance={30}
+              className="lg:col-span-7"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {metrics.map((metric, index) => {
                   if (!metric || typeof metric === 'number') return null
                   return (
@@ -171,7 +160,6 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({ results }) => {
           )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
-

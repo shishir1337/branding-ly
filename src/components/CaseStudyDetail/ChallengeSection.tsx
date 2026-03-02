@@ -6,13 +6,11 @@ import RichText from '@/components/RichText'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 interface ChallengeSectionProps {
-  challenge?:
-    | {
-        sectionLabel?: string | null
-        title: string
-        description: DefaultTypedEditorState
-      }
-    | null
+  challenge?: {
+    sectionLabel?: string | null
+    title: string
+    description: DefaultTypedEditorState
+  } | null
 }
 
 const DEFAULT_SECTION_LABEL = 'The Challenge'
@@ -22,37 +20,29 @@ export const ChallengeSection: React.FC<ChallengeSectionProps> = ({ challenge })
     return null
   }
 
-  const sectionLabel = (challenge.sectionLabel?.trim() || DEFAULT_SECTION_LABEL)
+  const sectionLabel = challenge.sectionLabel?.trim() || DEFAULT_SECTION_LABEL
 
   return (
-    <div className="w-full py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
-      {/* Decorative Background Element */}
-      <div
-        className="absolute top-0 right-0 w-96 h-96 opacity-5"
-        style={{
-          background: 'radial-gradient(circle, hsl(23, 100%, 56%) 0%, transparent 70%)',
-          transform: 'translate(30%, -30%)',
-        }}
-      />
-      
-      <div className="container px-4 sm:px-6 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
-            <div className="mb-8 sm:mb-12">
-              {/* "The Challenge" */}
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className="w-12 h-1 rounded-full"
-                  style={{ backgroundColor: 'hsl(23, 100%, 56%)' }}
-                />
+    <section className="w-full py-16 sm:py-20 md:py-24 bg-white">
+      <div className="container px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-12">
+          <ScrollReveal
+            direction="up"
+            delay={0.1}
+            duration={0.6}
+            distance={30}
+            className="lg:col-span-4"
+          >
+            <div className="lg:sticky lg:top-24">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-14 h-1 rounded-full" style={{ backgroundColor: 'hsl(23, 100%, 56%)' }} />
                 <p
                   style={{
                     fontFamily: 'Geist, sans-serif',
-                    fontSize: '15.909px',
-                    fontStyle: 'normal',
+                    fontSize: '13px',
                     fontWeight: 600,
                     lineHeight: '140%',
-                    letterSpacing: '-0.318px',
+                    letterSpacing: '1px',
                     color: 'hsl(23, 100%, 56%)',
                     textTransform: 'uppercase',
                   }}
@@ -60,48 +50,53 @@ export const ChallengeSection: React.FC<ChallengeSectionProps> = ({ challenge })
                   {sectionLabel}
                 </p>
               </div>
-
-              {/* Title */}
               <h2
-                className="mb-6 sm:mb-8"
                 style={{
                   fontFamily: 'Anton, sans-serif',
-                  fontSize: 'clamp(32px, 6vw, 48px)',
-                  fontStyle: 'normal',
+                  fontSize: 'clamp(34px, 5vw, 50px)',
                   fontWeight: 400,
-                  lineHeight: '1.2',
+                  lineHeight: '1.12',
                   color: '#000000',
+                  letterSpacing: '-0.5px',
                 }}
               >
                 {challenge.title}
               </h2>
+            </div>
+          </ScrollReveal>
 
-              {/* Description */}
-              <div
-                className="p-6 sm:p-8 rounded-2xl"
+          <ScrollReveal
+            direction="up"
+            delay={0.2}
+            duration={0.6}
+            distance={30}
+            className="lg:col-span-8"
+          >
+            <div
+              className="rounded-2xl p-6 sm:p-8 md:p-10"
+              style={{
+                backgroundColor: '#FAFAFA',
+                border: '1px solid rgba(0,0,0,0.05)',
+                borderLeft: '5px solid hsl(23, 100%, 56%)',
+                boxShadow: '0 8px 26px rgba(0, 0, 0, 0.06)',
+              }}
+            >
+              <RichText
+                data={challenge.description}
+                enableGutter={false}
+                className="case-study-description"
                 style={{
-                  backgroundColor: '#F8F8F8',
-                  borderLeft: '4px solid hsl(23, 100%, 56%)',
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: 'clamp(17px, 2vw, 19px)',
+                  fontWeight: 400,
+                  lineHeight: 1.75,
+                  color: '#2A2A2A',
                 }}
-              >
-                <RichText
-                  data={challenge.description}
-                  enableGutter={false}
-                  className="case-study-description"
-                  style={{
-                    fontFamily: 'Geist, sans-serif',
-                    fontSize: 'clamp(16px, 2vw, 18px)',
-                    fontWeight: 400,
-                    lineHeight: 1.8,
-                    color: '#333333',
-                  }}
-                />
-              </div>
+              />
             </div>
           </ScrollReveal>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
-

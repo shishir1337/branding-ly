@@ -159,9 +159,80 @@ export const CaseStudies: CollectionConfig<'case-studies'> = {
         ],
       },
     },
-    slugField(),
+    slugField({
+      fieldToUse: 'title',
+    }),
   ],
   hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        // Early slug generation before validation (safety net)
+        if (!data) return data
+        if (data.title && typeof data.title === 'string' && (!data.slug || String(data.slug).trim() === '')) {
+          const slug = data.title
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '') // Remove special characters
+            .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+          
+          if (slug) {
+            data.slug = slug
+          }
+        }
+        return data
+      },
+    ],
+    beforeChange: [
+      async ({ data, operation, req, originalDoc }) => {
+        // Ensure slug is generated from title if empty (especially when publishing)
+        if (!data) return data
+        if (data.title && typeof data.title === 'string' && (!data.slug || String(data.slug).trim() === '')) {
+          // Generate slug from title
+          let slug = data.title
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '') // Remove special characters
+            .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+          
+          // Ensure uniqueness by checking existing slugs
+          if (slug && req?.payload) {
+            let uniqueSlug = slug
+            let counter = 1
+            
+            while (true) {
+              const existing = await req.payload.find({
+                collection: 'case-studies',
+                where: {
+                  slug: { equals: uniqueSlug },
+                  ...(operation === 'update' && originalDoc?.id
+                    ? { id: { not_equals: originalDoc.id } }
+                    : {}),
+                },
+                limit: 1,
+                depth: 0,
+                overrideAccess: true,
+              })
+              
+              if (existing.totalDocs === 0) {
+                break
+              }
+              
+              uniqueSlug = `${slug}-${counter}`
+              counter++
+            }
+            
+            slug = uniqueSlug
+          }
+          
+          if (slug) {
+            data.slug = slug
+          }
+        }
+        return data
+      },
+    ],
     afterRead: [
       ({ doc }) => {
         if (!doc) return

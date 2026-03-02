@@ -76,6 +76,13 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || process.env.DATABASE_URI || '',
     },
+    // Disable auto-push for remote/production databases to avoid permission issues
+    push: process.env.NODE_ENV === 'development' && 
+          (process.env.DATABASE_URI?.includes('localhost') || 
+           process.env.DATABASE_URI?.includes('127.0.0.1') || 
+           process.env.DATABASE_URL?.includes('localhost') || 
+           process.env.DATABASE_URL?.includes('127.0.0.1')) || false,
+    migrationDir: './migrations',
   }),
   collections: [Pages, Posts, Media, Categories, Services, CaseStudies, TeamMembers, Users],
   cors: [getServerSideURL()].filter(Boolean),

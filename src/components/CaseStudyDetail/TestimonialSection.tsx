@@ -24,7 +24,7 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
 
   return (
     <div
-      className="w-full py-12 sm:py-16 md:py-20"
+      className="w-full py-16 sm:py-20 md:py-24"
       style={{
         background:
           'radial-gradient(139.25% 144.68% at 100% -32.85%, #FFDFAF 21.12%, rgba(255, 238, 223, 0.47) 73.2%, #FFF 89.16%)',
@@ -34,35 +34,59 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
         <ScrollReveal direction="up" delay={0.1} duration={0.6} distance={30}>
           <div className="max-w-4xl mx-auto">
             {testimonial.sectionTitle?.trim() && (
-              <h2
-                className="mb-6 sm:mb-8 text-left"
-                style={{
-                  fontFamily: 'Anton, sans-serif',
-                  fontSize: 'clamp(28px, 5vw, 40px)',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  color: '#000000',
-                }}
-              >
-                {testimonial.sectionTitle.trim()}
-              </h2>
+              <div className="mb-8 sm:mb-10">
+                {/* Section Label */}
+                <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                  <div
+                    className="w-14 h-1 rounded-full"
+                    style={{ backgroundColor: 'hsl(23, 100%, 56%)' }}
+                  />
+                  <p
+                    style={{
+                      fontFamily: 'Geist, sans-serif',
+                      fontSize: '14px',
+                      fontStyle: 'normal',
+                      fontWeight: 600,
+                      lineHeight: '140%',
+                      letterSpacing: '1px',
+                      color: 'hsl(23, 100%, 56%)',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Client Testimonial
+                  </p>
+                </div>
+                <h2
+                  className="text-left"
+                  style={{
+                    fontFamily: 'Anton, sans-serif',
+                    fontSize: 'clamp(36px, 6vw, 52px)',
+                    fontWeight: 400,
+                    lineHeight: '1.15',
+                    color: '#000000',
+                    letterSpacing: '-0.5px',
+                  }}
+                >
+                  {testimonial.sectionTitle.trim()}
+                </h2>
+              </div>
             )}
             <div
-              className="p-8 sm:p-12 rounded-2xl"
+              className="p-8 sm:p-10 md:p-12 rounded-2xl transition-shadow duration-300"
               style={{
                 background: '#FFF',
-                boxShadow: '0 8px 20px 0 rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.12)',
               }}
             >
               {/* Quote */}
               <div className="mb-6 sm:mb-8">
                 <svg
-                  width="48"
-                  height="36"
+                  width="56"
+                  height="42"
                   viewBox="0 0 48 36"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mb-4"
+                  className="mb-5"
                   style={{ color: 'hsl(23, 100%, 56%)' }}
                 >
                   <path
@@ -72,11 +96,11 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
                 </svg>
                 <p
                   style={{
-                    fontSize: 'clamp(18px, 2.5vw, 24px)',
+                    fontSize: 'clamp(20px, 2.8vw, 26px)',
                     fontStyle: 'italic',
                     fontWeight: 400,
-                    lineHeight: '1.6',
-                    color: '#333333',
+                    lineHeight: '1.7',
+                    color: '#2A2A2A',
                     fontFamily: 'Geist, sans-serif',
                   }}
                 >
@@ -85,33 +109,31 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
               </div>
 
               {/* Author */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 sm:gap-5 pt-6 border-t border-gray-200">
                 {image && (
                   <div className="flex-shrink-0">
                     <div
                       className="rounded-full overflow-hidden"
                       style={{
-                        width: '64px',
-                        height: '64px',
+                        width: '72px',
+                        height: '72px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                       }}
                     >
-                      <Media
-                        resource={image}
-                        size="64px"
-                        className="w-full h-full object-cover"
-                      />
+                      <Media resource={image} size="72px" className="w-full h-full object-cover" />
                     </div>
                   </div>
                 )}
                 <div>
                   <p
                     style={{
-                      fontSize: '18px',
+                      fontSize: '19px',
                       fontStyle: 'normal',
                       fontWeight: 600,
                       lineHeight: '1.4',
                       color: '#000000',
                       fontFamily: 'Geist, sans-serif',
+                      marginBottom: '4px',
                     }}
                   >
                     {testimonial.author}
@@ -119,7 +141,7 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
                   {testimonial.position && (
                     <p
                       style={{
-                        fontSize: '14px',
+                        fontSize: '15px',
                         fontStyle: 'normal',
                         fontWeight: 400,
                         lineHeight: '1.4',
@@ -139,4 +161,3 @@ export const TestimonialSection: React.FC<TestimonialSectionProps> = ({ testimon
     </div>
   )
 }
-
