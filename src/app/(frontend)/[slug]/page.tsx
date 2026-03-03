@@ -15,6 +15,7 @@ import { AboutUs } from '@/components/AboutUs'
 import { Statistics } from '@/components/Statistics'
 import { Testimonials } from '@/components/Testimonials'
 import { RecentPosts } from '@/components/RecentPosts'
+import { RecentCaseStudies } from '@/components/RecentCaseStudies'
 import { FAQ } from '@/components/FAQ'
 import { ContactUs } from '@/components/ContactUs'
 import { OurServicesSection } from '@/components/OurServicesSection'
@@ -108,6 +109,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <OurServicesSection services={await queryServices()} />
           <Testimonials />
           <RecentPosts />
+          <RecentCaseStudies />
           <FAQ />
           <ContactUs />
           {/* <WhyUs /> */}
