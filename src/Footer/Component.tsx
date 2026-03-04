@@ -30,7 +30,7 @@ export function Footer() {
                 fontWeight: 400,
                 lineHeight: '110%',
                 letterSpacing: 'clamp(-1.2px, -0.04vw, -2.8px)',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
               }}
             >
               Find <span style={{ color: 'hsl(23, 100%, 56%)' }}>solutions</span>
@@ -48,10 +48,11 @@ export function Footer() {
                 fontFamily: 'Geist, sans-serif',
                 lineHeight: '1.6',
                 color: '#FFFFFF',
-                opacity: 0.9
+                opacity: 0.9,
               }}
             >
-              From SEO and paid ads to social media, branding, and web design — we offer everything you need to grow and succeed online.
+              From SEO and paid ads to social media, branding, and web design — we offer everything
+              you need to grow and succeed online.
             </p>
 
             {/* Newsletter Form */}
@@ -69,7 +70,7 @@ export function Footer() {
                   borderRadius: '9999px',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   background: 'rgba(255, 255, 255, 0.1)',
-                  color: '#FFFFFF'
+                  color: '#FFFFFF',
                 }}
               />
               <button
@@ -77,7 +78,7 @@ export function Footer() {
                 className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 transition-colors"
                 style={{
                   backgroundColor: 'hsl(23, 100%, 56%)',
-                  color: '#FFFFFF'
+                  color: '#FFFFFF',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'hsl(23, 100%, 50%)'
@@ -106,7 +107,7 @@ export function Footer() {
                 fontWeight: 600,
                 fontFamily: 'Geist, sans-serif',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
               }}
             >
               GET IN TOUCH:
@@ -119,7 +120,7 @@ export function Footer() {
                   fontSize: 'clamp(13px, 1.6vw, 15px)',
                   fontFamily: 'Geist, sans-serif',
                   color: '#FFFFFF',
-                  opacity: 0.9
+                  opacity: 0.9,
                 }}
               >
                 info@brandingly.agency
@@ -129,7 +130,7 @@ export function Footer() {
                   fontSize: 'clamp(13px, 1.6vw, 15px)',
                   fontFamily: 'Geist, sans-serif',
                   color: '#FFFFFF',
-                  opacity: 0.9
+                  opacity: 0.9,
                 }}
               >
                 Dhaka, Bangladesh
@@ -141,10 +142,10 @@ export function Footer() {
                   fontSize: 'clamp(13px, 1.6vw, 15px)',
                   fontFamily: 'Geist, sans-serif',
                   color: '#FFFFFF',
-                  opacity: 0.9
+                  opacity: 0.9,
                 }}
               >
-                +880-1969-602-224
+                +8801336351622
               </a>
             </div>
           </div>
@@ -158,7 +159,7 @@ export function Footer() {
                 fontWeight: 600,
                 fontFamily: 'Geist, sans-serif',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
               }}
             >
               MAIN PAGES
@@ -173,7 +174,7 @@ export function Footer() {
                     fontSize: 'clamp(13px, 1.6vw, 15px)',
                     fontFamily: 'Geist, sans-serif',
                     color: '#FFFFFF',
-                    opacity: 0.9
+                    opacity: 0.9,
                   }}
                 >
                   {page}
@@ -191,7 +192,7 @@ export function Footer() {
                 fontWeight: 600,
                 fontFamily: 'Geist, sans-serif',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
               }}
             >
               OTHER PAGES
@@ -209,7 +210,7 @@ export function Footer() {
                     fontSize: 'clamp(13px, 1.6vw, 15px)',
                     fontFamily: 'Geist, sans-serif',
                     color: '#FFFFFF',
-                    opacity: 0.9
+                    opacity: 0.9,
                   }}
                 >
                   {page.label}
@@ -227,7 +228,7 @@ export function Footer() {
                 fontWeight: 600,
                 fontFamily: 'Geist, sans-serif',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
               }}
             >
               SOCIAL
@@ -275,10 +276,7 @@ export function Footer() {
       </div>
 
       {/* Copyright */}
-      <div
-        className="border-t border-white/20 py-6"
-        style={{ background: '#070515' }}
-      >
+      <div className="border-t border-white/20 py-6" style={{ background: '#070515' }}>
         <div className="container px-4 sm:px-6">
           <p
             className="text-center"
@@ -286,7 +284,7 @@ export function Footer() {
               fontSize: 'clamp(12px, 1.5vw, 14px)',
               fontFamily: 'Geist, sans-serif',
               color: '#FFFFFF',
-              opacity: 0.7
+              opacity: 0.7,
             }}
           >
             © {new Date().getFullYear()} Brandingly. All rights reserved.
