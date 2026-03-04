@@ -37,11 +37,11 @@ const serviceOptions = [
 ]
 
 const budgetOptions = [
-  'Less than $5K',
-  '$5K - $10K',
-  '$10K - $20K',
-  '$20K - $50K',
-  'More than $50K'
+  'Less than BDT 5K',
+  'BDT 5K - BDT 10K',
+  'BDT 10K - BDT 20K',
+  'BDT 20K - BDT 50K',
+  'More than BDT 50K'
 ]
 
 export const ContactUs: React.FC = () => {

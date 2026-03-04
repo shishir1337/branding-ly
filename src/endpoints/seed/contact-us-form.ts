@@ -121,11 +121,11 @@ export const contactUsForm: RequiredDataFromCollectionSlug<'forms'> = {
       required: true,
       width: 100,
       options: [
-        { label: 'Less than $5K', value: 'Less than $5K' },
-        { label: '$5K - $10K', value: '$5K - $10K' },
-        { label: '$10K - $20K', value: '$10K - $20K' },
-        { label: '$20K - $50K', value: '$20K - $50K' },
-        { label: 'More than $50K', value: 'More than $50K' },
+        { label: 'Less than BDT 5K', value: 'Less than BDT 5K' },
+        { label: 'BDT 5K - BDT 10K', value: 'BDT 5K - BDT 10K' },
+        { label: 'BDT 10K - BDT 20K', value: 'BDT 10K - BDT 20K' },
+        { label: 'BDT 20K - BDT 50K', value: 'BDT 20K - BDT 50K' },
+        { label: 'More than BDT 50K', value: 'More than BDT 50K' },
       ],
     },
     {
